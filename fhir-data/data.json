@@ -1,0 +1,3429 @@
+{
+  "resourceType": "Bundle",
+  "id": "222da56c-64b7-40fa-b84c-ff7729e36adb",
+  "meta": {
+    "lastUpdated": "2021-12-29T01:22:55.902+00:00"
+  },
+  "type": "searchset",
+  "link": [ {
+    "relation": "self",
+    "url": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest?_include=MedicationRequest%3Apatient"
+  }, {
+    "relation": "next",
+    "url": "https://api.logicahealth.org/researchonfhir/open?_getpages=222da56c-64b7-40fa-b84c-ff7729e36adb&_getpagesoffset=50&_count=50&_pretty=true&_bundletype=searchset"
+  } ],
+  "entry": [ {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-101",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-101",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:25.000+00:00",
+        "source": "#KQSArAdbxORTtqVw"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Nizatidine 15 MG/ML Oral Solution [Axid] (rxnorm: 582620)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "582620",
+          "display": "Nizatidine 15 MG/ML Oral Solution [Axid]"
+        } ],
+        "text": "Nizatidine 15 MG/ML Oral Solution [Axid]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1032702"
+      },
+      "dosageInstruction": [ {
+        "text": "10 mL bid",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-04-05"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-102",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-102",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:26.000+00:00",
+        "source": "#WnCTEkK79sEBIQNe"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Amoxicillin 80 MG/ML Oral Suspension (rxnorm: 308189)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "308189",
+          "display": "Amoxicillin 80 MG/ML Oral Suspension"
+        } ],
+        "text": "Amoxicillin 80 MG/ML Oral Suspension"
+      },
+      "subject": {
+        "reference": "Patient/smart-1081332"
+      },
+      "dosageInstruction": [ {
+        "text": "7 mL bid x 10 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2004-07-13"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-103",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-103",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:26.000+00:00",
+        "source": "#WnCTEkK79sEBIQNe"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Amoxicillin 120 MG/ML / clavulanate potassium 8.58 MG/ML Oral Suspension (rxnorm: 617993)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "617993",
+          "display": "Amoxicillin 120 MG/ML / clavulanate potassium 8.58 MG/ML Oral Suspension"
+        } ],
+        "text": "Amoxicillin 120 MG/ML / clavulanate potassium 8.58 MG/ML Oral Suspension"
+      },
+      "subject": {
+        "reference": "Patient/smart-1081332"
+      },
+      "dosageInstruction": [ {
+        "text": "5 mL bid x 10 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-01-04"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-104",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-104",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:26.000+00:00",
+        "source": "#WnCTEkK79sEBIQNe"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Azithromycin 20 MG/ML Oral Suspension [Zithromax] (rxnorm: 211307)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "211307",
+          "display": "Azithromycin 20 MG/ML Oral Suspension [Zithromax]"
+        } ],
+        "text": "Azithromycin 20 MG/ML Oral Suspension [Zithromax]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1081332"
+      },
+      "dosageInstruction": [ {
+        "text": "15 mL daily x 3 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-01-18"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 3,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-105",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-105",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:26.000+00:00",
+        "source": "#WnCTEkK79sEBIQNe"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">cefdinir 25 MG/ML Oral Suspension [Omnicef] (rxnorm: 261091)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "261091",
+          "display": "cefdinir 25 MG/ML Oral Suspension [Omnicef]"
+        } ],
+        "text": "cefdinir 25 MG/ML Oral Suspension [Omnicef]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1081332"
+      },
+      "dosageInstruction": [ {
+        "text": "7 mL bid x 10 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-01-28"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-106",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-106",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:26.000+00:00",
+        "source": "#WnCTEkK79sEBIQNe"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ciprofloxacin 3 MG/ML / Dexamethasone 1 MG/ML Otic Suspension [Ciprodex] (rxnorm: 404630)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "404630",
+          "display": "Ciprofloxacin 3 MG/ML / Dexamethasone 1 MG/ML Otic Suspension [Ciprodex]"
+        } ],
+        "text": "Ciprofloxacin 3 MG/ML / Dexamethasone 1 MG/ML Otic Suspension [Ciprodex]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1081332"
+      },
+      "dosageInstruction": [ {
+        "text": "4 gtt in ear bid x7 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-03-11"
+            },
+            "frequency": 3,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "[drp]",
+          "system": "http://unitsofmeasure.org",
+          "code": "[drp]"
+        },
+        "expectedSupplyDuration": {
+          "value": 7,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-107",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-107",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:26.000+00:00",
+        "source": "#WnCTEkK79sEBIQNe"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Amoxicillin 50 MG/ML Oral Suspension (rxnorm: 239191)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "239191",
+          "display": "Amoxicillin 50 MG/ML Oral Suspension"
+        } ],
+        "text": "Amoxicillin 50 MG/ML Oral Suspension"
+      },
+      "subject": {
+        "reference": "Patient/smart-1081332"
+      },
+      "dosageInstruction": [ {
+        "text": "10 mL bid x 10 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2007-06-06"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-108",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-108",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:26.000+00:00",
+        "source": "#WnCTEkK79sEBIQNe"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Sulfamethoxazole 40 MG/ML / Trimethoprim 8 MG/ML Oral Suspension [Sulfatrim] (rxnorm: 208406)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "208406",
+          "display": "Sulfamethoxazole 40 MG/ML / Trimethoprim 8 MG/ML Oral Suspension [Sulfatrim]"
+        } ],
+        "text": "Sulfamethoxazole 40 MG/ML / Trimethoprim 8 MG/ML Oral Suspension [Sulfatrim]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1081332"
+      },
+      "dosageInstruction": [ {
+        "text": "5 mL bid x 10 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2007-08-28"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-109",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-109",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:28.000+00:00",
+        "source": "#t8B1SBPceqIytzZz"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Estrogens, Conjugated (USP) 0.625 MG Oral Tablet [Premarin] (rxnorm: 150840)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "150840",
+          "display": "Estrogens, Conjugated (USP) 0.625 MG Oral Tablet [Premarin]"
+        } ],
+        "text": "Estrogens, Conjugated (USP) 0.625 MG Oral Tablet [Premarin]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1098667"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-01-13"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 30.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-110",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-110",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:28.000+00:00",
+        "source": "#t8B1SBPceqIytzZz"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Acetaminophen 300 MG / Codeine 30 MG Oral Tablet (rxnorm: 309462)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "309462",
+          "display": "Acetaminophen 300 MG / Codeine 30 MG Oral Tablet"
+        } ],
+        "text": "Acetaminophen 300 MG / Codeine 30 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1098667"
+      },
+      "dosageInstruction": [ {
+        "text": "1 q6h prn pain",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-07-30"
+            },
+            "frequency": 4,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "asNeededBoolean": true
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 24.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 6,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-111",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-111",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:28.000+00:00",
+        "source": "#t8B1SBPceqIytzZz"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">fexofenadine 180 MG Oral Tablet (rxnorm: 310333)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "310333",
+          "display": "fexofenadine 180 MG Oral Tablet"
+        } ],
+        "text": "fexofenadine 180 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1098667"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-09-10"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 90.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-112",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-112",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:28.000+00:00",
+        "source": "#t8B1SBPceqIytzZz"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Hydrocortisone 25 MG/ML Rectal Cream [Proctozone HC] (rxnorm: 351396)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "351396",
+          "display": "Hydrocortisone 25 MG/ML Rectal Cream [Proctozone HC]"
+        } ],
+        "text": "Hydrocortisone 25 MG/ML Rectal Cream [Proctozone HC]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1098667"
+      },
+      "dosageInstruction": [ {
+        "text": "Apply bid x7 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-09-12"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-113",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-113",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:28.000+00:00",
+        "source": "#t8B1SBPceqIytzZz"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Hydrocortisone 25 MG/ML / pramoxine 10 MG/ML Topical Cream (rxnorm: 310893)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "310893",
+          "display": "Hydrocortisone 25 MG/ML / pramoxine 10 MG/ML Topical Cream"
+        } ],
+        "text": "Hydrocortisone 25 MG/ML / pramoxine 10 MG/ML Topical Cream"
+      },
+      "subject": {
+        "reference": "Patient/smart-1098667"
+      },
+      "dosageInstruction": [ {
+        "text": "Apply bid x7 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2009-04-23"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 28,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-114",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-114",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:29.000+00:00",
+        "source": "#SpkMq39qajrl0UKR"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Amoxicillin 50 MG/ML Oral Suspension (rxnorm: 239191)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "239191",
+          "display": "Amoxicillin 50 MG/ML Oral Suspension"
+        } ],
+        "text": "Amoxicillin 50 MG/ML Oral Suspension"
+      },
+      "subject": {
+        "reference": "Patient/smart-1134281"
+      },
+      "dosageInstruction": [ {
+        "text": "10 mL bid x 10 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-11-28"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-115",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-115",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:29.000+00:00",
+        "source": "#SpkMq39qajrl0UKR"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">carbinoxamine 1 MG/ML / Dextromethorphan 4 MG/ML / Pseudoephedrine 15 MG/ML Oral Solution [Carbofed DM Drops] (rxnorm: 352027)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "352027",
+          "display": "carbinoxamine 1 MG/ML / Dextromethorphan 4 MG/ML / Pseudoephedrine 15 MG/ML Oral Solution [Carbofed DM Drops]"
+        } ],
+        "text": "carbinoxamine 1 MG/ML / Dextromethorphan 4 MG/ML / Pseudoephedrine 15 MG/ML Oral Solution [Carbofed DM Drops]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1134281"
+      },
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 0,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-116",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-116",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:29.000+00:00",
+        "source": "#SpkMq39qajrl0UKR"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Metoclopramide 1 MG/ML Oral Solution (rxnorm: 104884)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "104884",
+          "display": "Metoclopramide 1 MG/ML Oral Solution"
+        } ],
+        "text": "Metoclopramide 1 MG/ML Oral Solution"
+      },
+      "subject": {
+        "reference": "Patient/smart-1134281"
+      },
+      "dosageInstruction": [ {
+        "text": "4 mL qid",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2006-01-08"
+            },
+            "frequency": 4,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-117",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-117",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:29.000+00:00",
+        "source": "#SpkMq39qajrl0UKR"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ranitidine 15 MG/ML Oral Solution [Zantac] (rxnorm: 755272)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "755272",
+          "display": "Ranitidine 15 MG/ML Oral Solution [Zantac]"
+        } ],
+        "text": "Ranitidine 15 MG/ML Oral Solution [Zantac]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1134281"
+      },
+      "dosageInstruction": [ {
+        "text": "6 mL bid",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2006-01-08"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-118",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-118",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:29.000+00:00",
+        "source": "#SpkMq39qajrl0UKR"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Amoxicillin 80 MG/ML Oral Suspension (rxnorm: 308189)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "308189",
+          "display": "Amoxicillin 80 MG/ML Oral Suspension"
+        } ],
+        "text": "Amoxicillin 80 MG/ML Oral Suspension"
+      },
+      "subject": {
+        "reference": "Patient/smart-1134281"
+      },
+      "dosageInstruction": [ {
+        "text": "7 mL bid x 10 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2006-08-31"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-119",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-119",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:29.000+00:00",
+        "source": "#SpkMq39qajrl0UKR"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Mupirocin 0.02 MG/MG Topical Ointment (rxnorm: 106346)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "106346",
+          "display": "Mupirocin 0.02 MG/MG Topical Ointment"
+        } ],
+        "text": "Mupirocin 0.02 MG/MG Topical Ointment"
+      },
+      "subject": {
+        "reference": "Patient/smart-1134281"
+      },
+      "dosageInstruction": [ {
+        "text": "apply nasally prn",
+        "asNeededBoolean": true
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-120",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-120",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:29.000+00:00",
+        "source": "#SpkMq39qajrl0UKR"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Amoxicillin 40 MG/ML / Clavulanate 5.7 MG/ML Oral Suspension (rxnorm: 617423)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "617423",
+          "display": "Amoxicillin 40 MG/ML / Clavulanate 5.7 MG/ML Oral Suspension"
+        } ],
+        "text": "Amoxicillin 40 MG/ML / Clavulanate 5.7 MG/ML Oral Suspension"
+      },
+      "subject": {
+        "reference": "Patient/smart-1134281"
+      },
+      "dosageInstruction": [ {
+        "text": "7 mL bid x 10 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2009-06-17"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 10,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-121",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-121",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:36.000+00:00",
+        "source": "#cdCgXxWeLGLEFp8f"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">benazepril 10 MG Oral Tablet (rxnorm: 308607)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "308607",
+          "display": "benazepril 10 MG Oral Tablet"
+        } ],
+        "text": "benazepril 10 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1137192"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-08-20"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 90.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-122",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-122",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:36.000+00:00",
+        "source": "#cdCgXxWeLGLEFp8f"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Simvastatin 20 MG Oral Tablet (rxnorm: 312961)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "312961",
+          "display": "Simvastatin 20 MG Oral Tablet"
+        } ],
+        "text": "Simvastatin 20 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1137192"
+      },
+      "dosageInstruction": [ {
+        "text": "1 qhs",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-08-20"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 90.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-123",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-123",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:36.000+00:00",
+        "source": "#cdCgXxWeLGLEFp8f"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Isosorbide Dinitrate 10 MG Oral Tablet (rxnorm: 381056)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "381056",
+          "display": "Isosorbide Dinitrate 10 MG Oral Tablet"
+        } ],
+        "text": "Isosorbide Dinitrate 10 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1137192"
+      },
+      "dosageInstruction": [ {
+        "text": "1 tid",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-08-20"
+            },
+            "frequency": 3,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 270.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-124",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-124",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:36.000+00:00",
+        "source": "#cdCgXxWeLGLEFp8f"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Metoprolol 100 MG Oral Tablet (rxnorm: 866511)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "866511",
+          "display": "Metoprolol 100 MG Oral Tablet"
+        } ],
+        "text": "Metoprolol 100 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1137192"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-08-20"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 180.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-125",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-125",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:36.000+00:00",
+        "source": "#cdCgXxWeLGLEFp8f"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Metoprolol 50 MG Oral Tablet (rxnorm: 866514)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "866514",
+          "display": "Metoprolol 50 MG Oral Tablet"
+        } ],
+        "text": "Metoprolol 50 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1137192"
+      },
+      "dosageInstruction": [ {
+        "text": "1 bid",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2009-02-05"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 180.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-126",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-126",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:36.000+00:00",
+        "source": "#cdCgXxWeLGLEFp8f"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Diazepam 10 MG Oral Tablet (rxnorm: 197589)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "197589",
+          "display": "Diazepam 10 MG Oral Tablet"
+        } ],
+        "text": "Diazepam 10 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1137192"
+      },
+      "dosageInstruction": [ {
+        "text": "1 bid prn anxiety",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2009-07-13"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "asNeededBoolean": true
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 6.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 6,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-127",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-127",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:36.000+00:00",
+        "source": "#cdCgXxWeLGLEFp8f"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Methylprednisolone 4 MG Oral Tablet (rxnorm: 762675)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "762675",
+          "display": "Methylprednisolone 4 MG Oral Tablet"
+        } ],
+        "text": "Methylprednisolone 4 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1137192"
+      },
+      "dosageInstruction": [ {
+        "text": "taper as directed"
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 3,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-128",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-128",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:42.000+00:00",
+        "source": "#End1JLQzjDc2qXRW"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">anastrozole 1 MG Oral Tablet [Arimidex] (rxnorm: 151124)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "151124",
+          "display": "anastrozole 1 MG Oral Tablet [Arimidex]"
+        } ],
+        "text": "anastrozole 1 MG Oral Tablet [Arimidex]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1157764"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2003-10-23"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 30.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-129",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-129",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:42.000+00:00",
+        "source": "#End1JLQzjDc2qXRW"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">{4 (Risedronate 35 MG Oral Tablet [Actonel]) } Pack [Actonel 35] (rxnorm: 877300)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "877300",
+          "display": "{4 (Risedronate 35 MG Oral Tablet [Actonel]) } Pack [Actonel 35]"
+        } ],
+        "text": "{4 (Risedronate 35 MG Oral Tablet [Actonel]) } Pack [Actonel 35]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1157764"
+      },
+      "dosageInstruction": [ {
+        "text": "1 weekly",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2003-11-02"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "wk"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 4.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-130",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-130",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:42.000+00:00",
+        "source": "#End1JLQzjDc2qXRW"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Nitrofurantoin 100 MG Oral Capsule (rxnorm: 311992)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "311992",
+          "display": "Nitrofurantoin 100 MG Oral Capsule"
+        } ],
+        "text": "Nitrofurantoin 100 MG Oral Capsule"
+      },
+      "subject": {
+        "reference": "Patient/smart-1157764"
+      },
+      "dosageInstruction": [ {
+        "text": "1 bid",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2006-10-31"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 60.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-131",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-131",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:42.000+00:00",
+        "source": "#End1JLQzjDc2qXRW"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">bimatoprost 0.3 MG/ML Ophthalmic Solution [Lumigan] (rxnorm: 285128)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "285128",
+          "display": "bimatoprost 0.3 MG/ML Ophthalmic Solution [Lumigan]"
+        } ],
+        "text": "bimatoprost 0.3 MG/ML Ophthalmic Solution [Lumigan]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1157764"
+      },
+      "dosageInstruction": [ {
+        "text": "1 gtt daily in OD",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2009-08-22"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 2.0,
+          "unit": "[drp]",
+          "system": "http://unitsofmeasure.org",
+          "code": "[drp]"
+        },
+        "expectedSupplyDuration": {
+          "value": 20,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-132",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-132",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:47.000+00:00",
+        "source": "#lyVj5wZaDBrtHtA1"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler (rxnorm: 745679)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "745679",
+          "display": "200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler"
+        } ],
+        "text": "200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler"
+      },
+      "subject": {
+        "reference": "Patient/smart-1186747"
+      },
+      "dosageInstruction": [ {
+        "text": "2 puffs qid prn SOB",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2004-11-14"
+            },
+            "frequency": 4,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "asNeededBoolean": true
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "{puff}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{puff}"
+        },
+        "expectedSupplyDuration": {
+          "value": 25,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-133",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-133",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:47.000+00:00",
+        "source": "#lyVj5wZaDBrtHtA1"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">moxifloxacin 5 MG/ML Ophthalmic Solution [Vigamox] (rxnorm: 404473)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "404473",
+          "display": "moxifloxacin 5 MG/ML Ophthalmic Solution [Vigamox]"
+        } ],
+        "text": "moxifloxacin 5 MG/ML Ophthalmic Solution [Vigamox]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1186747"
+      },
+      "dosageInstruction": [ {
+        "text": "1 gtt in eyes tid x7 days",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-07-20"
+            },
+            "frequency": 3,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "[drp]",
+          "system": "http://unitsofmeasure.org",
+          "code": "[drp]"
+        },
+        "expectedSupplyDuration": {
+          "value": 7,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-134",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-134",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:47.000+00:00",
+        "source": "#lyVj5wZaDBrtHtA1"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">24 HR Methylphenidate 18 MG Extended Release Tablet [Concerta] (rxnorm: 284429)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "284429",
+          "display": "24 HR Methylphenidate 18 MG Extended Release Tablet [Concerta]"
+        } ],
+        "text": "24 HR Methylphenidate 18 MG Extended Release Tablet [Concerta]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1186747"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2006-01-07"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 30.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-135",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-135",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:47.000+00:00",
+        "source": "#lyVj5wZaDBrtHtA1"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ciprofloxacin 3 MG/ML / Dexamethasone 1 MG/ML Otic Suspension [Ciprodex] (rxnorm: 404630)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "404630",
+          "display": "Ciprofloxacin 3 MG/ML / Dexamethasone 1 MG/ML Otic Suspension [Ciprodex]"
+        } ],
+        "text": "Ciprofloxacin 3 MG/ML / Dexamethasone 1 MG/ML Otic Suspension [Ciprodex]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1186747"
+      },
+      "dosageInstruction": [ {
+        "text": "4 gtt in ear bid x7 day",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2006-09-25"
+            },
+            "frequency": 3,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "[drp]",
+          "system": "http://unitsofmeasure.org",
+          "code": "[drp]"
+        },
+        "expectedSupplyDuration": {
+          "value": 7,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-136",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-136",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:47.000+00:00",
+        "source": "#lyVj5wZaDBrtHtA1"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">atomoxetine 18 MG Oral Capsule [Strattera] (rxnorm: 352318)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "352318",
+          "display": "atomoxetine 18 MG Oral Capsule [Strattera]"
+        } ],
+        "text": "atomoxetine 18 MG Oral Capsule [Strattera]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1186747"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2007-07-17"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 30.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-137",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-137",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:47.000+00:00",
+        "source": "#lyVj5wZaDBrtHtA1"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">atomoxetine 25 MG Oral Capsule [Strattera] (rxnorm: 352319)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "352319",
+          "display": "atomoxetine 25 MG Oral Capsule [Strattera]"
+        } ],
+        "text": "atomoxetine 25 MG Oral Capsule [Strattera]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1186747"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-01-13"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 30.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-138",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-138",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:47.000+00:00",
+        "source": "#lyVj5wZaDBrtHtA1"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir HFA] (rxnorm: 745752)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "745752",
+          "display": "200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir HFA]"
+        } ],
+        "text": "200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir HFA]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1186747"
+      },
+      "dosageInstruction": [ {
+        "text": "2 puffs qid prn SOB",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-05-21"
+            },
+            "frequency": 4,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "asNeededBoolean": true
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "{puff}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{puff}"
+        },
+        "expectedSupplyDuration": {
+          "value": 25,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-139",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-139",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:52:52.000+00:00",
+        "source": "#HlAvi5DuW7UVsttc"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Lisinopril 20 MG Oral Tablet (rxnorm: 314077)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "314077",
+          "display": "Lisinopril 20 MG Oral Tablet"
+        } ],
+        "text": "Lisinopril 20 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1288992"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-08-13"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 90.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-140",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-140",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:52:52.000+00:00",
+        "source": "#HlAvi5DuW7UVsttc"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Memantine 10 MG Oral Tablet [Namenda] (rxnorm: 404673)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "404673",
+          "display": "Memantine 10 MG Oral Tablet [Namenda]"
+        } ],
+        "text": "Memantine 10 MG Oral Tablet [Namenda]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1288992"
+      },
+      "dosageInstruction": [ {
+        "text": "1 bid",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-08-13"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 180.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-141",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-141",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:52:52.000+00:00",
+        "source": "#HlAvi5DuW7UVsttc"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">donepezil 10 MG Oral Tablet [Aricept] (rxnorm: 153357)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "153357",
+          "display": "donepezil 10 MG Oral Tablet [Aricept]"
+        } ],
+        "text": "donepezil 10 MG Oral Tablet [Aricept]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1288992"
+      },
+      "dosageInstruction": [ {
+        "text": "1 qhs",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-08-14"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 90.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-142",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-142",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:52:52.000+00:00",
+        "source": "#HlAvi5DuW7UVsttc"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Hydrochlorothiazide 50 MG Oral Tablet (rxnorm: 197770)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "197770",
+          "display": "Hydrochlorothiazide 50 MG Oral Tablet"
+        } ],
+        "text": "Hydrochlorothiazide 50 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1288992"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-08-14"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 90.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-143",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-143",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:52:52.000+00:00",
+        "source": "#HlAvi5DuW7UVsttc"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">potassium citrate 10 MEQ Extended Release Tablet (rxnorm: 199381)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "199381",
+          "display": "potassium citrate 10 MEQ Extended Release Tablet"
+        } ],
+        "text": "potassium citrate 10 MEQ Extended Release Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1288992"
+      },
+      "dosageInstruction": [ {
+        "text": "1 daily",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-09-30"
+            },
+            "frequency": 1,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 200.0,
+          "unit": "{tablet}",
+          "system": "http://unitsofmeasure.org",
+          "code": "{tablet}"
+        },
+        "expectedSupplyDuration": {
+          "value": 90,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-144",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-144",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:53:34.000+00:00",
+        "source": "#46LvjsTGb9v3agn2"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Triamcinolone 1 MG/ML Topical Cream (rxnorm: 106256)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "106256",
+          "display": "Triamcinolone 1 MG/ML Topical Cream"
+        } ],
+        "text": "Triamcinolone 1 MG/ML Topical Cream"
+      },
+      "subject": {
+        "reference": "Patient/smart-1482713"
+      },
+      "dosageInstruction": [ {
+        "text": "apply bid to affected area",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2005-09-25"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-145",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-145",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:53:34.000+00:00",
+        "source": "#46LvjsTGb9v3agn2"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ibuprofen 20 MG/ML Oral Suspension (rxnorm: 197803)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "197803",
+          "display": "Ibuprofen 20 MG/ML Oral Suspension"
+        } ],
+        "text": "Ibuprofen 20 MG/ML Oral Suspension"
+      },
+      "subject": {
+        "reference": "Patient/smart-1482713"
+      },
+      "dosageInstruction": [ {
+        "text": "7 mL q6h prn",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2006-06-15"
+            },
+            "frequency": 4,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "asNeededBoolean": true
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-146",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-146",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:53:34.000+00:00",
+        "source": "#46LvjsTGb9v3agn2"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Diphenhydramine 2.5 MG/ML Oral Solution [Diphen] (rxnorm: 313960)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "313960",
+          "display": "Diphenhydramine 2.5 MG/ML Oral Solution [Diphen]"
+        } ],
+        "text": "Diphenhydramine 2.5 MG/ML Oral Solution [Diphen]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1482713"
+      },
+      "dosageInstruction": [ {
+        "text": "5 mL q6h prn pruritis",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2006-06-15"
+            },
+            "frequency": 4,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "asNeededBoolean": true
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "quantity": {
+          "value": 1.0,
+          "unit": "mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL"
+        },
+        "expectedSupplyDuration": {
+          "value": 7,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-147",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-147",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:53:34.000+00:00",
+        "source": "#46LvjsTGb9v3agn2"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Triamcinolone 0.25 MG/ML Topical Cream (rxnorm: 198305)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "198305",
+          "display": "Triamcinolone 0.25 MG/ML Topical Cream"
+        } ],
+        "text": "Triamcinolone 0.25 MG/ML Topical Cream"
+      },
+      "subject": {
+        "reference": "Patient/smart-1482713"
+      },
+      "dosageInstruction": [ {
+        "text": "apply bid to affected area",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-05-04"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-148",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-148",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:53:34.000+00:00",
+        "source": "#46LvjsTGb9v3agn2"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Clotrimazole 10 MG/ML Topical Cream (rxnorm: 309367)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "309367",
+          "display": "Clotrimazole 10 MG/ML Topical Cream"
+        } ],
+        "text": "Clotrimazole 10 MG/ML Topical Cream"
+      },
+      "subject": {
+        "reference": "Patient/smart-1482713"
+      },
+      "dosageInstruction": [ {
+        "text": "apply bid to affected area",
+        "timing": {
+          "repeat": {
+            "boundsPeriod": {
+              "start": "2008-05-04"
+            },
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        }
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 30,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-149",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-149",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:55:29.000+00:00",
+        "source": "#WQECJbVQHOKN8jPY"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Methylprednisolone 4 MG Oral Tablet (rxnorm: 762675)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "762675",
+          "display": "Methylprednisolone 4 MG Oral Tablet"
+        } ],
+        "text": "Methylprednisolone 4 MG Oral Tablet"
+      },
+      "subject": {
+        "reference": "Patient/smart-1557780"
+      },
+      "dosageInstruction": [ {
+        "text": "taper as directed"
+      } ],
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 6,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/MedicationRequest/smart-MedicationRequest-150",
+    "resource": {
+      "resourceType": "MedicationRequest",
+      "id": "smart-MedicationRequest-150",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:55:29.000+00:00",
+        "source": "#WQECJbVQHOKN8jPY"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Chlorpheniramine 1.6 MG/ML / Hydrocodone 2 MG/ML Extended Release Suspension [Tussionex PennKinetic] (rxnorm: 859258)</div>"
+      },
+      "status": "active",
+      "intent": "order",
+      "medicationCodeableConcept": {
+        "coding": [ {
+          "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+          "code": "859258",
+          "display": "Chlorpheniramine 1.6 MG/ML / Hydrocodone 2 MG/ML Extended Release Suspension [Tussionex PennKinetic]"
+        } ],
+        "text": "Chlorpheniramine 1.6 MG/ML / Hydrocodone 2 MG/ML Extended Release Suspension [Tussionex PennKinetic]"
+      },
+      "subject": {
+        "reference": "Patient/smart-1557780"
+      },
+      "dispenseRequest": {
+        "numberOfRepeatsAllowed": 1,
+        "expectedSupplyDuration": {
+          "value": 12,
+          "unit": "days",
+          "system": "http://unitsofmeasure.org",
+          "code": "d"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1081332",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1081332",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:26.000+00:00",
+        "source": "#WnCTEkK79sEBIQNe"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Joseph Ross</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1081332"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Ross",
+        "given": [ "Joseph", "I" ]
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "800-960-9294",
+        "use": "mobile"
+      }, {
+        "system": "email",
+        "value": "joseph.ross@example.com"
+      } ],
+      "gender": "male",
+      "birthDate": "2003-10-02",
+      "address": [ {
+        "use": "home",
+        "line": [ "19 Church St" ],
+        "city": "Tulsa",
+        "state": "OK",
+        "postalCode": "74108",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-72004454"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1482713",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1482713",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:53:19.000+00:00",
+        "source": "#IfdRe69gIUFOjvPE"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Susan Clark</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1482713"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Clark",
+        "given": [ "Susan", "A" ]
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "800-576-9327",
+        "use": "home"
+      }, {
+        "system": "email",
+        "value": "susan.clark@example.com"
+      } ],
+      "gender": "female",
+      "birthDate": "2000-12-27",
+      "address": [ {
+        "use": "home",
+        "line": [ "52 Highland St" ],
+        "city": "Tulsa",
+        "state": "OK",
+        "postalCode": "74116",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-71482713"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1032702",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1032702",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:25.000+00:00",
+        "source": "#KQSArAdbxORTtqVw"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Amy Shaw</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1032702"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Shaw",
+        "given": [ "Amy", "V" ]
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "800-782-6765",
+        "use": "mobile"
+      }, {
+        "system": "email",
+        "value": "amy.shaw@example.com"
+      } ],
+      "gender": "female",
+      "birthDate": "2007-03-20",
+      "address": [ {
+        "use": "home",
+        "line": [ "49 Meadow St" ],
+        "city": "Mounds",
+        "state": "OK",
+        "postalCode": "74047",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-72004454"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1557780",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1557780",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:54:56.000+00:00",
+        "source": "#AjTvxfp8OlsCnJcn"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">William Thomas</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1557780"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Thomas",
+        "given": [ "William", "F" ]
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "800-556-4849",
+        "use": "home"
+      }, {
+        "system": "email",
+        "value": "william.thomas@example.com"
+      } ],
+      "gender": "male",
+      "birthDate": "1933-06-16",
+      "address": [ {
+        "use": "home",
+        "line": [ "35 Meadow Rd" ],
+        "city": "Tulsa",
+        "state": "OK",
+        "postalCode": "74117",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-72004454"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1186747",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1186747",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:47.000+00:00",
+        "source": "#lyVj5wZaDBrtHtA1"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Daniel Johnson</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1186747"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Johnson",
+        "given": [ "Daniel", "A" ]
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "800-504-6466",
+        "use": "mobile"
+      }, {
+        "system": "email",
+        "value": "daniel.johnson@example.com"
+      } ],
+      "gender": "male",
+      "birthDate": "1995-02-22",
+      "address": [ {
+        "use": "home",
+        "line": [ "2 Main Ave" ],
+        "city": "Broken Arrow",
+        "state": "OK",
+        "postalCode": "74014",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-71032702"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1288992",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1288992",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:52:36.000+00:00",
+        "source": "#N3ReKjR75As8Kjhk"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Daniel Adams</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1288992"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Adams",
+        "given": [ "Daniel", "X" ]
+      } ],
+      "telecom": [ {
+        "system": "email",
+        "value": "daniel.adams@example.com"
+      } ],
+      "gender": "male",
+      "birthDate": "1925-12-23",
+      "address": [ {
+        "use": "home",
+        "line": [ "1 Hill Ave" ],
+        "city": "Tulsa",
+        "state": "OK",
+        "postalCode": "74117",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-71614502"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1137192",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1137192",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:36.000+00:00",
+        "source": "#cdCgXxWeLGLEFp8f"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Joshua Williams</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1137192"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Williams",
+        "given": [ "Joshua", "P" ]
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "800-232-5751",
+        "use": "mobile"
+      }, {
+        "system": "email",
+        "value": "joshua.williams@example.com"
+      } ],
+      "gender": "male",
+      "birthDate": "1954-08-21",
+      "address": [ {
+        "use": "home",
+        "line": [ "96 East Rd" ],
+        "city": "Tulsa",
+        "state": "OK",
+        "postalCode": "74108",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-72080416"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1134281",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1134281",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:29.000+00:00",
+        "source": "#SpkMq39qajrl0UKR"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Patrick Taylor</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1134281"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Taylor",
+        "given": [ "Patrick", "G" ]
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "800-539-3986",
+        "use": "home"
+      }, {
+        "system": "email",
+        "value": "patrick.taylor@example.com"
+      } ],
+      "gender": "male",
+      "birthDate": "2004-10-15",
+      "address": [ {
+        "use": "home",
+        "line": [ "24 Pine Rd" ],
+        "city": "Bixby",
+        "state": "OK",
+        "postalCode": "74008",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-71482713"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1157764",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1157764",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:42.000+00:00",
+        "source": "#End1JLQzjDc2qXRW"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Carol Hughes</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1157764"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Hughes",
+        "given": [ "Carol", "U" ]
+      } ],
+      "telecom": [ {
+        "system": "phone",
+        "value": "800-971-5389",
+        "use": "mobile"
+      }, {
+        "system": "email",
+        "value": "carol.hughes@example.com"
+      } ],
+      "gender": "female",
+      "birthDate": "1949-11-04",
+      "address": [ {
+        "use": "home",
+        "line": [ "36 South St" ],
+        "city": "Tulsa",
+        "state": "OK",
+        "postalCode": "74108",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-7880378"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  }, {
+    "fullUrl": "https://api.logicahealth.org/researchonfhir/open/Patient/smart-1098667",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "smart-1098667",
+      "meta": {
+        "versionId": "1",
+        "lastUpdated": "2020-07-15T02:51:28.000+00:00",
+        "source": "#t8B1SBPceqIytzZz"
+      },
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Robert Hill</div>"
+      },
+      "identifier": [ {
+        "use": "official",
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR",
+            "display": "Medical Record Number"
+          } ],
+          "text": "Medical Record Number"
+        },
+        "system": "http://hospital.smarthealthit.org",
+        "value": "smart-1098667"
+      } ],
+      "active": true,
+      "name": [ {
+        "use": "official",
+        "family": "Hill",
+        "given": [ "Robert", "P" ]
+      } ],
+      "telecom": [ {
+        "system": "email",
+        "value": "robert.hill@example.com"
+      } ],
+      "gender": "male",
+      "birthDate": "1953-10-27",
+      "address": [ {
+        "use": "home",
+        "line": [ "42 Park St" ],
+        "city": "Bixby",
+        "state": "OK",
+        "postalCode": "74008",
+        "country": "USA"
+      } ],
+      "generalPractitioner": [ {
+        "reference": "Practitioner/smart-Practitioner-71081332"
+      } ]
+    },
+    "search": {
+      "mode": "include"
+    }
+  } ]
+}
