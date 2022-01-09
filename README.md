@@ -14,8 +14,8 @@ There are a few libraries that can do this, but this documentation will stick wi
 in the Python Standard Library.
 
 ```shell
-# Create the virtual environment
-python3 -m venv venv
+# Create a virtual environment in a `venv/` folder
+python3 -m venv venv/
 # Activate the virtual environment
 source venv/bin/activate
 ```
