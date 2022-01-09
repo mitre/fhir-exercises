@@ -1,0 +1,85 @@
+---
+title: "FHIR for Research - Exercise 0 (R)"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Introduction
+
+This is an [RMarkdown](https://rmarkdown.rstudio.com/) [Notebook](https://bookdown.org/yihui/rmarkdown/notebook.html) that describes a basic setup for querying a [FHIR](https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf) server and pulling the returned data into an R data frame.
+
+## Initial setup
+
+This project uses [`renv`](https://rstudio.github.io/renv/articles/renv.html) for dependency management. **TODO: add more instructions about getting this set up for the first time.**
+
+We will use the `fhircrackr` library to handle querying from a FHIR server and converting the response into an R dataframe.
+
+We will also use [`tidyverse`](https://www.tidyverse.org) to facilitate working with data in R, and [`skimr`](https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html) for summarizing data.
+
+```{r setup}
+library(fhircrackr)
+library(tidyverse)
+library(skimr)
+```
+
+## Step 1+2: Connect to FHIR server and query data
+
+**Note: The Pyton version of this exercise does this in two separate steps, but in R we do these together thanks to `fhircrackr`.**
+
+Attempt to do a sample load from our example FHIR server by requesting [Patient resources](https://www.hl7.org/fhir/patient.html) for the available patients:
+
+```{r}
+fhir_server <- "https://api.logicahealth.org/researchonfhir/open/"
+request <- fhir_url(url = fhir_server, resource = "Patient")
+patient_bundle <- fhir_search(request = request)
+patient_bundle
+```
+
+This will get an `fhir_bundle_xml` object, which is a special object defined by the `fhircrackr` library. Note that this library uses XML rather than JSON when getting FHIR resources from the server.
+
+## Step 3: Convert response from server into a dataframe
+
+The `fhircrackr` library uses the `fhir_table_description()` function to translate the hierarchical resource returned by the FHIR server into a tabular format (i.e., a dataframe) that works with typical analysis approaches in R.
+
+This function creates a definition mapping parts of the XML representation of the resource onto columns in the dataframe that will be generated. The XML elements are identified using [XPath](https://en.wikipedia.org/wiki/XPath), a query language for XML. You can use a tool like [this XPath tester](https://extendsclass.com/xpath-tester.html) to help generate XPaths. **TODO: will probably need to provide more/better guidance on XPath.**
+
+**Note: Python exercise doesn't currently include `birthTime`, but it is included here to demonstrate how more complicate XPath queries work.**
+
+```{r}
+table_desc_patient <- fhir_table_description(
+    resource = "Patient",
+    
+    cols = c(
+            PID           = "id",
+            given_name    = "name/given",
+            family_name   = "name/family",
+            gender        = "gender",
+            birthday      = "birthDate",
+            birthTime     = "extension[@url=\"http://hl7.org/fhir/StructureDefinition/patient-birthTime\"]/valueDateTime"
+        )
+    
+)
+```
+
+Once the table description is created, we can create a dataframe:
+
+```{r}
+df_patient <- fhir_crack(bundles = patient_bundle, design = table_desc_patient, verbose = 0)
+df_patient %>% head()
+```
+
+# Step 4: Exploratory data analysis
+
+First summarize the data:
+```{r}
+df_patient %>% skim
+```
+
+**Note: The Python version of this exercise only has 50 rows. This is because by default the FHIR server we are using only includes 50 results per query. `fhircrackr` takes care of requesting additional pages of results automatically.**
+
+Let's look at our gender breakdown:
+```{r}
+df_patient %>% count(gender)
+
+```
