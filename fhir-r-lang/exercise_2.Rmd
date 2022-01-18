@@ -1,0 +1,544 @@
+---
+title: "FHIR for Research - Exercise 2 (R)"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Environment setup
+
+Load needed libraries:
+
+```{r setup}
+# library(fhircrackr)
+library(tidyverse)
+library(skimr)
+library(summarytools)
+library(table1)
+
+# Used for direct RESTful queries against the FHIR server
+library(httr)
+library(jsonlite)
+
+# library(lubridate) # Datetime manipulation
+
+# Visualizations
+library(ggthemes)
+theme_set(ggthemes::theme_economist_white())
+```
+
+Kids First uses an [HTTP cookie](https://en.wikipedia.org/wiki/HTTP_cookie) for authentication, which isn't supported by `fhircrackr`. We will therefore use the `httr` + `jsonlite` approach for loading data from the FHIR server into R data frames.
+
+```{r}
+fhir_server <- "https://kf-api-fhir-service.kidsfirstdrc.org"
+
+# Kids First uses cookie-based authentication, so we've pre-fetched a cookie and made it available here.
+
+
+# We will also wrap `httr::GET()` with our own function to make using this cookie easier:
+GET_kf <- function(path) {
+  # Flexiblity in case the hostname is included
+  path <- str_replace(path, fhir_server, "")
+  return(
+          httr::GET(
+                  url = str_interp("${fhir_server}${path}"),
+                  # Uncomment if you need to troubleshoot
+                  # verbose(data_out=T, data_in=T, info=T, ssl=T),
+
+                  # Tell the sever that you want the JSON-format response
+                  add_headers( Accept = 'application/fhir+json'),
+
+                  # `set_cookies()` should work, but it URL-encodes the cookie, which causes the cookie to not work
+                  # set_cookies('AWSELBAuthSessionCookie-0' = str_trim(read_file("kf_cookie.txt")))
+                  # The line below is what `set_cookies()` is doing under the hood, but without the URL encoding.
+                  httr::config(cookie = paste0("AWSELBAuthSessionCookie-0=", str_trim(read_file("kf_cookie.txt"))))
+          )
+  )
+}
+```
+
+## 1. Demographics
+
+First, let's show how to review basic demographic information for a patient cohort. There are a few ways we can do this.
+
+### 1.1. Just the first N patients on the server
+
+For the simplest example, let's just query for the first set of Patients on the server and see what that looks like.
+
+(Note that there are over 10,000 Patient resources on this server, so we don't want to query them all or follow all the pagination. For performance reasons, all the examples in this notebook are intended to run with only a single page of results.)
+
+```{r}
+response <- GET_kf('/Patient')
+response
+```
+
+Show the raw JSON from the response:
+
+```{r}
+httr::content(response, as = "text", encoding = "UTF-8") %>% prettify %>% substr(1,3000)
+```
+
+We can see the key data items we are looking for in there - gender, race, and ethnicity. (Race and ethnicity may be shown as "Not Reported" unfortunately, but we can see where they would fit)
+
+Let's convert the list of Patients to a data frame and translate columns as appropriate.
+
+```{r}
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+
+# The data frame with the patients is in the `entry` item in `response_list`:
+df_patient <- response_list$entry
+
+df_patient %>% head
+```
+
+List the columns in the data frame for reference:
+```{r}
+df_patient %>% colnames
+```
+
+Subset to the columns we need, and extract the data from nested data frames as needed:
+
+```{r}
+df_patient <- df_patient %>%
+        select(
+          fullUrl,
+          "resource.id",
+          "resource.gender",
+          "resource.extension"
+        )
+```
+
+To extract the race and ethnicity from the extension, we need to traverse the nested data frames. First we need to understand the structure, so we will look at the `resource.extension` cell for the first row (i.e., first patient):
+```{r}
+df_patient[1,]$resource.extension %>% str
+```
+
+This shows us we have the following hierarchy for each `resource.extension` cell:
+
+- List of 1 item
+  - Data frame with two columns (`url` and `extension`), and two rows (one for race, one for ethnicity)
+      - Each cell of the `url` column is a string with the URI of the extension. We'll look at the contents of this below
+      - Each cell of the `extension` column is a list of data frames, each with with multiple columns including `url` and `valueString`
+          - `url` indicates the type of `valueString`
+          - `valueString` is the reported value for race or ethnicity
+          - Other columns like `valueCoding.display` may be populated if a terminology is used
+
+To get race and ethnicity into separate columns as strings, we need to identify which row of the `resource.extension` sub-data frame corresponds to each, and then pull out `valueString` (or `valueCoding.display').
+
+To do this, we can use `endsWith` to look at the end of the `resource.extension[[1]]$url` value, which is either `race` or `ethnicity`. Let's look at a few different patients to see how this can change for `race`:
+```{r}
+df_patient[1,]$resource.extension[[1]] %>% filter(endsWith(url, "race")) %>% str
+```
+
+```{r}
+df_patient[2,]$resource.extension[[1]] %>% filter(endsWith(url, "race")) %>% str
+```
+
+```{r}
+df_patient[3,]$resource.extension[[1]] %>% filter(endsWith(url, "race")) %>% str
+```
+
+There are two ways to pull the data into a flat, "tidy" data frame: `unnest` and manually extracting the nested objects.
+
+The `unnest` approach creates a "long" data frame (with one row for each patient × extension type (race and ethnicity in this case) × extension values (e.g., the `text` version and the `ombCategory` version of race). This can be reshaped into a "wide" data frame for analysis with a little manipulation
+```{r}
+# Put the results of `unnest` into a temporary data frame so we can inspect it.
+tmp <- df_patient %>%
+  # Unnesting the two layers of nested objects
+  unnest("resource.extension") %>%
+  unnest("extension", names_repair = "unique")
+
+tmp
+```
+
+Finish processing:
+
+```{r}
+df_patient_unnest <- tmp %>%
+  # We can see that `tmp` has `url...4` and `url...5`, which should be renamed to keep the code clear
+  rename(
+    "extension_url" = "url...4",
+    "extension_value_type" = "url...5"
+  ) %>%
+  mutate(
+    # Recode extension_url for later reshaping
+    extension_url = case_when(
+      endsWith(extension_url, "race") ~ "race",
+      endsWith(extension_url, "ethnicity") ~ "ethnicity",
+      T ~ ""
+    )
+  ) %>%
+  # Collapse the multiple rows-per-patient down into one row per patient, with new columns for race/ethnicity
+  pivot_wider(
+    id_cols = c(fullUrl, resource.id, resource.gender),
+    names_from = c(extension_url, extension_value_type),
+    values_from = starts_with("value")
+  ) %>%
+  # Clean up the auto-generated column names from `pivot_wider`
+  rename(
+    "race_string" = "valueString_race_text",
+    "ethnicity_string" = "valueString_ethnicity_text",
+    "race_omb_code" = "valueCoding.code_race_ombCategory",
+    "ethnicity_omb_code" = "valueCoding.code_ethnicity_ombCategory",
+    "race_omb_display" = "valueCoding.display_race_ombCategory",
+    "ethnicity_omb_display" = "valueCoding.display_ethnicity_ombCategory",
+  ) %>%
+  # Remove unneded columns
+  select(fullUrl, resource.id, resource.gender, starts_with("race"), starts_with("ethnicity"))
+
+df_patient_unnest %>% head(5)
+```
+
+The other approach is to directly extract the nested objects.
+
+To see how this might work, let's first extract race for just one patient:
+
+```{r}
+# Pick an arbitrary patient row to work with
+patient_row_number <- 2
+
+# Create a filter of the nested `extensions` data frame for just the race extension
+filter_for_race_extension <- endsWith(
+  df_patient[patient_row_number,]$resource.extension[[1]]$url,
+  "race"
+)
+
+race_string <- (
+  df_patient[patient_row_number,]
+    $resource.extension[[1]][filter_for_race_extension,] # Apply filter we created above
+    $extension[[1]] %>% # Look at the 2nd-level nested data frame that has the extension values in it
+    filter(url == "text") # Filter down to just the `text` value (https://hl7.org/fhir/us/core/StructureDefinition-us-core-race-definitions.html#Extension.extension:text)
+)$valueString # Get the contents of `valueString`, which is where the value of the `text` component of race is stored
+
+race_string
+```
+
+Now we can use `dplyr` to apply this approach to all the rows in the table.
+
+```{r}
+df_patient_direct <- df_patient %>%
+  mutate(
+    # See https://www.r-bloggers.com/2018/09/using-purrrs-map-family-functions-in-dplyrmutate/ for some context on using `map` in `mutate`
+    race_string = map_chr( # Apply a function to each row, only returning vector of "chr" type
+      # Note that if you use `map` rather than `map_chr`, you get a list of chr, rather than just a vector of chr
+      resource.extension, # Argument that is passed to the anonymous function below
+      function(.) { # Anonymous function with one argument (`.`), which will always be `resource.extension` in this case
+        (.[endsWith(.$url, "race"),]$extension[[1]] %>% # Same approach as above - note you don't need [[1]] for `resource.extension` as `map_chr` takes care of this
+           filter(url == "text"))$valueString
+        }
+      ),
+    
+    # Repeat this pattern for `ethnicity_string`
+    ethnicity_string = map_chr(resource.extension, function(.) { (.[endsWith(.$url, "ethnicity"),]$extension[[1]] %>% filter(url == "text"))$valueString })
+  ) %>% 
+  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
+
+df_patient_direct %>% head(5)
+```
+
+We can generalize the function for getting race and ethnicity from instances of Patient returned by this server if we're going to be doing this a lot:
+
+```{r}
+fn_race_ethnicity_helper <- function(., suffix) {
+  # Add some error handling in case the extension isn't provided - if the filter is empty, return an empty string
+  filter <- endsWith(.$url, suffix)
+  if(!any(filter)) { return("") }
+
+  return((.[filter,]$extension[[1]] %>% filter(url == "text"))$valueString)
+}
+
+fn_get_race <- function(.) { fn_race_ethnicity_helper(., "race")}
+fn_get_ethnicity <- function(.) { fn_race_ethnicity_helper(., "ethnicity")}
+
+# Verify that these work:
+df_patient %>%
+  mutate(
+    race_string = map_chr(resource.extension, fn_get_race),
+    ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
+  ) %>%
+  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string) %>%
+  head(5)
+```
+
+Let's look at some descriptive statistics, starting with gender:
+
+```{r}
+df_patient %>% freq(resource.gender)
+```
+
+
+For race and ethnicity, let's compare the two approaches used above for getting the data into data frames:
+```{r}
+df_patient_unnest %>% freq(race_string)
+```
+
+```{r}
+df_patient_direct %>% freq(race_string)
+```
+
+They should be identical. Let's repeat for ethnicity.
+```{r}
+df_patient_unnest %>% freq(ethnicity_string)
+```
+```{r}
+df_patient_direct %>% freq(ethnicity_string)
+
+```
+
+### 1.2. Patients with a given Condition
+
+In the previous steps we reviewed what is essentially a random set of Patients, just the first set that the server returned when we asked for all Patients. Now let's get more targeted and query for just patients who have a diagnosis of a particular Condition. Then we can use the same process and functions we've already defined to analyze/visualize it.
+
+
+Kids First uses the [Mondo Disease Ontology](https://mondo.monarchinitiative.org/) for describing Conditions. Other servers may use different one or code systems such as [SNOMED-CT](), [ICD-10](), or others. A simple browser for finding Mondo codes by description is available at https://www.ebi.ac.uk/ols/ontologies/mondo . Using this browser, we can look at a few sample codes:
+
+
+| code | description |
+| --- | --- |
+| MONDO:0005015 | diabetes mellitus |
+| MONDO:0005961 | sinusitis |
+| MONDO:0008903 | lung cancer |
+| MONDO:0021640 | grade III glioma |
+
+
+Let's use grade III glioma as our condition of interest, with **MONDO:0021640** as our code of interest going forward.
+
+Following the same pattern as above:
+
+```{r}
+response <- GET_kf('/Patient?_has:Condition:patient:code=MONDO:0021640')
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+df_patient_glioma <- response_list$entry %>%
+  select(
+    fullUrl,
+    "resource.id",
+    "resource.gender",
+    "resource.extension"
+  ) %>%
+  mutate(
+    race_string = map_chr(resource.extension, fn_get_race),
+    ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
+  ) %>%
+  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
+df_patient_glioma %>% head(5)
+```
+
+Let's look at the descriptive statistics for the first 50 glioma patients -- will use the excellent `table1` library this time:
+
+```{r}
+table1(~ resource.gender + race_string + ethnicity_string, data = df_patient_glioma, overall = "Glioma")
+```
+
+
+### 1.3. Patients within a given Research Study
+
+The Kids First portal is comprised of multiple research studies.
+See more at:
+https://portal.kidsfirstdrc.org/studies
+or
+https://www.notion.so/Studies-and-Access-a5d2f55a8b40461eac5bf32d9483e90f
+
+In this exercise we'll explore how to query for patients specifically associated to one of these research studies. Let's pick the "Pediatric Brain Tumor Atlas: CBTTC" as an example, because it has a large number of participants.
+
+
+First let's find the study we are interested in as a ResearchStudy. There are a few possible ways we can do this, for example a search on ResearchStudy.title, but let's list all the ResearchStudies on the server and see what we can find.
+
+```{r}
+response <- GET_kf('/ResearchStudy')
+httr::content(response, as = "text", encoding = "UTF-8") %>% prettify %>% substr(1,3000)
+```
+
+We can also get a single research study of interest:
+```{r}
+response <- GET_kf('/ResearchStudy/76758')
+httr::content(response, as = "text", encoding = "UTF-8") %>% prettify
+```
+
+Get the patients associated with this research study:
+```{r}
+response <- GET_kf('/Patient?_has:ResearchSubject:individual:study=76758')
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+df_patient_peds_brain_tumor_atlas <- response_list$entry %>%
+  select(
+    fullUrl,
+    "resource.id",
+    "resource.gender",
+    "resource.extension"
+  ) %>%
+  mutate(
+    race_string = map_chr(resource.extension, fn_get_race),
+    ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
+  ) %>%
+  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
+table1(~ resource.gender + race_string + ethnicity_string, data = df_patient_peds_brain_tumor_atlas)
+```
+
+If you want to get all the patients associated with the study, you can do the following:
+
+```{r}
+i <- 1
+dfs <- list()
+next_url <- '/Patient?_has:ResearchSubject:individual:study=76758&_count=500'
+while(T) {
+  print(str_interp("Querying URL ${next_url}"))
+  response <- GET_kf(next_url)
+  response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+  dfs[[i]] <- response_list$entry %>%
+    select(
+      fullUrl,
+      "resource.id",
+      "resource.gender",
+      "resource.extension"
+    ) %>%
+    mutate(
+      race_string = map_chr(resource.extension, fn_get_race),
+      ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
+    ) %>%
+    select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
+
+  next_url <- (response_list$link %>% filter(relation == "next"))$url
+  if(is_empty(next_url)) { break }
+  i <- i + 1
+}
+```
+
+Each "page" of results is in a separate data frame, so concatenate these together:
+```{r}
+df_all_patient_peds_brain_tumor_atlas <- bind_rows(dfs)
+table1(~ resource.gender + race_string + ethnicity_string, data = df_all_patient_peds_brain_tumor_atlas)
+```
+
+## 2. Most Frequent Diagnoses
+
+### 2.1. Just the first conditions on the server
+
+As before, let's start with the simplest possible approach of just selecting an unfiltered set of Condition resources.
+```{r}
+response <- GET_kf('/Condition?_count=250')
+httr::content(response, as = "text", encoding = "UTF-8") %>% prettify %>% substr(1,4000)
+```
+```{r}
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+df_condition <- response_list$entry
+df_condition %>% head(5)
+```
+
+Pull the first value of `code.coding.display` out into its own variable for analysis:
+
+```{r}
+df_condition <- df_condition %>%
+  mutate(
+    condition_code_display = map_chr(resource.code.coding, function(.) { .$display })
+  )
+
+df_condition %>%
+        count(condition_code_display, sort = TRUE)
+```
+
+### 2.2. Patients in the Research Study
+
+In the previous steps, we looked at just a random sampling of Conditions: the first 250 that the server happened to return. Now let's return to the Research Study and see how we can query for just those Conditions.
+
+
+```{r}
+# One might expect we can just chain even further, for example:
+# /Condition?subject._has:ResearchSubject:individual:study=76758
+# however that's not going to work here
+# (it seems to hang the entire server for about 2 minutes so we request you not to actually run it)
+
+# Instead, let's combine two search concepts:
+#  - get the Patients by ResearchStudy, as we saw before
+#  - include the Conditions that reference back to each Patient
+
+# EXERCISE: Implement the query to select Patients and Conditions within the ResearchStudy of interest
+# Reminder: the ResearchStudy id = 76758
+response <- GET_kf('/Patient?_has:ResearchSubject:individual:study=76758&_revinclude=Condition:subject')
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+df_condition <- response_list$entry %>%
+  # So now we've done a _revinclude and we have 2 different resourceTypes in our results
+  # Let's filter to just the Conditions
+  filter(
+    resource.resourceType == "Condition"
+  ) %>%
+  select(
+    resource.id,
+    "resource.subject.reference",
+    "resource.code.text",
+    "resource.code.coding"
+  ) %>%
+  # The other method for unnesting data frames works well here
+  unnest(cols = c(resource.code.coding))
+
+
+# Note that for some reason `resource.code.coding.display` is not populated here - use `resource.code.text` instead
+df_condition %>% count(resource.code.text, sort = T)
+```
+
+## 3. Age at Diagnosis
+
+Next let's see how we can recreate the Age at Diagnosis
+To calculate age at diagnosis, we need two pieces of information:
+ - Date of Birth
+ - Date of Diagnosis
+However in order to de-identify the data, Kids First has removed date of birth information from Patient resources. Instead they use relative dates via an extension.
+
+In FHIR these may be captured in different resources that we may need to cross-reference:
+
+- Patient.birthDate
+- Condition.onset[x]
+- Condition.recordedDate
+
+Let's take a look at how the Kids First server represents these important concepts
+
+### 3.1. Patients with a given Condition
+
+```{r}
+response <- GET_kf('/Patient?_has:ResearchSubject:individual:study=76758')
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+df_patient_peds_brain_tumor_atlas <- response_list$entry %>%
+  select(
+    fullUrl,
+    "resource.id",
+    "resource.gender",
+    "resource.extension"
+  ) %>%
+  mutate(
+    race_string = map_chr(resource.extension, fn_get_race),
+    ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
+  ) %>%
+  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
+table1(~ resource.gender + race_string + ethnicity_string, data = df_patient_peds_brain_tumor_atlas)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
