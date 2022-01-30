@@ -116,11 +116,6 @@ response_list$rest$resource[[1]] %>%
   select(type, searchParam)
 ```
 
-
-```{r}
-df_resource l
-```
-
 ### Querying the Server
 
 The FHIR Spec has a nice summary cheat sheet which is helpful for crafting queries and understanding the resources they return.
@@ -129,7 +124,7 @@ The FHIR Spec has a nice summary cheat sheet which is helpful for crafting queri
 
 (Source: <https://www.hl7.org/fhir/http.html#summary>)
 
-Now that we know a little bit about the server, let's query for all the patients. Again, there are two different approaches to doing this: using the `fhircrackr` library, or directly queryingthe server with `httr`. Let's see the `httr` approach first:
+Now that we know a little bit about the server, let's query for all the patients. Again, there are two different approaches to doing this: using the `fhircrackr` library, or directly querying the server with `httr`. Let's see the `httr` approach first:
 
 ```{r}
 response <- httr::GET(
@@ -142,6 +137,19 @@ response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8
 
 response_list$entry
 ```
+
+It may be helpful to look at the raw JSON for a specific patient, which you can do like this:
+
+```{r}
+response <- httr::GET(
+        url = str_interp("${fhir_server}/Patient/smart-1032702"),
+        config = list(add_headers( Accept = 'application/json'))
+)
+
+# Look at raw JSON
+httr::content(response, as = "text", encoding = "UTF-8") %>% prettify()
+```
+
 
 You'll notice that this data frame contains nested data frames, which makes it more difficult to work with than we want. While this can be resolved by manipulating the data frames with R, using the `fhircrackr` package from Exercise 0 circumvents this complexity.
 
@@ -159,6 +167,27 @@ To make the same query as above with `fhircrackr`, run the following:
 request <- fhir_url(url = fhir_server, resource = "Patient")
 patient_bundle <- fhir_search(request = request)
 
+```
+
+Next we need to define the table description for `fhircrackr` to convert from the FHIR resources into data frames. Note that `fhircrackr` requests XML responses rather than JSON from the server. To understand the structure of the XML, let's look at the second resource returned by the server (the first one is missing some data that the others have):
+
+```{r}
+xml2::xml_find_first(x = patient_bundle[[1]], xpath = "./entry[2]/resource") %>% 
+  paste0 %>% 
+  cat
+```
+
+You can also just print the structure, which can help when constructing XPath queries:
+
+```{r}
+xml2::xml_structure(
+  xml2::xml_find_first(x = patient_bundle[[1]], xpath = "./entry[2]/resource")
+)
+```
+
+
+```{r}
+
 # Identify which elements of the FHIR resource we want to capture in our data frame - see Exercise 0 for details
 table_desc_patient <- fhir_table_description(
   resource = "Patient",
@@ -169,7 +198,8 @@ table_desc_patient <- fhir_table_description(
     family_name   = "name/family",
     gender        = "gender",
     birthday      = "birthDate",
-    maritalStatus = "maritalStatus/coding[1]/code",
+    maritalStatus = "maritalStatus/coding[1]/code", # Note that marital status is not in the example we printed above - but you can see it may be availalbe
+                                                    # by looking at the FHIR spec: https://www.hl7.org/fhir/R4/patient.html
     maritalStatusDisplay = "maritalStatus/coding[1]/display"
   )
 
@@ -426,7 +456,7 @@ response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8
 
 response_list$results$mechanism_of_action %>% paste %>% cat
 ```
-```{r}
+
 ## Learning Objectives and Key Concepts
 
 As a recap, this this exercise you learned how to:
@@ -437,4 +467,3 @@ As a recap, this this exercise you learned how to:
 * Understanding FHIR Resources to find data of interest
 * Exploring MedicationRequest
 * Integrate other, non-FHIR based APIs
-```
