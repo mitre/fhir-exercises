@@ -1,0 +1,262 @@
+---
+title: "Exercise 3 (R version)"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Learning Objectives and Key Concepts
+
+In this exercise, you will
+
+- Apply Knowledge from Exercises 0, 1, and 2
+- Attempt to complete each activity on your own individually
+- Query active Prescriptions in our Patient cohort
+- Understand the (non-FHIR) Drug-on-Drug Interaction API and learn how to query it
+- Combine the FHIR data with the non-FHIR API to determine Drug-on-Drug Interactions.
+
+## Drug on Drug Interactions
+
+For this exercise we will explore potential drug on drug interactions in a sizable patient cohort stored in FHIR combined with drug interaction data from the NIH's Drug RxNAV database.
+
+## Motivation/Purpose
+
+From a research persective we can envision leveraging these sorts of analyses to do post-market surveillance of drugs to determine both the rate of known adverse events among patients, as well as to potentially flag additional risks not yet identified.
+
+From a clinical perspective, this exercise demonstrates the power of SMART-on-FHIR applications, where third-party data (in this case Drug on Drug interaction data), can be pulled in, paired with FHIR formatted clinical data, and then leveraged to better inform patient care in the form of Clinical Decision Support tools.
+
+This exercise does NOT build a SMART-on-FHIR application, but gives you a sense of the type of applications you could build.
+
+## Initial setup
+
+```{r setup}
+library(fhircrackr)
+library(tidyverse)
+library(skimr)
+library(summarytools)
+
+# Used for direct RESTful queries against the FHIR server
+library(httr)
+library(jsonlite)
+
+library(lubridate) # Datetime manipulation
+
+# Visualizations
+library(ggthemes)
+theme_set(ggthemes::theme_economist_white())
+```
+
+## Environment configuration
+
+```{r}
+fhir_server <- "https://api.logicahealth.org/researchonfhir/open"
+```
+
+## Step 1: Query all active prescriptions in our patient cohort
+
+For this exercise we will call on the 'MedicationRequest' resource which is the closest equivalent to a prescription resource in FHIR.
+
+Each item in this resource is effectively a single prescription, such that you have a many-to-one relationship of prescriptions to patients.
+
+(This fact will be critical for our exercise, as determining a potential drug on drug interaction will require effectively grouping medication request resources by patient, to determine if the patient is on multiple concurrent prescriptions. We will therefore want to make sure we can include the relevant patient information to ensure we can map multiple prescriptions to individual patients.)
+
+
+
+```{r}
+request <- fhir_url(url = fhir_server, resource = "MedicationRequest")
+medication_request_bundle <- fhir_search(request = request)
+```
+
+View the structure of the first entry in the bundle to help with designing the table description for `fhircrackr`:
+
+```{r}
+xml2::xml_structure(
+  xml2::xml_find_first(x = medication_request_bundle[[1]], xpath = "./entry[1]/resource")
+)
+```
+
+```{r}
+# Identify which elements of the FHIR resource we want to capture in our data frame - see Exercise 0 for details
+table_desc_medication_request <- fhir_table_description(
+  resource = "MedicationRequest",
+  
+  cols = c(
+    medication_request_id = "id",
+    subject.reference = "subject/reference",
+    active = "status",
+    rxcode = "medicationCodeableConcept/coding/code"
+  )
+  
+)
+
+# Convert to R data frame
+df_medication_requests <- fhir_crack(bundles = medication_request_bundle, design = table_desc_medication_request, verbose = 0)
+
+df_medication_requests
+```
+
+So we now have a basic datafame with drug and patient information. Before we can begin trying to construct a parser, we need to examine our Drug Interaction API to see how data is submitted and returned.
+
+## Step 2: Understanding the Drug API and using that API with FHIR data
+
+Reviewing the NIH's RX Norm database documentation. Link here: https://lhncbc.nlm.nih.gov/RxNav/APIs/index.html
+
+We see one clear option we have to use is the RX CUI code using the six-digit NDC code
+https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxNorm.getNDCs.html
+
+This correlates with our Patient data column: `resource.medicationCodeableConcept.coding.codes` (quite a mouthful! But we'll deal with that shortly).
+
+Let's pull two sample interactions using the following general notation:
+
+    URL/list.json?rxcuis=[code 1]+[code 2]
+
+- The URL is: `https://rxnav.nlm.nih.gov/REST/interaction/`
+
+Two combinations we can try are:
+ - 207106 and 656659
+ - 762675 and 859258
+
+```{r}
+response <- httr::GET(
+        url = str_interp("https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=207106+656659"),
+        config = list(add_headers( Accept = 'application/json'))
+)
+
+# Look at raw JSON
+httr::content(response, as = "text", encoding = "UTF-8") %>% prettify()
+```
+
+```{r}
+response <- httr::GET(
+        url = str_interp("https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=762675+859258"),
+        config = list(add_headers( Accept = 'application/json'))
+)
+
+# Look at raw JSON
+httr::content(response, as = "text", encoding = "UTF-8") %>% prettify()
+```
+
+If there is an interaction, the `fullInteractionTypeGroup` element is set at the top level of the JSON response. This can be detected like so:
+
+```{r}
+response <- httr::GET(
+        url = str_interp("https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=207106+656659"),
+        config = list(add_headers( Accept = 'application/json'))
+)
+
+
+
+# Convert from raw `httr` response into an R list for easier access
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+
+response_list[["fullInteractionTypeGroup"]] %>% length > 0
+```
+
+```{r}
+response <- httr::GET(
+        url = str_interp("https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=762675+859258"),
+        config = list(add_headers( Accept = 'application/json'))
+)
+
+
+
+# Convert from raw `httr` response into an R list for easier access
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+
+response_list[["fullInteractionTypeGroup"]] %>% length > 0
+```
+
+Feel free to experiment with additional drug combinations, including 3 or more drugs to see how the information varies.
+
+Taking stock, we have successfully accessed the Drug API, and hopefully now have an understanding of what the API returns when there is a drug interaction versus when there isn't.
+
+We now have important information informing our next steps.
+
+First, we have a structured target to work toward for submitting our patient data to the Drug API. For each patient, we will need to compile a list of RXCUI codes of the prescriptions they are on, and then append them to our API query with a `+` between each code. For our next step we'll go about constructing that!
+
+Second, we have an understanding of how the Drug API returns a known interaction, versus how it returns when there isn't one. We can begin to consider how the format of this data can be used to indicate - in bulk - the presence or absence of a reaction.
+
+## Step 3: Check drug/drug interactions for all patients
+
+The [API documentation](https://lhncbc.nlm.nih.gov/RxNav/APIs/api-Interaction.findInteractionsFromList.html) for the drug/drug interaction endpoint we are using indicates that a maximum of 50 drugs can be assessed at once for interactions.
+
+If we want to submit all the drugs each patient in our dataset is actively taking, we first need to make sure that none have more than 50 active drugs:
+```{r}
+df_medication_requests %>%
+  filter(active == "active") %>% # Active drugs only
+  distinct(subject.reference, rxcode) %>% # Remove any duplicates
+  count(subject.reference) %>% # Count the number of drugs for each patient
+  arrange(-n) # Sort in descending order
+```
+
+The most active drugs per patient we have is 21, so we can safely make one API call for each patient.
+
+Let's define a custom function to identify if there are drug/drug interactions using the API:
+
+```{r}
+fn_get_drug_drug_interaction <- function(rxcodes) {
+  str_interp("Getting interactions for ${rxcodes}\n") %>% cat
+  response <- httr::GET(
+    url = str_interp("https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${rxcodes}"),
+    config = list(add_headers( Accept = 'application/json'))
+  )
+
+  # Convert from raw `httr` response into an R list for easier access
+  response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+
+  return(response_list[["fullInteractionTypeGroup"]] %>% length > 0)
+}
+fn_get_drug_drug_interaction <- Vectorize(fn_get_drug_drug_interaction) # Makes this work with `mutate` in dplyr
+
+# Test to make sure it works
+fn_get_drug_drug_interaction("207106+656659") %>% cat
+paste("\n\n") %>% cat
+fn_get_drug_drug_interaction("762675+859258") %>% cat
+```
+
+Now if we reshape the `df_medication_requests` data frame from long to wide, and concatenate all the RXNorm codes (separated with a `+`), we can then run this function on each row to identify the patients with drug/drug interactions.
+
+```{r}
+df <- df_medication_requests %>% 
+  filter(active == "active") %>% 
+  select(subject.reference, rxcode) %>% 
+  group_by(subject.reference) %>% 
+  summarize(
+    rxcodes = str_c(rxcode, collapse = "+"),
+    total_rx = sum(!is.na(rxcode))
+  )
+df %>% glimpse
+```
+
+Try with just two rows to make sure it works:
+
+```{r}
+df %>% 
+  filter(total_rx >= 2) %>% 
+  head(2) %>% 
+  mutate(
+    possible_interaction = fn_get_drug_drug_interaction(rxcodes)
+  )
+```
+
+Now run for the whole DataFrame -- this make take a minute.
+
+```{r}
+df <- df %>% 
+  filter(total_rx >= 2) %>% 
+  mutate(
+    possible_interaction = fn_get_drug_drug_interaction(rxcodes)
+  )
+```
+
+Total number of drug/drug interactions in the cohort for patients with at least 2 active drugs:
+
+```{r}
+df %>% freq(possible_interaction)
+```
+
+As a bonus consider some additional information you can output, such as keeping a running count of total interactions, or specific details about the interaction types.
+
+## Summary
+
+This exercise demonstrates how FHIR data can interact with the broader ecosystem of healthcare data and resources to determine additional health care insights. Here we pulled data from multiple resources into a unified dataframe, and then modified how the data was stored in order to pass it through to a third-party API and determine health outcomes.
