@@ -1,13 +1,13 @@
 ---
-title: "FHIR for Research - Exercise 0 (R)"
+title: "FHIR for Research - Exercise 0: Getting Started (R version)"
 output:
   html_document:
     df_print: paged
 ---
 
-## Exercise 0 - Getting Started
-### Motivation / Purpose
-#### Exercise Objective: Introduce you to the basic mechanisms for working with FHIR
+## Learning Objectives
+
+The objective for this exercise is **to introduce you to the basic mechanisms for working with FHIR.**
 
 For this exercise, we will walk you through the following steps:
 

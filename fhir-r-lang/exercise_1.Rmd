@@ -1,5 +1,5 @@
 ---
-title: "Exercise 1: Patients Prescribed Opioids (R version)"
+title: "FHIR for Research - Exercise 1: Patients Prescribed Opioids (R version)"
 output:
   html_document:
     df_print: paged
@@ -79,12 +79,6 @@ cs$Resources
 #### Manually querying the FHIR server (without `fhircrackr`)
 
 You can also do this directly with the `httr` library to manually make the HTTP request and load the results into R, but this takes some extra work:
-
-```{r}
-str_c("FHIR Version Supported: ", cs$Meta$fhirVersion, "\n") %>% cat
-str_c("Formats Supported: ", cs$Meta$format, "\n") %>% cat
-str_c("FHIR Resources Supported: ", cs$Resources$type %>% length, "\n") %>% cat
-```
 
 ```{r}
 response <- httr::GET(

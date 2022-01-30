@@ -1,5 +1,5 @@
 ---
-title: "Exercise 3 (R version)"
+title: "FHIR for Research - Exercise 3: Drug on Drug Interactions (R version)"
 output:
   html_document:
     df_print: paged
