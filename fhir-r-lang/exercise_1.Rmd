@@ -1,13 +1,27 @@
 ---
-title: "FHIR for Research - Exercise 1 (R)"
+title: "Exercise 1: Patients Prescribed Opioids (R version)"
 output:
   html_document:
     df_print: paged
 ---
 
+## Learning Objectives and Key Concepts
+
+Workshop attendees will learn how to:
+* Query a FHIR Server to learn about its capabilities
+* How to read FHIR specifications and understand how it applies to FHIR interactions and data
+* Search for resources of various types and parse the results to find information of interest
+* Process paginated responses
+* Understanding FHIR Resources to find data of interest
+* Exploring MedicationRequest
+* Integrate other, non-FHIR based APIs
+
+## Icons in this Guide
+📘A link to a useful external reference related to the section the icon appears in
+
 ## Introduction
 
-This notebook explores a FHIR server with a RESTful API which contains data with patients currently prescribed opioids.
+This notebook explores a FHIR server with a RESTful API which contains data with patients currently prescribed opioids. We'll explore the FHIR Server to learn about its capabilities, query for FHIR resources, and generate some basic visualizations from the data.
 
 ## Initial setup
 
@@ -42,61 +56,69 @@ All servers are required to support the `capabilities` interaction which documen
 
 📘[Read more about the capabilities interaction](https://www.hl7.org/fhir/http.html#capabilities)
 
-In Exercise 0, we used `fhircrackr` to pull data from the FHIR server into R. This works well for FHIR queries that return an instance of the [Bundle resource](http://www.hl7.org/fhir/bundle.html) (which is how FHIR servers package the responses to many queries). However, `GET [base]/metadata` returns an instance of [CapabilityStatement](http://hl7.org/fhir/capabilitystatement.html) so `fhircrackr` can't read it.
+`fhircrackr` provides an easy way to query this endpoing and load the results into R:
 
-Instead, we can use the same approach used in the Python to directly query the FHIR server's RESTful interface and get a JSON response:
+```{r}
+cs <- fhir_capability_statement(fhir_server)
+```
+
+The CapabilityStatement is usually a very large resource so we'll focus on a few key elements. Namely, the FHIR version supported, the Resource formats supported, the number of RESTful Endpoints, and the endpoint types.
+
+```{r}
+str_c("FHIR Version Supported: ", cs$Meta$fhirVersion, "\n") %>% cat
+str_c("Formats Supported: ", cs$Meta$format, "\n") %>% cat
+str_c("FHIR Resources Supported: ", cs$Resources$type %>% length, "\n") %>% cat
+```
+
+We can also see the details of the types of FHIR Resources available on this endpoint and the supported operations. Keep in mind that there might not be any data available for a particular FHIR resource even if the server supports that type.
+
+```{r}
+cs$Resources
+```
+
+#### Manually querying the FHIR server (without `fhircrackr`)
+
+You can also do this directly with the `httr` library to manually make the HTTP request and load the results into R, but this takes some extra work:
+
+```{r}
+str_c("FHIR Version Supported: ", cs$Meta$fhirVersion, "\n") %>% cat
+str_c("Formats Supported: ", cs$Meta$format, "\n") %>% cat
+str_c("FHIR Resources Supported: ", cs$Resources$type %>% length, "\n") %>% cat
+```
 
 ```{r}
 response <- httr::GET(
         url = str_interp("${fhir_server}/metadata"),
         config = list(add_headers( Accept = 'application/fhir+json'))
 )
-str_c("HTTP Status Code: ", response$status_code)
-```
 
-The HTTP status code, `200 - OK` indicates a successful response. The CapabilityStatement is usually a very large resource so we'll focus on a few key elements.
-
-```{r}
 # Convert from raw `httr` response into an R list for easier access
 response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
 
-print(str_interp("FHIR Version Supported: ${response_list$fhirVersion}"))
-print(str_interp("Formats Supported: ${paste(response_list$format, collapse = ', ')}"), quote = F)
+str_interp("FHIR Version Supported: ${response_list$fhirVersion}\n") %>% cat
+str_interp("Formats Supported: ${paste(response_list$format, collapse = ', ')}\n") %>% cat
 
-print(str_interp("Number of RESTful Endpoints: ${dim(response_list$rest)[1]}"))
+str_interp("Supported FHIR resource types: ${response_list$rest$resource[[1]] %>% select(type) %>% nrow}\n") %>% cat
+
+# Interactions by resource
+response_list$rest$resource[[1]] %>%
+  mutate(
+    interaction = paste(interaction[[1]]$code, collapse = ", ")
+  ) %>%
+  select(type, interaction)
 ```
-Endpoint type:
 ```{r}
-response_list$rest %>% select(mode)
-```
-
-There is only a single server RESTful endpoint. We can also see the types of FHIR Resources available on this endpoint and the supported operations. Keep in mind that there might not be any data available for a particular FHIR resource even if the server supports that type.
-
-Supported resources:
-
-```{r}
-df_resource <- response_list$rest$resource[[1]]
-df_resource %>% select(type)
-```
-
-Interactions supported by Resource:
-
-```{r}
-df_resource %>%
-        mutate(
-                interaction = paste(interaction[[1]]$code, collapse = ", ")
-        ) %>%
-        select(type, interaction)
+# Searches by resource type
+response_list$rest$resource[[1]] %>%
+  mutate(
+    searchParam = paste(searchParam[[1]]$name, collapse = ", ")
+  ) %>%
+  select(type, searchParam)
 ```
 
-Searches supported by Resource:
 
 ```{r}
-df_resource %>%
-        mutate(
-                searchParam = paste(searchParam[[1]]$name, collapse = ", ")
-        ) %>%
-        select(type, searchParam)
+df_resource l
 ```
 
 ### Querying the Server
@@ -107,7 +129,8 @@ The FHIR Spec has a nice summary cheat sheet which is helpful for crafting queri
 
 (Source: <https://www.hl7.org/fhir/http.html#summary>)
 
-Now that we know a little bit about the server, let's query for all the patients.
+Now that we know a little bit about the server, let's query for all the patients. Again, there are two different approaches to doing this: using the `fhircrackr` library, or directly queryingthe server with `httr`. Let's see the `httr` approach first:
+
 ```{r}
 response <- httr::GET(
   url = str_interp("${fhir_server}/Patient"),
@@ -122,7 +145,7 @@ response_list$entry
 
 You'll notice that this data frame contains nested data frames, which makes it more difficult to work with than we want. While this can be resolved by manipulating the data frames with R, using the `fhircrackr` package from Exercise 0 circumvents this complexity.
 
-It also avoids the following complexity from the Python version of this exercise, as discussed in Exercise 0:
+It also avoids some complexity around needing to make multiple requests to get multiple "pages" of responses from the FHIR server:
 
 > Servers may paginate results when there are too many matches to reasonable return in a single request. Clients can provide a `_count` which suggests to the server how many resources to return in a Bundle. Servers are required to never provide more resources in a single bundle than a client requests with `_count`, but may provide less.
 >
@@ -173,25 +196,29 @@ df_patient %>% skim
 
 ## Patient Demographics
 
-Now that we have all our patients, let's try and analyze their demographics
+Now that we have all our patients, let's try and analyze their demographics.
+
+First lets find the frequency of gender values:
 
 ```{r}
 freq(df_patient, gender)
 ```
 
+Let's also look at the frequency of the marital status codes.
 
 ```{r}
 freq(df_patient, maritalStatus)
 ```
 
-The `M` and `S` codes are a bit cryptic, so let's check them against the display text:
+`M` and `S` codes are a bit cryptic, so let's check them against the display text and create a cross tabulation of the factors.
 
 ```{r}
 ctable(df_patient$maritalStatusDisplay, df_patient$maritalStatus)
 ```
 It looks like there may be some data quality issues with this variable -- why does `maritalStatusDisplay` have both `Never Married` and `S` if those equate to the same code of `S`?
 
-Histogram of patient ages:
+Patient age isn't directly available in the data set, but can be calculated via the patient's birthday.
+
 ```{r}
 df_patient %>%
         mutate(
@@ -204,18 +231,11 @@ df_patient %>%
 
 ```
 
-TODO: not sure what to do with this from the Python version:
-
-```
-identifiers_table = patients_df[['id','identifier']]
-identifiers_table.groupby('id').identifier.apply(lambda x: pd.DataFrame(x.values[0])).reset_index()
-```
-
 ## Querying for Resources
 
 FHIR breaks up health information into chunks of data called Resources which are connected together via references.
 
-In this use case we're interested in patients who've been prescribed opioids. Looking at the [FHIR Patient profile](https://www.hl7.org/fhir/patient.html) we see a few references to things like their primary care provider or people that the organization managing the patient record, but nothing about medications. Luckily, above this profile we see a list of other resources that reference Patient - including [MedicationRequest](https://www.hl7.org/fhir/medicationrequest.html#MedicationRequest). Looking within MedicationRequest we see that `MedicationRequest.subject` identifies the patient the medication is for.
+In this use case we're interested in patients who've been prescribed opioids. Looking at the [FHIR Patient profile](https://www.hl7.org/fhir/patient.html) we see a few references to things like their primary care provider or the organization managing the patient record, but nothing about medications. Luckily, above this profile we see a list of other resources that reference Patient - including [MedicationRequest](https://www.hl7.org/fhir/medicationrequest.html#MedicationRequest). Looking within MedicationRequest we see that `MedicationRequest.subject` identifies the patient the medication is for.
 
 Let's see if we can find the Medications prescribed to the patient with id `10098`. The core FHIR spec doesn't require that any specific searches be supported so it's important to read the documentation and look at the CapabilityStatement of the server being queried to get an idea of the options available. For now we'll look at the core FHIR spec for an idea of search parameters defined in the base spec that servers might implement.
 
@@ -226,14 +246,8 @@ _Note: Specific FHIR Implementation Guides, like US Core, may define their own S
 📘[Read more about FHIR Resource Organization](https://www.hl7.org/fhir/overview-arch.html#organizing)
 
 ```{r}
-# capabilities_df[capabilities_df['Resource']=='MedicationRequest'].explode('Search')[['Resource','Search']]
-
-df_resource %>%
-  mutate(
-    searchParam = paste(searchParam[[1]]$name, collapse = ", ")
-  ) %>%
-  select(type, searchParam) %>%
-  filter(type == "MedicationRequest")
+(cs$Resources %>% filter(type == "MedicationRequest"))$searchParam.name %>%
+  str_replace_all(" \\|\\| ", "\n") %>% cat
 ```
 
 Let's pull in the [MedicationRequest](https://hl7.org/fhir/medicationrequest.html) instances for one patient using the JSON approach -- this gives us an easy way to see which elements are provided by this server. You can also look at the [MedicationRequest spec](https://hl7.org/fhir/medicationrequest.html) to help determine which elements are populated.
@@ -275,9 +289,29 @@ df_meds <- fhir_crack(bundles = medication_request_bundle, design = table_desc_m
 df_meds
 ```
 
-Looks like this patient has been prescribed tramadol hydrocholoride (RXNorm `835603`). What if we want to know the brand name for our research or a SMART-on-FHIR app used by clinicians? Let's see if the RxNorm API can help. This is where we can look to other APIs!
+Looks like this patient has been prescribed tramadol hydrocholoride. FHIR servers can provide terminology services as well so let's `$lookup` some additional details about this code. In particular, let's check to see if the code is Inactive.
 
-Here's an API that might work: <https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html>
+📘[Read more about FHIR Terminology](https://www.hl7.org/fhir/terminology-module.html)
+
+📘[Read more about using RxNorm with FHIR](https://www.hl7.org/fhir/rxnorm.html)
+
+```{r}
+response <- httr::GET(
+  url = str_interp("http://tx.fhir.org/r4/CodeSystem/$lookup?system=http://www.nlm.nih.gov/research/umls/rxnorm&code=835603"),
+  config = list(add_headers( Accept = 'application/fhir+json'))
+)
+
+# Convert from raw `httr` response into an R list for easier access
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+
+response_list$parameter
+```
+
+Here we can see that the code is not inactive.
+
+But what if we want to know something the FHIR Terminology server can't provide like the brand name for our research or a SMART-on-FHIR app used by clinicians? Let's see if the RxNorm API can help. This is where we can look to other APIs!
+
+https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html
 
 Looks like https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxNorm.getAllRelatedInfo.html will have what we need since I know I want the [Brand Name term type](https://www.nlm.nih.gov/research/umls/rxnorm/docs/appendix5.html)
 
@@ -321,7 +355,9 @@ response_list$propConceptGroup$propConcept %>% filter(propName == "SCHEDULE")
 
 Looks like it's Schedule 4. It's even listed as an example on the [FDA Drug Schedule website](https://www.dea.gov/drug-information/drug-scheduling)
 
-What about what this drug treats?
+![](fda_drug_schedule.png)
+
+The RxNorm APIs offer a number of other helpful services which can be used to determine things like relationships to other terminology systems including `Medication Reference Terminology (MED-RT)` for determining what the drug may treat and the `Anatomical Therapeutic Chemical Classification System (ATC)` to get the class of drug.
 
 ```{r}
 response <- httr::GET(
@@ -372,4 +408,33 @@ df_meds %>%
           atc_class = fn_get_atc_class_vectorized(med_code_value)
         ) %>% 
   select(patient, med_code_value, atc_class, everything())
+```
+In Exercise 3 we'll work more with the RxNav APIs to detect drug interactions in a patient.
+
+There's other APIs we could use as well, including FDA APIs where we can retrieve things like adverse event reports or product labels for specific drugs.
+
+https://open.fda.gov/apis/
+
+```{r}
+response <- httr::GET(
+  url = str_interp("https://api.fda.gov/drug/label.json?search=openfda.rxcui.exact=835603"),
+  config = list(add_headers( Accept = 'application/json'))
+)
+
+# Convert from raw `httr` response into an R list for easier access
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+
+response_list$results$mechanism_of_action %>% paste %>% cat
+```
+```{r}
+## Learning Objectives and Key Concepts
+
+As a recap, this this exercise you learned how to:
+* Query a FHIR Server to learn about its capabilities
+* How to read FHIR specifications and understand how it applies to FHIR interactions and data
+* Search for resources of various types and parse the results to find information of interest
+* Process paginated responses
+* Understanding FHIR Resources to find data of interest
+* Exploring MedicationRequest
+* Integrate other, non-FHIR based APIs
 ```
