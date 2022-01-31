@@ -38,7 +38,7 @@ pip install -r requirements.txt
 jupyter-lab
 ```
 
-By default, this should open Jupyter lab at 
+By default, this should open Jupyter lab at http://localhost:8888/lab
 
 ## License
 
