@@ -1,16 +1,60 @@
 ---
-title: "FHIR for Research - Exercise 2 (R)"
+title: "FHIR for Research - Exercise 2: Kids First (R version)"
 output:
   html_document:
     df_print: paged
 ---
+
+## Learning Objectives and Key Concepts
+
+Workshop attendees will learn how to query FHIR resources in various ways, to enable visualizing and analyzing data.
+
+What will participants do as part of the exercise?
+
+ - Connecting to Kids First
+ - Fetching and Examining Demographic Data
+ - Finding a ResearchStudy
+ - Fetching Patients enrolled in a ResearchStudy
+ - Dealing with Extensions (e.g., age of onset)
+ - Identifying Patients with desired diagnosis and data elements across multiple studies/datasets
+ - Utilize APIs to explore the data (e.g., demographics)
+ - Utilize APIs for research analyses (e.g., phenotype analysis)
+ - Building Graphs from FHIR data
+  - Demographics
+  - Most Frequent Diagnoses
+  - Age at Diagnosis
+  - Overall Survival
+
+
+### Icons in this Guide
+📘 A link to a useful external reference related to the section the icon appears in
+
+🖐 A hands-on section where you will code something or interact with the server
+
+## Scenario
+
+In this exercise we're going to explore how to access the data needed to generate the summary information from the Kids First dashboard in a few different ways. A snapshot of the Kids First dashboard is shown below:
+
+![KF Dashboard](img/kf_dashboard.png)
+
+The Kids First Data Portal is accessible at https://portal.kidsfirstdrc.org/explore (login required, though signup is free with any Google account)
+
+For this exercise we'll be focusing on the following 4 graphs:
+ - Demographics
+ - Most frequent diagnoses
+ - Age at diagnosis
+ - Overall survival
+
+(Note that the image shown depicts the statistics for the entire Kids First population, whereas all graphs in this exercise will be based on specific sub-cohorts of the population, so the graphs we generate today will look a little different.)
 
 ## Environment setup
 
 Load needed libraries:
 
 ```{r setup}
-# library(fhircrackr)
+library(fhircrackr)
+source("exercise_2_fhircrackr_patch.R") # Support Kids First cookie
+
 library(tidyverse)
 library(skimr)
 library(summarytools)
@@ -27,263 +71,167 @@ library(ggthemes)
 theme_set(ggthemes::theme_economist_white())
 ```
 
-Kids First uses an [HTTP cookie](https://en.wikipedia.org/wiki/HTTP_cookie) for authentication, which isn't supported by `fhircrackr`. We will therefore use the `httr` + `jsonlite` approach for loading data from the FHIR server into R data frames.
+Kids First uses an [HTTP cookie](https://en.wikipedia.org/wiki/HTTP_cookie) for authentication, which isn't supported natively by `fhircrackr`. The `setup` block above loads a patched version of `fhircrackr` to support this.
 
-```{r}
-fhir_server <- "https://kf-api-fhir-service.kidsfirstdrc.org"
-
-# Kids First uses cookie-based authentication, so we've pre-fetched a cookie and made it available here.
-
-
-# We will also wrap `httr::GET()` with our own function to make using this cookie easier:
-GET_kf <- function(path) {
-  # Flexiblity in case the hostname is included
-  path <- str_replace(path, fhir_server, "")
-  return(
-          httr::GET(
-                  url = str_interp("${fhir_server}${path}"),
-                  # Uncomment if you need to troubleshoot
-                  # verbose(data_out=T, data_in=T, info=T, ssl=T),
-
-                  # Tell the sever that you want the JSON-format response
-                  add_headers( Accept = 'application/fhir+json'),
-
-                  # `set_cookies()` should work, but it URL-encodes the cookie, which causes the cookie to not work
-                  # set_cookies('AWSELBAuthSessionCookie-0' = str_trim(read_file("kf_cookie.txt")))
-                  # The line below is what `set_cookies()` is doing under the hood, but without the URL encoding.
-                  httr::config(cookie = paste0("AWSELBAuthSessionCookie-0=", str_trim(read_file("kf_cookie.txt"))))
-          )
-  )
-}
-```
 
 ## 1. Demographics
 
-First, let's show how to review basic demographic information for a patient cohort. There are a few ways we can do this.
+Our first step will be show how to review basic demographic information for a patient cohort. Let's explore a few approaches for constructing a patient cohort.
 
 ### 1.1. Just the first N patients on the server
 
 For the simplest example, let's just query for the first set of Patients on the server and see what that looks like.
 
-(Note that there are over 10,000 Patient resources on this server, so we don't want to query them all or follow all the pagination. For performance reasons, all the examples in this notebook are intended to run with only a single page of results.)
+🖐 Knowledge Check: Fill in the query to select Patients on the server.
+
+(Note that there are over 10,000 Patient resources on this server, so we don't want to query them all or follow all the pagination. For performance reasons, all the examples in this notebook are intended to run with only a single page of results, but in a real-world use case, you would want to follow the pagination as shown in the previous exercise, to make sure you fetched all the requested data for a given query.)
 
 ```{r}
-response <- GET_kf('/Patient')
-response
+fhir_server <- "https://kf-api-fhir-service.kidsfirstdrc.org"
+request <- fhir_url(url = fhir_server, resource = "Patient", )
+patient_bundle <- fhir_search(request = request, max_bundles = 10)
 ```
 
-Show the raw JSON from the response:
+(Note: if you get an error then the cookie you are using expired - let the instructors know ASAP so they can fetch a new one, or [see these instructions to fetch a cookie](https://github.com/kids-first/kf-api-fhir-service#authenticate-to-access-server-environment) and put it into the kf_cookie.txt file, then reload the Environment Setup step above.)
 
+Let's filter the bundle down to just the first Patient resource to see what it contains:
 ```{r}
-httr::content(response, as = "text", encoding = "UTF-8") %>% prettify %>% substr(1,3000)
+xml2::xml_find_first(x = patient_bundle[[1]], xpath = "./entry[1]/resource") %>% 
+  paste0 %>% 
+  cat
 ```
 
-We can see the key data items we are looking for in there - gender, race, and ethnicity. (Race and ethnicity may be shown as "Not Reported" unfortunately, but we can see where they would fit)
+Looking at this XML, it appears to contain the data to construct a data frame of patients with some basic demographics:
 
-Let's convert the list of Patients to a data frame and translate columns as appropriate.
+|`id`|`gender`|`race`|`ethnicity`|
+|-|-|-|
+|103070|male|Not Reported|Not Reported|
+|...|...|...|...|
 
-```{r}
-response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+Gender is relatively easy to extract, but race and Ethnicity are a little tricker to extract because they are recorded as _extensions_. Extensions are used to represent information that is not part of the basic definition of a resource.
 
-# The data frame with the patients is in the `entry` item in `response_list`:
-df_patient <- response_list$entry
+Every element in a resource or data type includes an optional "extension" child element that may be present any number of times. Extensions contain a defining `url` and either a `value[x]` or sub-extensions (but not both).
 
-df_patient %>% head
+This also leads into choice types, ie, that `value[x]`. Choice types allow for different instances to use different data types as appropriate. Only one of the choices is allowed at a time on a given resource instance.
+
+A simple example of choice types is the `Patient.deceased[x]` field indicating if the individual is deceased or not. `deceased[x]` is allowed to be either a `boolean` or `dateTime`.
+
+
+Note that extensions are also allowed on primitive types, so in JSON these are represented by prepending the field name with an underscore `_` to create a new object-type field where the extension field can be added. The following example demonstrates the "birthTime" extension on the `Patient.birthDate` field:
+
+**TODO:** Convert this to XML? Why is `_birthDate` missing from the XML above?
+
+```
+{
+    "resourceType": "Patient",
+    ...
+    "birthDate": "1987-06-05",
+    "_birthDate": {
+        "extension": [
+            {
+                "url": "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+                "valueDateTime": "1987-06-05T04:32:01Z"
+            }
+        ]
+    }
+}
 ```
 
-List the columns in the data frame for reference:
-```{r}
-df_patient %>% colnames
-```
+We'll see more instances like this later in the exercise.
 
-Subset to the columns we need, and extract the data from nested data frames as needed:
+📘[Read more about Extensions in FHIR](https://www.hl7.org/fhir/extensibility.html)
+
+
+Getting back to Race and Ethnicity, these extensions are defined within [US Core](https://www.hl7.org/fhir/us/core/) which is an implementation guide that defines the base set of requirements for FHIR implementation in the US and reflects the ONC U.S. Core Data for Interoperability required data fields. Further details about US Core are outside the scope of this exercise, but for now understand that nearly all FHIR data within the US will use US Core.
+
+Both the Race and Ethnicity extension use subextensions to represent the concept in 3 possible ways:
+ - OMB Category, based on the (https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf)
+ - `url` is "ombCategory"
+ - `valueCoding` from the [OMB Race Categories ValueSet](https://hl7.org/fhir/us/core/STU4/ValueSet-omb-race-category.html) or [OMB Ethnicity Categories ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-omb-ethnicity-category.html)
+ - Detailed, based on CDC Race and Ethnicity codes
+- `url` is "detailed"
+- `valueCoding` from the [Detailed race ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-detailed-race.html) or [Detailed ethnicity ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-detailed-ethnicity.html)
+ - Text, free text (required)
+- `url` is "text"
+- `valueString` is free text
+
+📘[Read more about the US Core Race Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-race.html)
+
+📘[Read more about the US Core Ethnicity Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-ethnicity.html)
+
+----
+
+Now, let's convert the FHIR resource a data frame using the same technique from Exercise 1:
 
 ```{r}
-df_patient <- df_patient %>%
-        select(
-          fullUrl,
-          "resource.id",
-          "resource.gender",
-          "resource.extension"
+
+# Identify which elements of the FHIR resource we want to capture in our data frame - see Exercise 0 for details
+table_desc_patient <- fhir_table_description(
+        resource = "Patient",
+
+        cols = c(
+                id            = "id",
+                gender        = "gender",
+                race_string = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]/extension[@url=\"text\"]/valueString",
+                race_coding_display = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]/extension[@url=\"text\"]/valueCoding/display",
+                race_coding_code = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]/extension[@url=\"text\"]/valueCoding/code",
+                ethnicity_string = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]/extension[@url=\"text\"]/valueString",
+                ethnicity_coding_display = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]/extension[@url=\"text\"]/valueCoding/display",
+                ethnicity_coding_code = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]/extension[@url=\"text\"]/valueCoding/code"
         )
-```
 
-To extract the race and ethnicity from the extension, we need to traverse the nested data frames. First we need to understand the structure, so we will look at the `resource.extension` cell for the first row (i.e., first patient):
-```{r}
-df_patient[1,]$resource.extension %>% str
-```
-
-This shows us we have the following hierarchy for each `resource.extension` cell:
-
-- List of 1 item
-  - Data frame with two columns (`url` and `extension`), and two rows (one for race, one for ethnicity)
-      - Each cell of the `url` column is a string with the URI of the extension. We'll look at the contents of this below
-      - Each cell of the `extension` column is a list of data frames, each with with multiple columns including `url` and `valueString`
-          - `url` indicates the type of `valueString`
-          - `valueString` is the reported value for race or ethnicity
-          - Other columns like `valueCoding.display` may be populated if a terminology is used
-
-To get race and ethnicity into separate columns as strings, we need to identify which row of the `resource.extension` sub-data frame corresponds to each, and then pull out `valueString` (or `valueCoding.display').
-
-To do this, we can use `endsWith` to look at the end of the `resource.extension[[1]]$url` value, which is either `race` or `ethnicity`. Let's look at a few different patients to see how this can change for `race`:
-```{r}
-df_patient[1,]$resource.extension[[1]] %>% filter(endsWith(url, "race")) %>% str
-```
-
-```{r}
-df_patient[2,]$resource.extension[[1]] %>% filter(endsWith(url, "race")) %>% str
-```
-
-```{r}
-df_patient[3,]$resource.extension[[1]] %>% filter(endsWith(url, "race")) %>% str
-```
-
-There are two ways to pull the data into a flat, "tidy" data frame: `unnest` and manually extracting the nested objects.
-
-The `unnest` approach creates a "long" data frame (with one row for each patient × extension type (race and ethnicity in this case) × extension values (e.g., the `text` version and the `ombCategory` version of race). This can be reshaped into a "wide" data frame for analysis with a little manipulation
-```{r}
-# Put the results of `unnest` into a temporary data frame so we can inspect it.
-tmp <- df_patient %>%
-  # Unnesting the two layers of nested objects
-  unnest("resource.extension") %>%
-  unnest("extension", names_repair = "unique")
-
-tmp
-```
-
-Finish processing:
-
-```{r}
-df_patient_unnest <- tmp %>%
-  # We can see that `tmp` has `url...4` and `url...5`, which should be renamed to keep the code clear
-  rename(
-    "extension_url" = "url...4",
-    "extension_value_type" = "url...5"
-  ) %>%
-  mutate(
-    # Recode extension_url for later reshaping
-    extension_url = case_when(
-      endsWith(extension_url, "race") ~ "race",
-      endsWith(extension_url, "ethnicity") ~ "ethnicity",
-      T ~ ""
-    )
-  ) %>%
-  # Collapse the multiple rows-per-patient down into one row per patient, with new columns for race/ethnicity
-  pivot_wider(
-    id_cols = c(fullUrl, resource.id, resource.gender),
-    names_from = c(extension_url, extension_value_type),
-    values_from = starts_with("value")
-  ) %>%
-  # Clean up the auto-generated column names from `pivot_wider`
-  rename(
-    "race_string" = "valueString_race_text",
-    "ethnicity_string" = "valueString_ethnicity_text",
-    "race_omb_code" = "valueCoding.code_race_ombCategory",
-    "ethnicity_omb_code" = "valueCoding.code_ethnicity_ombCategory",
-    "race_omb_display" = "valueCoding.display_race_ombCategory",
-    "ethnicity_omb_display" = "valueCoding.display_ethnicity_ombCategory",
-  ) %>%
-  # Remove unneded columns
-  select(fullUrl, resource.id, resource.gender, starts_with("race"), starts_with("ethnicity"))
-
-df_patient_unnest %>% head(5)
-```
-
-The other approach is to directly extract the nested objects.
-
-To see how this might work, let's first extract race for just one patient:
-
-```{r}
-# Pick an arbitrary patient row to work with
-patient_row_number <- 2
-
-# Create a filter of the nested `extensions` data frame for just the race extension
-filter_for_race_extension <- endsWith(
-  df_patient[patient_row_number,]$resource.extension[[1]]$url,
-  "race"
 )
 
-race_string <- (
-  df_patient[patient_row_number,]
-    $resource.extension[[1]][filter_for_race_extension,] # Apply filter we created above
-    $extension[[1]] %>% # Look at the 2nd-level nested data frame that has the extension values in it
-    filter(url == "text") # Filter down to just the `text` value (https://hl7.org/fhir/us/core/StructureDefinition-us-core-race-definitions.html#Extension.extension:text)
-)$valueString # Get the contents of `valueString`, which is where the value of the `text` component of race is stored
+# Convert to R data frame
+df_patient <- fhir_crack(bundles = patient_bundle, design = table_desc_patient, verbose = 0)
 
-race_string
+df_patient
 ```
 
-Now we can use `dplyr` to apply this approach to all the rows in the table.
+In this case, it appears that `valueCode` is not used in the data for race or ethnicity, so we can rely on `valueString` (which appears in the `race_string` and `ethnicity_string` columns).
+
+
+Let's look at some descriptive statistics:
 
 ```{r}
-df_patient_direct <- df_patient %>%
-  mutate(
-    # See https://www.r-bloggers.com/2018/09/using-purrrs-map-family-functions-in-dplyrmutate/ for some context on using `map` in `mutate`
-    race_string = map_chr( # Apply a function to each row, only returning vector of "chr" type
-      # Note that if you use `map` rather than `map_chr`, you get a list of chr, rather than just a vector of chr
-      resource.extension, # Argument that is passed to the anonymous function below
-      function(.) { # Anonymous function with one argument (`.`), which will always be `resource.extension` in this case
-        (.[endsWith(.$url, "race"),]$extension[[1]] %>% # Same approach as above - note you don't need [[1]] for `resource.extension` as `map_chr` takes care of this
-           filter(url == "text"))$valueString
-        }
-      ),
-    
-    # Repeat this pattern for `ethnicity_string`
-    ethnicity_string = map_chr(resource.extension, function(.) { (.[endsWith(.$url, "ethnicity"),]$extension[[1]] %>% filter(url == "text"))$valueString })
-  ) %>% 
-  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
-
-df_patient_direct %>% head(5)
-```
-
-We can generalize the function for getting race and ethnicity from instances of Patient returned by this server if we're going to be doing this a lot:
-
-```{r}
-fn_race_ethnicity_helper <- function(., suffix) {
-  # Add some error handling in case the extension isn't provided - if the filter is empty, return an empty string
-  filter <- endsWith(.$url, suffix)
-  if(!any(filter)) { return("") }
-
-  return((.[filter,]$extension[[1]] %>% filter(url == "text"))$valueString)
-}
-
-fn_get_race <- function(.) { fn_race_ethnicity_helper(., "race")}
-fn_get_ethnicity <- function(.) { fn_race_ethnicity_helper(., "ethnicity")}
-
-# Verify that these work:
-df_patient %>%
-  mutate(
-    race_string = map_chr(resource.extension, fn_get_race),
-    ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
-  ) %>%
-  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string) %>%
-  head(5)
-```
-
-Let's look at some descriptive statistics, starting with gender:
-
-```{r}
-df_patient %>% freq(resource.gender)
-```
-
-
-For race and ethnicity, let's compare the two approaches used above for getting the data into data frames:
-```{r}
-df_patient_unnest %>% freq(race_string)
+df_patient %>% freq(gender)
 ```
 
 ```{r}
-df_patient_direct %>% freq(race_string)
+df_patient %>% freq(race_string)
 ```
 
-They should be identical. Let's repeat for ethnicity.
-```{r}
-df_patient_unnest %>% freq(ethnicity_string)
-```
-```{r}
-df_patient_direct %>% freq(ethnicity_string)
 
+```{r}
+df_patient %>% freq(ethnicity_string)
 ```
+
+This data frame can also easily produce charts:
+
+```{r}
+ggplot(df_patient, aes(x="", y=factor(1), fill=gender)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  theme_void() +
+  scale_fill_brewer(palette="Blues")
+```
+
+```{r}
+ggplot(df_patient, aes(x="", y=factor(1), fill=race_string)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  theme_void() +
+  scale_fill_brewer(palette="Blues")
+```
+
+```{r}
+ggplot(df_patient, aes(x="", y=factor(1), fill=ethnicity_string)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  theme_void() +
+  scale_fill_brewer(palette="Blues")
+```
+
 
 ### 1.2. Patients with a given Condition
 
@@ -303,242 +251,568 @@ Kids First uses the [Mondo Disease Ontology](https://mondo.monarchinitiative.org
 
 Let's use grade III glioma as our condition of interest, with **MONDO:0021640** as our code of interest going forward.
 
-Following the same pattern as above:
+----
+
+In Exercise 1 we saw an instance of basic querying, when we searched for MedicationRequests associated to a given Patient. (Reminder: `"{FHIR_SERVER}/MedicationRequest?patient=10098"`) This is one of the most basic and fundamental types of query, where we get resources from a server, filtered by some aspect of the resource itself. In the previous example with medications, the MedicationRequest resource has a reference back to the Patient in the `patient` field so we can query that directly.
+But what if we want to go in the other direction? For example, find all Patients that are taking a given Medication, or Patients that have been diagnosed with a given Condition?
+
+Enter "chaining" and "reverse chaining". These are capabilities of FHIR that allow for more complex queries that can save a client and/or server from having to perform a series of operations.
+
+The FHIR documentation offers the following examples of chaining:
+
+>  In order to save a client from performing a series of search operations, reference parameters may be "chained" by appending them with a period (.) followed by the name of a search parameter defined for the target resource. This can be done recursively, following a logical path through a graph of related resources, separated by `.`. For instance, given that the resource `DiagnosticReport` has a search parameter named `subject`, which is usually a reference to a `Patient` resource, and the `Patient` resource includes a parameter `name` which searches on patient name, then the search
+
+`GET [base]/DiagnosticReport?subject.name=peter`
+
+is a request to return all the lab reports that have a `subject` whose `name` includes "peter". Because the Diagnostic Report subject can be one of a set of different resources, it's necessary to limit the search to a particular type:
+
+`GET [base]/DiagnosticReport?subject:Patient.name=peter`
+
+This request returns all the lab reports that have a subject which is a patient, whose name includes "peter".
+
+In the case of "Patients diagnosed with a given Condition", we want the opposite direction - search for resources based on what links back to them. This is done with the `_has` search parameter.
+
+The `_has` search parameter uses the colon character `:` to separate fields, and requires a few sub-parameters:
+
+ - the resource type to search for references back from
+ - the field on that resource which would link back to the current resource
+ - a field on that resource to filter by
+
+A complete example is:
+
+`[base]/Patient?_has:Observation:patient:code=1234-5`
+
+This requests the server to return Patient resources, where the patient resource is referred to by at least one Observation where the observation has a code of 1234, and where the Observation refers to the patient resource in the patient search parameter.
+
+Unfortunately we acknowledge the syntax is a little confusing. It may be easiest to read this query as as "Get Patients that have an Observation that links back to this Patient having a code of 1234-5"
+
+📘 [Read more about FHIR Search Chaining and Reverse Chaining](https://hl7.org/fhir/r4/search.html#chaining)
+
+Let's use this approach to find Patients based on a diagnosis.
+
+🖐 Fill in the search query to find Patients that have a Condition of grade III glioma.
 
 ```{r}
-response <- GET_kf('/Patient?_has:Condition:patient:code=MONDO:0021640')
-response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
-df_patient_glioma <- response_list$entry %>%
-  select(
-    fullUrl,
-    "resource.id",
-    "resource.gender",
-    "resource.extension"
-  ) %>%
-  mutate(
-    race_string = map_chr(resource.extension, fn_get_race),
-    ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
-  ) %>%
-  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
-df_patient_glioma %>% head(5)
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:Condition:patient:code" = "MONDO:0021640"))
+patient_bundle <- fhir_search(request = request, max_bundles = 1)
+
+# Can use the same table description as we set up above
+df_patient_glioma <- fhir_crack(bundles = patient_bundle, design = table_desc_patient, verbose = 0)
+
 ```
+
 
 Let's look at the descriptive statistics for the first 50 glioma patients -- will use the excellent `table1` library this time:
 
 ```{r}
-table1(~ resource.gender + race_string + ethnicity_string, data = df_patient_glioma, overall = "Glioma")
+table1(~ gender + race_string + ethnicity_string, data = df_patient_glioma, overall = "Glioma")
 ```
 
 
 ### 1.3. Patients within a given Research Study
 
 The Kids First portal is comprised of multiple research studies.
-See more at:
-https://portal.kidsfirstdrc.org/studies
-or
-https://www.notion.so/Studies-and-Access-a5d2f55a8b40461eac5bf32d9483e90f
+See more at <https://portal.kidsfirstdrc.org/studies> or <https://www.notion.so/Studies-and-Access-a5d2f55a8b40461eac5bf32d9483e90f>
 
-In this exercise we'll explore how to query for patients specifically associated to one of these research studies. Let's pick the "Pediatric Brain Tumor Atlas: CBTTC" as an example, because it has a large number of participants.
+In this step we'll explore how to query for patients specifically associated to one of these research studies. Let's pick the "Pediatric Brain Tumor Atlas: CBTTC" as an example, because it has a large number of participants.
 
+First let's find the study we are interested in as a ResearchStudy. There are a few possible ways we can do this, for example a search on ResearchStudy.title, but we don't necessarily know the title of the FHIR resource is going to match those other lists.
 
-First let's find the study we are interested in as a ResearchStudy. There are a few possible ways we can do this, for example a search on ResearchStudy.title, but let's list all the ResearchStudies on the server and see what we can find.
+Let's list all the ResearchStudies on the server and see what we can find.
 
 ```{r}
-response <- GET_kf('/ResearchStudy')
-httr::content(response, as = "text", encoding = "UTF-8") %>% prettify %>% substr(1,3000)
+request <- fhir_url(url = fhir_server, resource = "ResearchStudy")
+research_study_bundle <- fhir_search(request = request)
 ```
 
-We can also get a single research study of interest:
-```{r}
-response <- GET_kf('/ResearchStudy/76758')
-httr::content(response, as = "text", encoding = "UTF-8") %>% prettify
-```
-
-Get the patients associated with this research study:
-```{r}
-response <- GET_kf('/Patient?_has:ResearchSubject:individual:study=76758')
-response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
-df_patient_peds_brain_tumor_atlas <- response_list$entry %>%
-  select(
-    fullUrl,
-    "resource.id",
-    "resource.gender",
-    "resource.extension"
-  ) %>%
-  mutate(
-    race_string = map_chr(resource.extension, fn_get_race),
-    ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
-  ) %>%
-  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
-table1(~ resource.gender + race_string + ethnicity_string, data = df_patient_peds_brain_tumor_atlas)
-```
-
-If you want to get all the patients associated with the study, you can do the following:
+Let's look at the XML for the first ResearchStudy resource instance returned:
 
 ```{r}
-i <- 1
-dfs <- list()
-next_url <- '/Patient?_has:ResearchSubject:individual:study=76758&_count=500'
-while(T) {
-  print(str_interp("Querying URL ${next_url}"))
-  response <- GET_kf(next_url)
-  response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
-  dfs[[i]] <- response_list$entry %>%
-    select(
-      fullUrl,
-      "resource.id",
-      "resource.gender",
-      "resource.extension"
-    ) %>%
-    mutate(
-      race_string = map_chr(resource.extension, fn_get_race),
-      ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
-    ) %>%
-    select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
-
-  next_url <- (response_list$link %>% filter(relation == "next"))$url
-  if(is_empty(next_url)) { break }
-  i <- i + 1
-}
+xml2::xml_find_first(x = research_study_bundle[[1]], xpath = "./entry[1]/resource") %>%
+        paste0 %>%
+        cat
 ```
 
-Each "page" of results is in a separate data frame, so concatenate these together:
+
 ```{r}
-df_all_patient_peds_brain_tumor_atlas <- bind_rows(dfs)
-table1(~ resource.gender + race_string + ethnicity_string, data = df_all_patient_peds_brain_tumor_atlas)
+table_desc_research_study <- fhir_table_description(
+        resource = "ResearchStudy",
+
+        cols = c(
+                id = "id",
+                title = "title"
+        )
+
+)
+
+# Convert to R data frame
+df_study <- fhir_crack(bundles = research_study_bundle, design = table_desc_research_study, verbose = 0)
+
+df_study
 ```
+
+We want ID **76758**, which actually has title "Pediatric Brain Tumor Atlas - Children's Brain Tumor Tissue Consortium". We'll continue to use this ResearchStudy for future steps in this exercise.
+
+```{r}
+df_study %>% filter(id == 76758)
+```
+
+We can query for Patient resources by ResearchStudy via those ResearchSubjects (notice the reference to a Patient in the `individual` field), and again run our same analysis. (hint: sounds like reverse-chaining again!)
+
+🖐 Fill in the query to find Patients that are associated to ResearchStudy 76758
+
+```{r}
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:ResearchSubject:individual:study" = "76758"))
+patient_bundle <- fhir_search(request = request, max_bundles = 1)
+
+# Can use the same table description as we set up above
+df_patient_study <- fhir_crack(bundles = patient_bundle, design = table_desc_patient, verbose = 0)
+table1(~ gender + race_string + ethnicity_string, data = df_patient_study, overall = "Study 76758")
+
+```
+
 
 ## 2. Most Frequent Diagnoses
 
+Our second step will be show how to perform queries that enable basic prevalence analysis. Again there are a few different ways we can build a cohort for this.
+
 ### 2.1. Just the first conditions on the server
 
-As before, let's start with the simplest possible approach of just selecting an unfiltered set of Condition resources.
-```{r}
-response <- GET_kf('/Condition?_count=250')
-httr::content(response, as = "text", encoding = "UTF-8") %>% prettify %>% substr(1,4000)
-```
-```{r}
-response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
-df_condition <- response_list$entry
-df_condition %>% head(5)
-```
+As before, let's start with the simplest possible approach of just selecting an unfiltered and unsorted set of Condition resources. This time, let's tell the server we want 250 Conditions.
+(Why 250? In this case it's the most the server will return in one response.)
 
-Pull the first value of `code.coding.display` out into its own variable for analysis:
+🖐 Fill in the query to request 250 Condition resources from the server
 
 ```{r}
-df_condition <- df_condition %>%
-  mutate(
-    condition_code_display = map_chr(resource.code.coding, function(.) { .$display })
+request <- fhir_url(url = fhir_server, resource = "Condition", parameters = list("_count" = "250"))
+condition_bundle <- fhir_search(request = request, max_bundles = 1)
+
+# The first few only had `code.text` - change $n `entry[$n]` to integers until
+# you see the expected nested `code.coding.code` structure
+xml2::xml_find_first(x = condition_bundle[[1]], xpath = "./entry[4]/resource") %>%
+  paste0 %>%
+  cat
+```
+
+The key to what this Condition represents is nested within the `code` field, but there's a lot of information there. Let's dig into three very important types in FHIR: `code`, `Coding`, and `CodeableConcept`.
+
+#### code
+`code` is a FHIR primitive based on string. `code`s are generally taken from a controlled set of strings defined elsewhere, and are restricted in that `code`s may not contain leading whitespace, trailing whitespace, or more than 1 consecutive whitespace character. `"9283-4"` is an example of a `code`.
+
+
+#### Coding
+[`Coding`](https://www.hl7.org/fhir/datatypes.html#Coding) is a general purpose datatype that builds on top of `code`. A `Coding` is a representaton of a defined concept using a symbol from a defined code system. `Coding` includes fields for `code`, the code `system` it comes from, the `version` of the system, a human-readable `display`, and `userSelected` to indicate if this coding was chosen directly by the user. An example `Coding`:
+
+**TODO: Convert to XML?**
+
+```
+{
+  "system": "http://snomed.info/sct",
+  "code": "444814009",
+  "display": "Viral sinusitis (disorder)"
+}
+```
+
+#### CodeableConcept
+[`CodeableConcept`](https://www.hl7.org/fhir/datatypes.html#CodeableConcept) is a general purpose datatype builds further on top of `Coding`. A `CodeableConcept` represents a value that is usually supplied by providing a reference to one or more terminologies or ontologies but may also be defined by the provision of text. Most resources that are defined by specific clinical concepts will include a `CodeableConcept` type field.
+`CodeableConcept` includes fields for an array of `coding`s and optional `text`.
+
+
+An example `CodeableConcept`:
+```
+{
+    "coding": [
+        {
+            "system": "http://snomed.info/sct",
+            "code": "260385009",
+            "display": "Negative"
+        }, {
+            "system": "https://acme.lab/resultcodes",
+            "code": "NEG",
+            "display": "Negative"
+        }
+    ],
+    "text": "Negative for Chlamydia Trachomatis rRNA"
+}
+```
+
+
+In this case all we really want is a consistent human-readable display, so let's get these into a DataFrame and map that `code` field into something appropriate.
+
+
+
+```{r}
+table_desc_condition <- fhir_table_description(
+  resource = "Condition",
+
+  cols = c(
+    id = "id",
+    patient_id = "subject/reference",
+    # TODO: figure out if/how to handle multiple codes
+    code = "code/coding[1]/code",
+    code_text = "code/text",
+    code_display = "code/coding[1]/display",
+    code_system = "code/coding[1]/system"
   )
 
-df_condition %>%
-        count(condition_code_display, sort = TRUE)
+)
+
+# Convert to R data frame
+df_condition <- fhir_crack(bundles = condition_bundle, design = table_desc_condition, verbose = 0)
+
+df_condition
 ```
+
+Now let's create a table of the top 10 most prevalent conditions:
+
+```{r}
+df_condition %>% count(code_text, sort = TRUE)
+```
+
+Now let's create a graph of the top 10 most prevalent conditions:
+
+```{r}
+ggplot(
+  df_condition %>% count(code_text, sort = TRUE) %>% head(10),
+  aes(x = reorder(code_text, n), y = n)
+  ) +
+  geom_bar(stat="identity") + 
+  coord_flip() +
+  xlab("Condition") +
+  scale_y_continuous(breaks=c(0,2,4,6,8,10))
+```
+
 
 ### 2.2. Patients in the Research Study
 
 In the previous steps, we looked at just a random sampling of Conditions: the first 250 that the server happened to return. Now let's return to the Research Study and see how we can query for just those Conditions.
 
 
-```{r}
-# One might expect we can just chain even further, for example:
-# /Condition?subject._has:ResearchSubject:individual:study=76758
-# however that's not going to work here
-# (it seems to hang the entire server for about 2 minutes so we request you not to actually run it)
-
-# Instead, let's combine two search concepts:
-#  - get the Patients by ResearchStudy, as we saw before
-#  - include the Conditions that reference back to each Patient
-
-# EXERCISE: Implement the query to select Patients and Conditions within the ResearchStudy of interest
-# Reminder: the ResearchStudy id = 76758
-response <- GET_kf('/Patient?_has:ResearchSubject:individual:study=76758&_revinclude=Condition:subject')
-response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
-df_condition <- response_list$entry %>%
-  # So now we've done a _revinclude and we have 2 different resourceTypes in our results
-  # Let's filter to just the Conditions
-  filter(
-    resource.resourceType == "Condition"
-  ) %>%
-  select(
-    resource.id,
-    "resource.subject.reference",
-    "resource.code.text",
-    "resource.code.coding"
-  ) %>%
-  # The other method for unnesting data frames works well here
-  unnest(cols = c(resource.code.coding))
-
-
-# Note that for some reason `resource.code.coding.display` is not populated here - use `resource.code.text` instead
-df_condition %>% count(resource.code.text, sort = T)
+One might expect we can just chain even further, for example:
 ```
+/Condition?subject._has:ResearchSubject:individual:study=76758
+```
+However, that's not going to work here. (it seems to hang the entire server for about 2 minutes so we request you not to actually run it)
+
+
+Instead, let's combine two search concepts:
+ - get the Patients by ResearchStudy, as we saw before ("reverse chaining")
+ - include the Conditions that reference back to each Patient
+
+
+We've seen how to find a resource, based on another resource that references it, but we haven't yet seen how to include multiple resource types in a single search. This leads us to new search parameters we haven't seen before: `_include` and `_revinclude`.
+
+`_include` allows for including resources that the queried resource references out to. (For example, Condition references out to a Patient and Encounter)
+`_revinclude` ie, "reverse include", allows for including resources that reference back to the queried resource. (For example, Patient is referenced by Condition)
+
+These parameters specify a search parameter to search on, which includes 3 parts:
+ - The name of the source resource where the reference field exists
+ - The field name of the reference
+ - (optionally) a specific type of target resource, for cases when multiple resource types are allowed.
+
+
+Some simple examples:
+
+```
+GET [base]/MedicationRequest?_include=MedicationRequest:patient
+GET [base]/MedicationRequest?_revinclude=Provenance:target
+```
+
+The first search requests all matching MedicationRequests, to include any patient that the medication prescriptions in the result set refer to. The second search requests all matching prescriptions, return all the provenance resources that refer to them.
+
+
+📘[Read more about including other resources in search results](https://www.hl7.org/fhir/search.html#include)
+
+
+🖐 Implement the query to select Patients within the ResearchStudy of interest and include their Conditions
+
+Reminder: the ResearchStudy id = **76758**
+
+
+```{r}
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:ResearchSubject:individual:study" = "76758", "_revinclude" = "Condition:subject"))
+bundle <- fhir_search(request = request, max_bundles = 1)
+
+# Can use the same table description as we set up above
+df_condition_study <- fhir_crack(bundles = bundle, design = table_desc_condition, verbose = 0)
+
+df_condition_study %>% count(code_text, sort = TRUE)
+```
+
+Here's the graph version:
+
+```{r}
+ggplot(
+  df_condition_study %>% count(code_text, sort = TRUE) %>% head(10),
+  aes(x = reorder(code_text, n), y = n)
+  ) +
+  geom_bar(stat="identity") + 
+  coord_flip() +
+  xlab("Condition")
+```
+
+Now we have a more useful graph - the most common diagnoses among a research study cohort. (Note however that this represents only the first page of results from the server, not necessarily the entire cohort. Pagination, as seen in the previous exercise, may be necessary to fetch the entire cohort.)
 
 ## 3. Age at Diagnosis
 
-Next let's see how we can recreate the Age at Diagnosis
+Our third step will be to see how we can recreate the Age at Diagnosis chart.
+
 To calculate age at diagnosis, we need two pieces of information:
  - Date of Birth
  - Date of Diagnosis
+
 However in order to de-identify the data, Kids First has removed date of birth information from Patient resources. Instead they use relative dates via an extension.
 
 In FHIR these may be captured in different resources that we may need to cross-reference:
 
-- Patient.birthDate
-- Condition.onset[x]
-- Condition.recordedDate
+- `Patient.birthDate`
+- `Condition.onset[x]`
+- `Condition.recordedDate`
 
 Let's take a look at how the Kids First server represents these important concepts
 
-### 3.1. Patients with a given Condition
+### 3.1. Diagnoses of a particular Condition
+
+Let's start by querying for Conditions of a given code. We'll stick with **MONDO:0021640** (grade III glioma) as our condition of interest.
+
+🖐 Fill in the query to select Conditions by this code
+
+Then we'll look at one instance to see what it contains.
 
 ```{r}
-response <- GET_kf('/Patient?_has:ResearchSubject:individual:study=76758')
-response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
-df_patient_peds_brain_tumor_atlas <- response_list$entry %>%
-  select(
-    fullUrl,
-    "resource.id",
-    "resource.gender",
-    "resource.extension"
-  ) %>%
+request <- fhir_url(url = fhir_server, resource = "Condition", parameters = list("code" = "MONDO:0021640"))
+bundle <- fhir_search(request = request, max_bundles = 1)
+
+xml2::xml_find_first(x = bundle[[1]], xpath = "./entry[1]/resource") %>% 
+  paste0 %>% 
+  cat
+```
+
+What we see here is that the Condition has a `recordedDate` field with an extension "http://hl7.org/fhir/StructureDefinition/relative-date", then nested below that are 3 sub-extensions representing the parts of a "relative date": 
+ - The event that this Condition is relative to
+ - The relationship (before/after)
+ - The numerical offset
+ 
+See more about the relative-date extension here: http://hl7.org/fhir/R4/extension-relative-date.html
+ 
+ 
+Now let's put this into a DataFrame:
+
+```{r}
+
+table_desc_condition_glioma <- fhir_table_description(
+  resource = "Condition",
+
+  cols = c(
+    id = "id",
+    patient_id = "subject/reference",
+    recorded_duration = str_c(
+      "recordedDate",
+      "/extension[@url=\"http://hl7.org/fhir/StructureDefinition/relative-date\"]",
+      "/extension[@url=\"offset\"]",
+      "/valueDuration",
+      "/value"
+    ),
+    recorded_duration_units = str_c(
+      "recordedDate",
+      "/extension[@url=\"http://hl7.org/fhir/StructureDefinition/relative-date\"]",
+      "/extension[@url=\"offset\"]",
+      "/valueDuration",
+      "/unit"
+    )
+  )
+
+)
+
+df_condition_glioma <- fhir_crack(bundles = bundle, design = table_desc_condition_glioma, verbose = 0)
+
+df_condition_glioma
+```
+
+Note: for data aggregated from multiple sources, you may encounter data in very different forms. For the dataset we are working with in this step, we can safely assume that all recordedDate extensions will be of this form if present: relative to birth, after birth, and recorded in days.
+
+Given this assumption, convert the `recorded_duratrion` column into age in years:
+
+```{r}
+df_condition_glioma <- df_condition_glioma %>% 
   mutate(
-    race_string = map_chr(resource.extension, fn_get_race),
-    ethnicity_string = map_chr(resource.extension, fn_get_ethnicity)
+    onsetAgeInYears = as.numeric(recorded_duration) / 365
+  )
+
+df_condition_glioma
+```
+
+Now let's graph the ages with a basic histogram:
+
+```{r}
+ggplot(df_condition_glioma, aes(onsetAgeInYears)) +
+  geom_histogram(binwidth = 1)
+```
+
+
+### 3.2. Patients in the Research Study
+
+Now let's go back to our selected Research Study and see how we can get the Conditions for those Patients in the study. We've seen before that doubly-nested references may not work, so instead we can combine multiple approaches as we saw in section 2.2, to fetch Patients by ResearchStudy, and then include their diagnosed Conditions.
+
+
+🖐 Fill in the query to select Patients in the ResearchStudy of interest, along with their Conditions.
+
+Reminder: the ResearchStudy id = **76758**
+
+
+**TODO:** This is the same block as for 2.2 - why is this repeated?
+
+```{r}
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:ResearchSubject:individual:study" = "76758", "_revinclude" = "Condition:subject"))
+bundle <- fhir_search(request = request, max_bundles = 1)
+
+# Can use the same table description as we set up above
+df_condition_study <- fhir_crack(bundles = bundle, design = table_desc_condition_glioma, verbose = 0)
+
+df_condition_study
+```
+
+Note that this query also gets the Patient resources, but we don't need these for our analysis so we can ignore them.
+
+Not all Conditions may have a `recordedDate`, so filter to just those that do and convert to onset in age:
+
+```{r}
+df_condition_study <- df_condition_study %>% 
+  mutate(
+    recorded_duration = as.numeric(recorded_duration)
   ) %>%
-  select(fullUrl, resource.id, resource.gender, race_string, ethnicity_string)
-table1(~ resource.gender + race_string + ethnicity_string, data = df_patient_peds_brain_tumor_atlas)
+  filter(
+    !is.na(recorded_duration)
+  ) %>% 
+  mutate(
+    onsetAgeInYears = as.numeric(recorded_duration) / 365
+  )
+```
+
+Now let's graph the ages again with a basic histogram:
+
+```{r}
+ggplot(df_condition_study, aes(onsetAgeInYears)) +
+  geom_histogram(binwidth = 1)
 ```
 
 
 
 
+## 4. Overall Survival
+
+### 4.1. Patients in the Research Study
+
+Our final step in this exercise will be to reproduce the Overall Survival graph. The data requirements for this graph build on top of the previous steps, so now we need to know the relationship between date of death, or last recorded survival, and date of onset.
+
+As before, Kids First data has been deidentified so there generally are no absolute dates, but relative dates are enough as long as there is a common reference point. Fortunately most of KF uses dates relative to birth or enrollment into a clinical trial.
+
+First let's see how KF reports death information. One possibility is in the `Patient.deceased[x]` field, so let's see if anything on the server has that populated.
+
+```{r}
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = c("deceased" = "true"))
+bundle <- fhir_search(request = request, max_bundles = 1)
+xml2::xml_find_first(x = bundle[[1]], xpath = "./total") %>%
+        paste0 %>%
+        cat
+```
 
 
+Looks like that's a no. That's fine, there are other options. We'll spare the reader the full exploration process, but we know that in this case, Clinical Status of "Alive" or "Dead" is captured as an Observation with SNOMED code "263493007". Observations can be thought of as a clinical question of sorts, where the question is captured as the `code` and the answer is captured as the `value`.
+
+📘 [Read more about the Observation resource](https://www.hl7.org/fhir/observation.html)
 
 
+Let's look at an example of one of these:
+
+```{r}
+request <- fhir_url(url = fhir_server, resource = "Observation", parameters = c("code" = "263493007"))
+bundle <- fhir_search(request = request, max_bundles = 1)
+xml2::xml_find_first(x = bundle[[1]], xpath = "./entry[1]/resource") %>%
+        paste0 %>%
+        cat
+```
+
+Like with the Condition resources in previous examples, we see an `_effectiveDate` with extensions describing a date relative to birth. There's our common reference point, so let's gather all our data and put it together.
+
+In this case, we want Patients, Conditions, and Observations. There are multiple possible approaches we could take here. One possible approach is to make 1 query to find Patients, 1 query to find all Conditions, then 1 query to find all Observations, then join the results and drop any mismatches. In this case let's see if we can do it in one single query.
 
 
+🖐 Fill in the query to fetch Patients, Conditions, and Observations, for Patients in our ResearchStudy of interest.
+
+Reminder: the ResearchStudy id = **76758**
 
 
+```{r}
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:ResearchSubject:individual:study" = "76758", "_revinclude" = "Observation:subject", "_revinclude" = "Condition:subject"))
+bundle <- fhir_search(request = request, max_bundles = 1)
+```
 
+Note that this query we just ran selected ALL Conditions and Observations linked to the selected Patients. If we need to filter the results further, we can only do that by post-processing and not within the FHIR query itself.
 
+Fortunately there only appears to be one Observation per Patient in this dataset, so there is no need to filter further.
 
+Let's break this Bundle out into separate data frames.
 
+We'll first inspect an Observation resource first because this is the first time we're seeing Observations.
 
+```{r}
+xml2::xml_find_first(x = bundle[[1]], xpath = "//*[contains (name(), \"Observation\")]") %>%
+        paste0 %>%
+        cat
+```
 
+To calculate survival, we have to get subtract onset date from the latest clinical status date (Observation).
+As with Condition `_recordedDate`, these Observations use a relative date via an extension on `_effectiveDateTime`.
 
+Let's break that out into a single number. Fortunately the format is exactly the same as before, so we can reuse the same approach we used earlier with Condition
 
+```{r}
+table_desc_observation <- fhir_table_description(
+  resource = "Observation",
 
+  cols = c(
+    id = "id",
+    patient_id = "subject/reference",
+    effectiveDateTime_duration = str_c(
+      "effectiveDateTime",
+      "/extension[@url=\"http://hl7.org/fhir/StructureDefinition/relative-date\"]",
+      "/extension[@url=\"offset\"]",
+      "/valueDuration",
+      "/value"
+    ),
+    effectiveDateTime_duration_units = str_c(
+      "effectiveDateTime",
+      "/extension[@url=\"http://hl7.org/fhir/StructureDefinition/relative-date\"]",
+      "/extension[@url=\"offset\"]",
+      "/valueDuration",
+      "/unit"
+    ),
+    
+    # Get the code identifying the Observation as well
+    code = "code/coding/code",
+    code_display = "code/coding/display",
+    code_system = "code/coding/system"
+  )
+)
 
+df_observation <- fhir_crack(bundles = bundle, design = table_desc_observation, verbose = 0)
 
+df_observation <- df_observation %>% 
+  mutate(
+    effectiveDateTime_duration = as.numeric(effectiveDateTime_duration)
+  ) %>%
+  filter(
+    !is.na(effectiveDateTime_duration)
+  ) %>% 
+  mutate(
+    onsetAgeInYears = as.numeric(effectiveDateTime_duration) / 365
+  )
 
+df_observation
+```
 
-
-
-
-
-
+**TODO:** finish translation of this last section pending updates to the Python version.
 
 
 

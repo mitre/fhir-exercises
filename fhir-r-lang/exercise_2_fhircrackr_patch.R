@@ -12,7 +12,7 @@ get_bundle <- function(
   delay_between_attempts = 10,
   log_errors = NULL) {
 
-  cat(paste("Patched 'get_bundle' in use..."))
+  cat(paste("Patched 'get_bundle' in use...\n"))
 
   #download response
   for(n in seq_len(max_attempts)) {
