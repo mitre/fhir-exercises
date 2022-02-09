@@ -35,7 +35,7 @@ What will participants do as part of the exercise?
 
 In this exercise we're going to explore how to access the data needed to generate the summary information from the Kids First dashboard in a few different ways. A snapshot of the Kids First dashboard is shown below:
 
-![KF Dashboard](img/kf_dashboard.png)
+![KF Dashboard](../img/kf_dashboard.png)
 
 The Kids First Data Portal is accessible at https://portal.kidsfirstdrc.org/explore (login required, though signup is free with any Google account)
 
@@ -104,7 +104,7 @@ xml2::xml_find_first(x = patient_bundle[[1]], xpath = "./entry[1]/resource") %>%
 Looking at this XML, it appears to contain the data to construct a data frame of patients with some basic demographics:
 
 |`id`|`gender`|`race`|`ethnicity`|
-|-|-|-|
+|-|-|-|-|
 |103070|male|Not Reported|Not Reported|
 |...|...|...|...|
 
@@ -168,18 +168,44 @@ Now, let's convert the FHIR resource a data frame using the same technique from 
 # Identify which elements of the FHIR resource we want to capture in our data frame - see Exercise 0 for details
 table_desc_patient <- fhir_table_description(
         resource = "Patient",
-
         cols = c(
-                id            = "id",
-                gender        = "gender",
-                race_string = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]/extension[@url=\"text\"]/valueString",
-                race_coding_display = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]/extension[@url=\"text\"]/valueCoding/display",
-                race_coding_code = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]/extension[@url=\"text\"]/valueCoding/code",
-                ethnicity_string = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]/extension[@url=\"text\"]/valueString",
-                ethnicity_coding_display = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]/extension[@url=\"text\"]/valueCoding/display",
-                ethnicity_coding_code = "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]/extension[@url=\"text\"]/valueCoding/code"
+          id            = "id",
+          gender        = "gender",
+          race_string = str_c(
+            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
+            "/extension[@url=\"text\"]",
+            "/valueString"
+          ),
+          race_coding_display = str_c(
+            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
+            "/extension[@url=\"text\"]",
+            "/valueCoding",
+            "/display"
+          ),
+          race_coding_code = str_c(
+            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
+            "/extension[@url=\"text\"]",
+            "/valueCoding",
+            "/code"
+          ),
+          ethnicity_string = str_c(
+            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
+            "/extension[@url=\"text\"]",
+            "/valueString"
+          ),
+          ethnicity_coding_display = str_c(
+            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
+            "/extension[@url=\"text\"]",
+            "/valueCoding",
+            "/display"
+          ),
+          ethnicity_coding_code = str_c(
+            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
+            "/extension[@url=\"text\"]",
+            "/valueCoding",
+            "/code"
+          )
         )
-
 )
 
 # Convert to R data frame
