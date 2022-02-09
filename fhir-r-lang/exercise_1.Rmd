@@ -70,6 +70,8 @@ str_c("Formats Supported: ", cs$Meta$format, "\n") %>% cat
 str_c("FHIR Resources Supported: ", cs$Resources$type %>% length, "\n") %>% cat
 ```
 
+**TODO:** Add in RESTFul endpoints for parity with Python
+
 We can also see the details of the types of FHIR Resources available on this endpoint and the supported operations. Keep in mind that there might not be any data available for a particular FHIR resource even if the server supports that type.
 
 ```{r}
@@ -136,7 +138,7 @@ It may be helpful to look at the raw JSON for a specific patient, which you can 
 
 ```{r}
 response <- httr::GET(
-        url = str_interp("${fhir_server}/Patient/smart-1032702"),
+        url = str_interp("${fhir_server}/Patient/3437"),
         config = list(add_headers( Accept = 'application/json'))
 )
 
@@ -291,24 +293,44 @@ response_list$entry %>% glimpse
 Now we can use `fhircrackr` to quickly load these into a data frame:
 
 ```{r}
-request <- fhir_url(url = fhir_server, resource = "MedicationRequest", parameters = c(patient="10098"))
+request <-
+  fhir_url(
+    url = fhir_server,
+    resource = "MedicationRequest",
+    parameters = c(patient = "10098")
+  )
 medication_request_bundle <- fhir_search(request = request)
 
-# Identify which elements of the FHIR resource we want to capture in our data frame - see Exercise 0 for details
+```
+
+Let's look at one of the resources returned by the server:
+
+```{r}
+xml2::xml_find_first(x = medication_request_bundle[[1]], xpath = "./entry[1]/resource") %>% 
+  paste0 %>% 
+  cat
+```
+
+We can use this example to construct the table description that will allow us to convert this to a data frame:
+
+```{r}
 table_desc_medication_request <- fhir_table_description(
-resource = "MedicationRequest",
-
-cols = c(
-patient = "subject/reference",
-med_code_value = "medicationCodeableConcept/coding/code",
-med_code_system = "medicationCodeableConcept/coding/system",
-med_code_display = "medicationCodeableConcept/coding/display"
-)
-
+  resource = "MedicationRequest",
+  
+  cols = c(
+    patient = "subject/reference",
+    med_code_value = "medicationCodeableConcept/coding/code",
+    med_code_system = "medicationCodeableConcept/coding/system",
+    med_code_display = "medicationCodeableConcept/coding/display"
+  )
+  
 )
 
 # Convert to R data frame
-df_meds <- fhir_crack(bundles = medication_request_bundle, design = table_desc_medication_request, verbose = 0)
+df_meds <-
+  fhir_crack(bundles = medication_request_bundle,
+             design = table_desc_medication_request,
+             verbose = 0)
 
 df_meds
 ```
@@ -454,6 +476,7 @@ response_list$results$mechanism_of_action %>% paste %>% cat
 ## Learning Objectives and Key Concepts
 
 As a recap, this this exercise you learned how to:
+
 * Query a FHIR Server to learn about its capabilities
 * How to read FHIR specifications and understand how it applies to FHIR interactions and data
 * Search for resources of various types and parse the results to find information of interest
