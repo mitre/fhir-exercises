@@ -1,4 +1,4 @@
-# To run the Jupyter notebooks from MyBinder, click [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/stevetsa/fhir-exercises/HEAD)
+## To run the Jupyter notebooks from MyBinder, click [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/stevetsa/fhir-exercises/HEAD)
 
 
 # fhir-exercises
