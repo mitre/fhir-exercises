@@ -69,6 +69,10 @@ library(jsonlite)
 # Visualizations
 library(ggthemes)
 theme_set(ggthemes::theme_economist_white())
+
+# Survival analysis
+library(survival) 
+library(survminer)
 ```
 
 Kids First uses an [HTTP cookie](https://en.wikipedia.org/wiki/HTTP_cookie) for authentication, which isn't supported natively by `fhircrackr`. The `setup` block above loads a patched version of `fhircrackr` to support this.
@@ -738,6 +742,8 @@ First let's see how KF reports death information. One possibility is in the `Pat
 ```{r}
 request <- fhir_url(url = fhir_server, resource = "Patient", parameters = c("deceased" = "true"))
 bundle <- fhir_search(request = request, max_bundles = 1)
+
+# Show total records returned by the query
 xml2::xml_find_first(x = bundle[[1]], xpath = "./total") %>%
         paste0 %>%
         cat
@@ -818,27 +824,182 @@ table_desc_observation <- fhir_table_description(
     # Get the code identifying the Observation as well
     code = "code/coding/code",
     code_display = "code/coding/display",
-    code_system = "code/coding/system"
+    code_system = "code/coding/system",
+    
+    # Get the value for the observation
+    value_code = "valueCodeableConcept/coding/code",
+    value_display = "valueCodeableConcept/coding/display",
+    value_system = "valueCodeableConcept/coding/system"
   )
 )
 
 df_observation <- fhir_crack(bundles = bundle, design = table_desc_observation, verbose = 0)
 
+df_observation
+```
+
+We expect all observations to have `code=263493007 (Clinical status)`. Let's verify:
+
+```{r}
+df_observation$code %>% freq
+```
+
+And we expect all observations to have either `alive` or `deceased` as the value (stored in `valueCodeableConcept`):
+
+```{r}
+ctable(df_observation$value_code, df_observation$value_display)
+```
+
+We also expect only one observation per Patient -- let's verify:
+
+```{r}
+(df_observation %>% count(patient_id))$n %>% max
+```
+
+Looks like this is true, so we can use `df_observation` both to calculate the time under observation and the endpoint for the survival analysis.
+
+For time under observation, we will use the `effectiveDateTime_duration` variable, which is time since birth. Let's verify the units are consistent:
+
+```{r}
+df_observation$effectiveDateTime_duration_units %>% freq
+```
+
+If there are any `NA` values for the units, that means no `effectiveDateTime` is recorded. Let's drop any such records for simplicity of this exercise, but for research this would warrant deeper investigation.
+
+```{r}
+df_observation <- df_observation %>% 
+  filter(!is.na(effectiveDateTime_duration_units))
+
+df_observation$effectiveDateTime_duration_units %>% freq
+```
+
+For easier interpretability, let's change this from days to years:
+
+```{r}
 df_observation <- df_observation %>% 
   mutate(
     effectiveDateTime_duration = as.numeric(effectiveDateTime_duration)
   ) %>%
-  filter(
-    !is.na(effectiveDateTime_duration)
-  ) %>% 
   mutate(
-    onsetAgeInYears = as.numeric(effectiveDateTime_duration) / 365
+    observationEndAgeInYears = as.numeric(effectiveDateTime_duration) / 365.25
   )
 
 df_observation
 ```
 
-**TODO:** finish translation of this last section pending updates to the Python version.
+The Condition resource gives us the age at which observation began, so let's extract what we need:
+
+```{r}
+table_desc_condition <- fhir_table_description(
+  resource = "Condition",
+
+  cols = c(
+    id = "id",
+    patient_id = "subject/reference",
+    recorded_duration = str_c(
+      "recordedDate",
+      "/extension[@url=\"http://hl7.org/fhir/StructureDefinition/relative-date\"]",
+      "/extension[@url=\"offset\"]",
+      "/valueDuration",
+      "/value"
+    ),
+    recorded_duration_units = str_c(
+      "recordedDate",
+      "/extension[@url=\"http://hl7.org/fhir/StructureDefinition/relative-date\"]",
+      "/extension[@url=\"offset\"]",
+      "/valueDuration",
+      "/unit"
+    ),
+    code_code = "code/coding/code",
+    code_display = "code/text"
+  )
+
+)
+
+df_condition<- fhir_crack(bundles = bundle, design = table_desc_condition, verbose = 0)
+
+df_condition
+```
+
+There are multiple Conditions for each Patient. For the purposes of this analysis, we will assume the smallest `recorded_duration` (i.e., closest to birth) Condition represents the beginning of observed time.
+
+First, let's sanity check the units:
+
+```{r}
+df_condition$recorded_duration_units %>% freq
+```
 
 
+
+```{r}
+df_condition_min_recorded_duration <- df_condition %>% 
+  mutate(
+    recorded_duration = as.numeric(recorded_duration)
+  ) %>% 
+  # Remove rows with null recorded duration
+  filter(!is.na(recorded_duration_units)) %>%
+  
+  # Get the minimum recorded duration for each patient_id
+  group_by(patient_id) %>% 
+  summarize(
+    min_recorded_duration_years = min(recorded_duration) / 365.25
+  )
+df_condition_min_recorded_duration
+```
+
+Now we can merge with the observations to get our final data frame for input into the survival analysis:
+
+```{r}
+df_survival <- df_observation %>% 
+  left_join(
+    df_condition_min_recorded_duration,
+    by = "patient_id"
+  )
+df_survival
+```
+
+Let's sanity check the two key variables we need for time in observation:
+
+```{r}
+df_survival %>% select(min_recorded_duration_years, observationEndAgeInYears) %>% skim
+```
+
+Recall that we checked to make sure there was one row per patient id in `df_observation`, which had this many rows:
+
+```{r}
+df_observation %>% nrow
+```
+
+If that matches with the number of rows in `df_survival`, we know that we haven't introduced any extra rows. And if there are no missing data in the `skim()` output above, know we have the data we need.
+
+We can now run the survival analysis:
+
+```{r}
+df_surv_input <- df_survival %>% 
+  select(patient_id, min_recorded_duration_years, observationEndAgeInYears, value_code, value_display) %>% 
+  mutate(
+    observation_time_years = observationEndAgeInYears - min_recorded_duration_years,
+    event = case_when(
+      value_code == "438949009" ~ 0, # Alive
+      value_code == "419099009" ~ 1, # Dead
+      T ~ NaN # null for all other values
+    )
+  )
+
+df_surv_input
+```
+
+Let's sanity check our `event` variable:
+
+```{r}
+ctable(df_surv_input$event, df_surv_input$value_display)
+```
+
+Looks good! Now we can run the survival analysis and generate a Kaplan-Meier survival curves:
+
+```{r}
+surv_obj <- Surv(time = df_surv_input$observation_time_years, event = df_surv_input$event)
+fit <- survfit(surv_obj ~ 1, data = df_surv_input)
+ggsurvplot(fit, data = df_surv_input)
+```
 
