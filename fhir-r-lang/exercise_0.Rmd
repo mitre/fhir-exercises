@@ -5,18 +5,19 @@ output:
     df_print: paged
 ---
 
-## Learning Objectives
-
-The objective for this exercise is **to introduce you to the basic mechanisms for working with FHIR.**
+## Exercise Objective: Introduce you to the basic mechanisms for working with FHIR
 
 For this exercise, we will walk you through the following steps:
 
-- Establish a connection to the client server
-- Format and submit a query to the server
-- Process response data from the FHIR server.
-- View the resulting data to confirm that we successfully pulled data from the remote server.
+1. Establish a connection to the client server.
+2. Format and submit a query to the server.
+3. Process response data from the FHIR server as a JSON document.
+4. View the resulting JSON to confirm that we successfully pulled data from the remote server.
 
-We will use the `fhircrackr` library to handle querying from a FHIR server and converting the response into an R dataframe.
+## Icons in this Guide
+ 📘 A link to a useful external reference related to the section the icon appears in  
+
+## Step 0: Initial setup
 
 Let's get our environment set up:
 
@@ -34,7 +35,7 @@ Generally speaking the pattern for a RESTful GET query appended to a URL will ta
 VERB [url]/[Resource] {?parameter=[value]}
 ```
 
-See <http://hl7.org/fhir/R4/http.html> for more details.
+📘[Read more about FHIR HTTP Interactions](http://hl7.org/fhir/R4/http.html)
 
 Let's attempt to do a sample load from our example FHIR server by requesting [Patient resources](https://www.hl7.org/fhir/patient.html) for the available patients.
 
@@ -75,7 +76,7 @@ table_desc_patient <- fhir_table_description(
 )
 ```
 
-Many of the XPath queries you will use wil be straight-forward, like `id` and `name/given`. In some cases, you may need to construct more complex queries like the one to extract `birthTime` from the `patient-birthTime` extension in the FHIR resource instance. You can use a tool like [this XPath tester](https://extendsclass.com/xpath-tester.html) to help generate XPaths. For more information on XPath, see [this guide](https://www.w3schools.com/xml/xpath_intro.asp).
+Many of the XPath queries you will use wil be straight-forward, like `id` and `name/given`. In some cases, you may need to construct more complex queries like the one to extract `birthTime` from the `patient-birthTime` extension in the FHIR resource instance. You can use a tool like [this XPath tester](https://extendsclass.com/xpath-tester.html) to help generate XPaths. For more information on XPath, see [this guide](https://www.w3schools.com/xml/xpath_intro.asp). We will cover how to view the underlying FHIR XML to construct XPath queries in subsequent exercises.
 
 Once the table description is created, we can create a dataframe:
 
@@ -85,3 +86,5 @@ df_patient
 ```
 
 You should see the name, gender, birthday and birth time for the patient with ID `smart-1032702`.
+
+In the next exercise, we'll look deeper into these and other requests and converting data into data frames for analysis.
