@@ -715,7 +715,7 @@ df_condition_study <- df_condition_study %>%
     !is.na(recorded_duration)
   ) %>% 
   mutate(
-    onsetAgeInYears = as.numeric(recorded_duration) / 365
+    onsetAgeInYears = recorded_duration / 365
   )
 ```
 
