@@ -219,6 +219,7 @@ Now if we reshape the `df_medication_requests` data frame from long to wide, and
 ```{r}
 df <- df_medication_requests %>% 
   filter(active == "active") %>% 
+  distinct(subject.reference, rxcode) %>% # Remove any duplicates
   select(subject.reference, rxcode) %>% 
   group_by(subject.reference) %>% 
   summarize(
