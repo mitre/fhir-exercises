@@ -92,7 +92,7 @@ For the simplest example, let's just query for the first set of Patients on the 
 
 ```{r}
 fhir_server <- "https://kf-api-fhir-service.kidsfirstdrc.org"
-request <- fhir_url(url = fhir_server, resource = "Patient", )
+request <- fhir_url(url = fhir_server, resource = "Patient")
 patient_bundle <- fhir_search(request = request, max_bundles = 10)
 ```
 
