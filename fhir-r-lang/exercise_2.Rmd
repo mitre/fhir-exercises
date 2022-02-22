@@ -64,8 +64,6 @@ library(table1)
 library(httr)
 library(jsonlite)
 
-# library(lubridate) # Datetime manipulation
-
 # Visualizations
 library(ggthemes)
 theme_set(ggthemes::theme_economist_white())
@@ -76,6 +74,9 @@ library(survminer)
 ```
 
 Kids First uses an [HTTP cookie](https://en.wikipedia.org/wiki/HTTP_cookie) for authentication, which isn't supported natively by `fhircrackr`. The `setup` block above loads a patched version of `fhircrackr` to support this.
+
+If you see the message "Could not authenticate with Kids First. The cookie may need to be updated"
+when running the code block above, then let the instructors know ASAP so they can fetch a new cookie, or [see these instructions to fetch a cookie](https://github.com/kids-first/kf-api-fhir-service#authenticate-to-access-server-environment) and then re-run the setup block above.
 
 
 ## 1. Demographics
@@ -96,8 +97,6 @@ request <- fhir_url(url = fhir_server, resource = "Patient")
 patient_bundle <- fhir_search(request = request, max_bundles = 10)
 ```
 
-(Note: if you get an error then the cookie you are using expired - let the instructors know ASAP so they can fetch a new one, or [see these instructions to fetch a cookie](https://github.com/kids-first/kf-api-fhir-service#authenticate-to-access-server-environment) and put it into the kf_cookie.txt file, then reload the Environment Setup step above.)
-
 Let's filter the bundle down to just the first Patient resource to see what it contains:
 ```{r}
 xml2::xml_find_first(x = patient_bundle[[1]], xpath = "./entry[1]/resource") %>% 
@@ -112,7 +111,7 @@ Looking at this XML, it appears to contain the data to construct a data frame of
 |103070|male|Not Reported|Not Reported|
 |...|...|...|...|
 
-Gender is relatively easy to extract, but race and Ethnicity are a little tricker to extract because they are recorded as _extensions_. Extensions are used to represent information that is not part of the basic definition of a resource.
+Gender is relatively easy to extract, but race and Ethnicity are a little trickier to extract because they are recorded as _extensions_. Extensions are used to represent information that is not part of the basic definition of a resource.
 
 Every element in a resource or data type includes an optional "extension" child element that may be present any number of times. Extensions contain a defining `url` and either a `value[x]` or sub-extensions (but not both).
 
@@ -120,10 +119,7 @@ This also leads into choice types, ie, that `value[x]`. Choice types allow for d
 
 A simple example of choice types is the `Patient.deceased[x]` field indicating if the individual is deceased or not. `deceased[x]` is allowed to be either a `boolean` or `dateTime`.
 
-
-Note that extensions are also allowed on primitive types, so in JSON these are represented by prepending the field name with an underscore `_` to create a new object-type field where the extension field can be added. The following example demonstrates the "birthTime" extension on the `Patient.birthDate` field:
-
-**TODO:** Convert this to XML? Why is `_birthDate` missing from the XML above?
+Note that extensions are also allowed on primitive types. If you are looking at the JSON representation of FHIR resources (see Exercise 1), extensions on primitive types are represented by prepending the field name with an underscore `_` to create a new object-type field where the extension field can be added. The following example demonstrates the "birthTime" extension on the `Patient.birthDate` field:
 
 ```
 {
@@ -141,6 +137,16 @@ Note that extensions are also allowed on primitive types, so in JSON these are r
 }
 ```
 
+The XML version looks like this:
+
+```
+<birthDate value="1987-06-05">
+  <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
+    <valueDateTime value="1987-06-05T04:32:01Z"/>
+  </extension>
+</birthDate>
+```
+
 We'll see more instances like this later in the exercise.
 
 📘[Read more about Extensions in FHIR](https://www.hl7.org/fhir/extensibility.html)
@@ -150,66 +156,63 @@ Getting back to Race and Ethnicity, these extensions are defined within [US Core
 
 Both the Race and Ethnicity extension use subextensions to represent the concept in 3 possible ways:
  - OMB Category, based on the (https://www.govinfo.gov/content/pkg/FR-1997-10-30/pdf/97-28653.pdf)
- - `url` is "ombCategory"
- - `valueCoding` from the [OMB Race Categories ValueSet](https://hl7.org/fhir/us/core/STU4/ValueSet-omb-race-category.html) or [OMB Ethnicity Categories ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-omb-ethnicity-category.html)
+    - `url` is "ombCategory"
+    - `valueCoding` from the [OMB Race Categories ValueSet](https://hl7.org/fhir/us/core/STU4/ValueSet-omb-race-category.html) or [OMB Ethnicity Categories ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-omb-ethnicity-category.html)
  - Detailed, based on CDC Race and Ethnicity codes
-- `url` is "detailed"
-- `valueCoding` from the [Detailed race ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-detailed-race.html) or [Detailed ethnicity ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-detailed-ethnicity.html)
+   - `url` is "detailed"
+   - `valueCoding` from the [Detailed race ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-detailed-race.html) or [Detailed ethnicity ValueSet](https://www.hl7.org/fhir/us/core/ValueSet-detailed-ethnicity.html)
  - Text, free text (required)
-- `url` is "text"
-- `valueString` is free text
+   - `url` is "text"
+   - `valueString` is free text
 
-📘[Read more about the US Core Race Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-race.html)
+📘[Read more about the US Core Race Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-race.html) 
 
-📘[Read more about the US Core Ethnicity Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-ethnicity.html)
+📘[Read more about the US Core Ethnicity Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-ethnicity.html) 
 
 ----
 
-Now, let's convert the FHIR resource a data frame using the same technique from Exercise 1:
+Given the above let's define functions to find the Race and Ethnicity on a Patient resource.
+
+🖐 Fill in the blank XPath queries below to extract the race and ethnicity values out of the extensions on a Patient resource:
 
 ```{r}
 
 # Identify which elements of the FHIR resource we want to capture in our data frame - see Exercise 0 for details
 table_desc_patient <- fhir_table_description(
-        resource = "Patient",
-        cols = c(
-          id            = "id",
-          gender        = "gender",
-          race_string = str_c(
-            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
-            "/extension[@url=\"text\"]",
-            "/valueString"
-          ),
-          race_coding_display = str_c(
-            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
-            "/extension[@url=\"text\"]",
-            "/valueCoding",
-            "/display"
-          ),
-          race_coding_code = str_c(
-            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
-            "/extension[@url=\"text\"]",
-            "/valueCoding",
-            "/code"
-          ),
-          ethnicity_string = str_c(
-            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
-            "/extension[@url=\"text\"]",
-            "/valueString"
-          ),
-          ethnicity_coding_display = str_c(
-            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
-            "/extension[@url=\"text\"]",
-            "/valueCoding",
-            "/display"
-          ),
-          ethnicity_coding_code = str_c(
-            "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
-            "/extension[@url=\"text\"]",
-            "/valueCoding",
-            "/code"
-          )
-        )
+  resource = "Patient",
+  cols = c(
+    id          = "id",
+    gender      = "gender",
+    race_string = str_c(
+      "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
+      "/extension[@url=\"text\"]",
+      "/valueString"
+    ),
+    # The resources we are working with store race and ethincity as strings rather than
+    # codes. If you did need to extract the codes, this is what the XPath queries would
+    # look like:
+    #
+    # race_coding_display = str_c(
+    #   "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
+    #   "/extension[@url=\"text\"]",
+    #   "/valueCoding",
+    #   "/display"
+    # ),
+    # race_coding_code = str_c(
+    #   "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\"]",
+    #   "/extension[@url=\"text\"]",
+    #   "/valueCoding",
+    #   "/code"
+    # ),
+    
+    
+    # 🖐 Fill in the XPath query to extract the ethnicity from the `valueString` of the extension:
+    ethnicity_string = str_c(
+      "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
+      "/extension[@url=\"text\"]",
+      "/valueString"
+    )
+  )
 )
 
 # Convert to R data frame
@@ -217,9 +220,6 @@ df_patient <- fhir_crack(bundles = patient_bundle, design = table_desc_patient, 
 
 df_patient
 ```
-
-In this case, it appears that `valueCode` is not used in the data for race or ethnicity, so we can rely on `valueString` (which appears in the `race_string` and `ethnicity_string` columns).
-
 
 Let's look at some descriptive statistics:
 
@@ -283,22 +283,24 @@ Let's use grade III glioma as our condition of interest, with **MONDO:0021640** 
 
 ----
 
-In Exercise 1 we saw an instance of basic querying, when we searched for MedicationRequests associated to a given Patient. (Reminder: `"{FHIR_SERVER}/MedicationRequest?patient=10098"`) This is one of the most basic and fundamental types of query, where we get resources from a server, filtered by some aspect of the resource itself. In the previous example with medications, the MedicationRequest resource has a reference back to the Patient in the `patient` field so we can query that directly.
-But what if we want to go in the other direction? For example, find all Patients that are taking a given Medication, or Patients that have been diagnosed with a given Condition?
+In Exercise 1 we saw an instance of basic querying, when we searched for MedicationRequests associated to a given Patient. (Reminder: `"{FHIR_SERVER}/MedicationRequest?patient=10098"`) This is one of the most basic and fundamental types of query, where we get resources from a server, filtered by some aspect of the resource itself. In the previous example with medications, the MedicationRequest resource has a reference back to the Patient in the `patient` field so we can query that directly. 
+But what if we want to go in the other direction? For example, find all Patients that are taking a given Medication, or Patients that have been diagnosed with a given Condition? 
 
 Enter "chaining" and "reverse chaining". These are capabilities of FHIR that allow for more complex queries that can save a client and/or server from having to perform a series of operations.
 
 The FHIR documentation offers the following examples of chaining:
 
->  In order to save a client from performing a series of search operations, reference parameters may be "chained" by appending them with a period (.) followed by the name of a search parameter defined for the target resource. This can be done recursively, following a logical path through a graph of related resources, separated by `.`. For instance, given that the resource `DiagnosticReport` has a search parameter named `subject`, which is usually a reference to a `Patient` resource, and the `Patient` resource includes a parameter `name` which searches on patient name, then the search
+>  In order to save a client from performing a series of search operations, reference parameters may be "chained" by appending them with a period (.) followed by the name of a search parameter defined for the target resource. This can be done recursively, following a logical path through a graph of related resources, separated by `.`. For instance, given that the resource `DiagnosticReport` has a search parameter named `subject`, which is usually a reference to a `Patient` resource, and the `Patient` resource includes a parameter `name` which searches on patient name, then the search  
+> 
+> `GET [base]/DiagnosticReport?subject.name=peter`  
+>
+> is a request to return all the lab reports that have a `subject` whose `name` includes "peter". Because the Diagnostic Report subject can be one of a set of different resources, it's necessary to limit the search to a particular type:  
+>
+> `GET [base]/DiagnosticReport?subject:Patient.name=peter`  
+>
+> This request returns all the lab reports that have a subject which is a patient, whose name includes "peter". 
 
-`GET [base]/DiagnosticReport?subject.name=peter`
 
-is a request to return all the lab reports that have a `subject` whose `name` includes "peter". Because the Diagnostic Report subject can be one of a set of different resources, it's necessary to limit the search to a particular type:
-
-`GET [base]/DiagnosticReport?subject:Patient.name=peter`
-
-This request returns all the lab reports that have a subject which is a patient, whose name includes "peter".
 
 In the case of "Patients diagnosed with a given Condition", we want the opposite direction - search for resources based on what links back to them. This is done with the `_has` search parameter.
 
@@ -308,19 +310,22 @@ The `_has` search parameter uses the colon character `:` to separate fields, and
  - the field on that resource which would link back to the current resource
  - a field on that resource to filter by
 
+
 A complete example is:
 
 `[base]/Patient?_has:Observation:patient:code=1234-5`
 
-This requests the server to return Patient resources, where the patient resource is referred to by at least one Observation where the observation has a code of 1234, and where the Observation refers to the patient resource in the patient search parameter.
+This requests the server to return Patient resources, where the patient resource is referred to by at least one Observation where the observation has a code of 1234, and where the Observation refers to the patient resource in the patient search parameter. 
+
 
 Unfortunately we acknowledge the syntax is a little confusing. It may be easiest to read this query as as "Get Patients that have an Observation that links back to this Patient having a code of 1234-5"
+
 
 📘 [Read more about FHIR Search Chaining and Reverse Chaining](https://hl7.org/fhir/r4/search.html#chaining)
 
 Let's use this approach to find Patients based on a diagnosis.
 
-🖐 Fill in the search query to find Patients that have a Condition of grade III glioma.
+🖐 Fill in the search query (in the `parameters` argument) to find Patients that have a Condition of grade III glioma.
 
 ```{r}
 request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:Condition:patient:code" = "MONDO:0021640"))
@@ -359,20 +364,20 @@ Let's look at the XML for the first ResearchStudy resource instance returned:
 
 ```{r}
 xml2::xml_find_first(x = research_study_bundle[[1]], xpath = "./entry[1]/resource") %>%
-        paste0 %>%
-        cat
+  paste0 %>%
+  cat
 ```
 
+Based on this, we can construct the XPath queries to pull these resources into a data frame:
 
 ```{r}
 table_desc_research_study <- fhir_table_description(
-        resource = "ResearchStudy",
-
-        cols = c(
-                id = "id",
-                title = "title"
-        )
-
+  resource = "ResearchStudy",
+  
+  cols = c(
+    id = "id",
+    title = "title"
+  )
 )
 
 # Convert to R data frame
@@ -405,13 +410,18 @@ table1(~ gender + race_string + ethnicity_string, data = df_patient_study, overa
 ## 2. Most Frequent Diagnoses
 
 Our second step will be show how to perform queries that enable basic prevalence analysis. Again there are a few different ways we can build a cohort for this.
+In this step we'll be looking at diagnoses, which are represented by the Condition resource.
+
+📘 Read more about the [FHIR Condition resource](https://www.hl7.org/fhir/condition.html).
 
 ### 2.1. Just the first conditions on the server
 
-As before, let's start with the simplest possible approach of just selecting an unfiltered and unsorted set of Condition resources. This time, let's tell the server we want 250 Conditions.
+As before, let's start with the simplest possible approach of just selecting an unfiltered and unsorted set of Condition resources. This time, let's tell the server we want 250 Conditions.   
 (Why 250? In this case it's the most the server will return in one response.)
 
-🖐 Fill in the query to request 250 Condition resources from the server
+📘 Refresher: read more about [requesting a certain number of resources](https://www.hl7.org/fhir/search.html#count).
+
+🖐 Fill in the query to select 250 Condition resources from the server
 
 ```{r}
 request <- fhir_url(url = fhir_server, resource = "Condition", parameters = list("_count" = "250"))
@@ -427,13 +437,14 @@ xml2::xml_find_first(x = condition_bundle[[1]], xpath = "./entry[4]/resource") %
 The key to what this Condition represents is nested within the `code` field, but there's a lot of information there. Let's dig into three very important types in FHIR: `code`, `Coding`, and `CodeableConcept`.
 
 #### code
+
 `code` is a FHIR primitive based on string. `code`s are generally taken from a controlled set of strings defined elsewhere, and are restricted in that `code`s may not contain leading whitespace, trailing whitespace, or more than 1 consecutive whitespace character. `"9283-4"` is an example of a `code`.
 
-
 #### Coding
+
 [`Coding`](https://www.hl7.org/fhir/datatypes.html#Coding) is a general purpose datatype that builds on top of `code`. A `Coding` is a representaton of a defined concept using a symbol from a defined code system. `Coding` includes fields for `code`, the code `system` it comes from, the `version` of the system, a human-readable `display`, and `userSelected` to indicate if this coding was chosen directly by the user. An example `Coding`:
 
-**TODO: Convert to XML?**
+In JSON:
 
 ```
 {
@@ -443,12 +454,24 @@ The key to what this Condition represents is nested within the `code` field, but
 }
 ```
 
+In XML:
+
+```
+<coding> 
+  <system value="http://snomed.info/sct"/> 
+  <code value="444814009"/> 
+  <display value="Viral sinusitis (disorder)"/> 
+</coding> 
+```
+
 #### CodeableConcept
+
 [`CodeableConcept`](https://www.hl7.org/fhir/datatypes.html#CodeableConcept) is a general purpose datatype builds further on top of `Coding`. A `CodeableConcept` represents a value that is usually supplied by providing a reference to one or more terminologies or ontologies but may also be defined by the provision of text. Most resources that are defined by specific clinical concepts will include a `CodeableConcept` type field.
 `CodeableConcept` includes fields for an array of `coding`s and optional `text`.
 
 
-An example `CodeableConcept`:
+An example `CodeableConcept` in JSON:
+
 ```
 {
     "coding": [
@@ -466,10 +489,28 @@ An example `CodeableConcept`:
 }
 ```
 
+And in XML:
 
-In this case all we really want is a consistent human-readable display, so let's get these into a DataFrame and map that `code` field into something appropriate.
+```
+<valueCodeableConcept>
+  <coding>
+    <system value="http://snomed.info/sct"/>
+    <code value="260385009"/>
+    <display value="Negative"/>
+  </coding>
+  <coding>
+    <system value="https://acme.lab/resultcodes"/>
+    <code value="NEG"/>
+    <display value="Negative"/>
+  </coding>
+  <text value="Negative for Chlamydia Trachomatis rRNA"/>
+</valueCodeableConcept>
+```
 
 
+In this case all we really want is a consistent human-readable display, so let's get these into a data frame and map that `code` field into something appropriate.
+
+🖐 Fill in the XPath queries below to extract the `text` of the CodeableConcept, and the `code`, `display`, and `system` of the contained Coding.
 
 ```{r}
 table_desc_condition <- fhir_table_description(
@@ -478,11 +519,10 @@ table_desc_condition <- fhir_table_description(
   cols = c(
     id = "id",
     patient_id = "subject/reference",
-    # TODO: figure out if/how to handle multiple codes
-    code = "code/coding[1]/code",
-    code_text = "code/text",
-    code_display = "code/coding[1]/display",
-    code_system = "code/coding[1]/system"
+    codeableconcept_text = "code/text",
+    coding_code = "code/coding/code",
+    coding_display = "code/coding/display",
+    coding_system = "code/coding/system"
   )
 
 )
@@ -496,15 +536,15 @@ df_condition
 Now let's create a table of the top 10 most prevalent conditions:
 
 ```{r}
-df_condition %>% count(code_text, sort = TRUE)
+df_condition %>% count(codeableconcept_text, sort = TRUE)
 ```
 
 Now let's create a graph of the top 10 most prevalent conditions:
 
 ```{r}
 ggplot(
-  df_condition %>% count(code_text, sort = TRUE) %>% head(10),
-  aes(x = reorder(code_text, n), y = n)
+  df_condition %>% count(codeableconcept_text, sort = TRUE) %>% head(10),
+  aes(x = reorder(codeableconcept_text, n), y = n)
   ) +
   geom_bar(stat="identity") + 
   coord_flip() +
@@ -512,6 +552,8 @@ ggplot(
   scale_y_continuous(breaks=c(0,2,4,6,8,10))
 ```
 
+
+**************** stopped
 
 ### 2.2. Patients in the Research Study
 
@@ -566,15 +608,15 @@ bundle <- fhir_search(request = request, max_bundles = 1)
 # Can use the same table description as we set up above
 df_condition_study <- fhir_crack(bundles = bundle, design = table_desc_condition, verbose = 0)
 
-df_condition_study %>% count(code_text, sort = TRUE)
+df_condition_study %>% count(codeableconcept_text, sort = TRUE)
 ```
 
 Here's the graph version:
 
 ```{r}
 ggplot(
-  df_condition_study %>% count(code_text, sort = TRUE) %>% head(10),
-  aes(x = reorder(code_text, n), y = n)
+  df_condition_study %>% count(codeableconcept_text, sort = TRUE) %>% head(10),
+  aes(x = reorder(codeableconcept_text, n), y = n)
   ) +
   geom_bar(stat="identity") + 
   coord_flip() +
@@ -626,7 +668,9 @@ What we see here is that the Condition has a `recordedDate` field with an extens
 See more about the relative-date extension here: http://hl7.org/fhir/R4/extension-relative-date.html
  
  
-Now let's put this into a DataFrame:
+Now let's put this into a data frame:
+
+🖐 Fill in the blank parts of the XPath query to extract the value and units.
 
 ```{r}
 
@@ -684,13 +728,7 @@ ggplot(df_condition_glioma, aes(onsetAgeInYears)) +
 
 Now let's go back to our selected Research Study and see how we can get the Conditions for those Patients in the study. We've seen before that doubly-nested references may not work, so instead we can combine multiple approaches as we saw in section 2.2, to fetch Patients by ResearchStudy, and then include their diagnosed Conditions.
 
-
-🖐 Fill in the query to select Patients in the ResearchStudy of interest, along with their Conditions.
-
-Reminder: the ResearchStudy id = **76758**
-
-
-**TODO:** This is the same block as for 2.2 - why is this repeated?
+(Note: this is the same query we did back in Section 2.2.)
 
 ```{r}
 request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:ResearchSubject:individual:study" = "76758", "_revinclude" = "Condition:subject"))
@@ -727,8 +765,6 @@ ggplot(df_condition_study, aes(onsetAgeInYears)) +
 ```
 
 
-
-
 ## 4. Overall Survival
 
 ### 4.1. Patients in the Research Study
@@ -749,11 +785,9 @@ xml2::xml_find_first(x = bundle[[1]], xpath = "./total") %>%
         cat
 ```
 
-
 Looks like that's a no. That's fine, there are other options. We'll spare the reader the full exploration process, but we know that in this case, Clinical Status of "Alive" or "Dead" is captured as an Observation with SNOMED code "263493007". Observations can be thought of as a clinical question of sorts, where the question is captured as the `code` and the answer is captured as the `value`.
 
 📘 [Read more about the Observation resource](https://www.hl7.org/fhir/observation.html)
-
 
 Let's look at an example of one of these:
 
@@ -764,6 +798,10 @@ xml2::xml_find_first(x = bundle[[1]], xpath = "./entry[1]/resource") %>%
         paste0 %>%
         cat
 ```
+
+Note: there are other ways this query could have been run. For example the code system could have been specified like `fhir_url(url = fhir_server, resource = "Observation", parameters = c("code" = "http://snomed.info/sct|263493007"))`.
+
+📘 Read more about [token search](https://www.hl7.org/fhir/search.html#token)
 
 Like with the Condition resources in previous examples, we see an `_effectiveDate` with extensions describing a date relative to birth. There's our common reference point, so let's gather all our data and put it together.
 
@@ -797,7 +835,7 @@ xml2::xml_find_first(x = bundle[[1]], xpath = "//*[contains (name(), \"Observati
 To calculate survival, we have to get subtract onset date from the latest clinical status date (Observation).
 As with Condition `_recordedDate`, these Observations use a relative date via an extension on `_effectiveDateTime`.
 
-Let's break that out into a single number. Fortunately the format is exactly the same as before, so we can reuse the same approach we used earlier with Condition
+Let's break that out into a single number. Fortunately the format is exactly the same as before, so we can reuse the same approach we used earlier with Condition.
 
 ```{r}
 table_desc_observation <- fhir_table_description(
@@ -1003,3 +1041,26 @@ fit <- survfit(surv_obj ~ 1, data = df_surv_input)
 ggsurvplot(fit, data = df_surv_input)
 ```
 
+We're only using a small set of patients here so the graph is going to show a wide area of uncertainty. Consider changing the most recent FHIR query above to select 250 records, and running through the steps again to get here and seeing how the result changes. This is left as an exercise for the reader.
+
+## Summary
+
+Well done! We've just walked through eight different sample queries to build out content for four fundamental concepts. 
+
+### Learning Objectives and Key Concepts
+
+In this exercise, you practiced:
+
+ - Connecting to Kids First
+ - Fetching and Examining Demographic Data
+ - Finding a ResearchStudy
+ - Fetching Patients enrolled in a ResearchStudy
+ - Dealing with Extensions (e.g., age of onset)
+ - Identifying Patients with desired diagnosis and data elements across multiple studies/datasets
+ - Utilize APIs to explore the data (e.g., demographics)
+ - Utilize APIs for research analyses (e.g., phenotype analysis)
+ - Building Graphs from FHIR data
+     - Demographics
+     - Most Frequent Diagnoses
+     - Age at Diagnosis
+     - Overall Survival
