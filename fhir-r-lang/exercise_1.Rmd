@@ -523,6 +523,7 @@ response_list$results$mechanism_of_action %>% paste %>% cat
 ## Learning Objectives and Key Concepts
 
 As a recap, this this exercise you learned how to:
+
 * Query a FHIR Server to learn about its capabilities
 * How to read FHIR specifications and understand how it applies to FHIR interactions and data
 * Search for resources of various types and parse the results to find information of interest
