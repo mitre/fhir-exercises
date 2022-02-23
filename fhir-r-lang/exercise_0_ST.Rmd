@@ -110,6 +110,7 @@ Once the table description is created, we can create a dataframe:
 ```{r}
 df_patient <- fhir_crack(bundles = patient_bundles, design = table_desc_patient, verbose = 0)
 df_patient
+df_pateint
 ```
 
 You should see the name, gender, birthday and birth time for the patient with ID `smart-1032702`.
