@@ -93,7 +93,7 @@ For the simplest example, let's just query for the first set of Patients on the 
 
 ```{r}
 fhir_server <- "https://kf-api-fhir-service.kidsfirstdrc.org"
-request <- fhir_url(url = fhir_server, resource = "Patient")
+request <- fhir_url(______________)
 patient_bundle <- fhir_search(request = request, max_bundles = 10)
 ```
 
@@ -208,9 +208,7 @@ table_desc_patient <- fhir_table_description(
     
     # 🖐 Fill in the XPath query to extract the ethnicity from the `valueString` of the extension:
     ethnicity_string = str_c(
-      "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
-      "/extension[@url=\"text\"]",
-      "/valueString"
+      _____
     )
   )
 )
@@ -328,7 +326,7 @@ Let's use this approach to find Patients based on a diagnosis.
 🖐 Fill in the search query (in the `parameters` argument) to find Patients that have a Condition of grade III glioma.
 
 ```{r}
-request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:Condition:patient:code" = "MONDO:0021640"))
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list(________))
 patient_bundle <- fhir_search(request = request, max_bundles = 1)
 
 # Can use the same table description as we set up above
@@ -397,7 +395,7 @@ We can query for Patient resources by ResearchStudy via those ResearchSubjects (
 🖐 Fill in the query to find Patients that are associated to ResearchStudy 76758
 
 ```{r}
-request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:ResearchSubject:individual:study" = "76758"))
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list(_______))
 patient_bundle <- fhir_search(request = request, max_bundles = 1)
 
 # Can use the same table description as we set up above
@@ -424,7 +422,7 @@ As before, let's start with the simplest possible approach of just selecting an 
 🖐 Fill in the query to select 250 Condition resources from the server
 
 ```{r}
-request <- fhir_url(url = fhir_server, resource = "Condition", parameters = list("_count" = "250"))
+request <- fhir_url(url = fhir_server, resource = "Condition", parameters = list(_____))
 condition_bundle <- fhir_search(request = request, max_bundles = 1)
 
 # The first few only had `code.text` - change $n `entry[$n]` to integers until
@@ -519,10 +517,10 @@ table_desc_condition <- fhir_table_description(
   cols = c(
     id = "id",
     patient_id = "subject/reference",
-    codeableconcept_text = "code/text",
-    coding_code = "code/coding/code",
-    coding_display = "code/coding/display",
-    coding_system = "code/coding/system"
+    codeableconcept_text = "___",
+    coding_code = "___",
+    coding_display = "___",
+    coding_system = "___"
   )
 
 )
@@ -602,7 +600,7 @@ Reminder: the ResearchStudy id = **76758**
 
 
 ```{r}
-request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:ResearchSubject:individual:study" = "76758", "_revinclude" = "Condition:subject"))
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list(_____))
 bundle <- fhir_search(request = request, max_bundles = 1)
 
 # Can use the same table description as we set up above
@@ -652,7 +650,7 @@ Let's start by querying for Conditions of a given code. We'll stick with **MONDO
 Then we'll look at one instance to see what it contains.
 
 ```{r}
-request <- fhir_url(url = fhir_server, resource = "Condition", parameters = list("code" = "MONDO:0021640"))
+request <- fhir_url(url = fhir_server, resource = "Condition", parameters = list(_____))
 bundle <- fhir_search(request = request, max_bundles = 1)
 
 xml2::xml_find_first(x = bundle[[1]], xpath = "./entry[1]/resource") %>% 
@@ -684,15 +682,11 @@ table_desc_condition_glioma <- fhir_table_description(
       "recordedDate",
       "/extension[@url=\"http://hl7.org/fhir/StructureDefinition/relative-date\"]",
       "/extension[@url=\"offset\"]",
-      "/valueDuration",
-      "/value"
+      ______,
+      ______
     ),
     recorded_duration_units = str_c(
-      "recordedDate",
-      "/extension[@url=\"http://hl7.org/fhir/StructureDefinition/relative-date\"]",
-      "/extension[@url=\"offset\"]",
-      "/valueDuration",
-      "/unit"
+      ____
     )
   )
 
@@ -814,7 +808,7 @@ Reminder: the ResearchStudy id = **76758**
 
 
 ```{r}
-request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list("_has:ResearchSubject:individual:study" = "76758", "_revinclude" = "Observation:subject", "_revinclude" = "Condition:subject"))
+request <- fhir_url(url = fhir_server, resource = "Patient", parameters = list())
 bundle <- fhir_search(request = request, max_bundles = 1)
 ```
 

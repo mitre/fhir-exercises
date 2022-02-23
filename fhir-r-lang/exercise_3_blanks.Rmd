@@ -121,7 +121,7 @@ Two combinations we can try are:
 
 ```{r}
 response <- httr::GET(
-        url = str_interp("https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=207106+656659"),
+        url = str_interp("________"),
         config = list(add_headers( Accept = 'application/json'))
 )
 
@@ -133,7 +133,7 @@ Now for the secondpair of RxNorm codes:
 
 ```{r}
 response <- httr::GET(
-        url = str_interp("https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=762675+859258"),
+        url = str_interp("_________"),
         config = list(add_headers( Accept = 'application/json'))
 )
 
@@ -220,10 +220,7 @@ fn_get_drug_drug_interaction <- Vectorize(fn_get_drug_drug_interaction) # Makes 
  🖐 Test our original two drug combinations with the custom function to ensure that it is outputting the expected responses. 
 
 ```{r}
-# Test to make sure it works
-fn_get_drug_drug_interaction("207106+656659") %>% cat
-paste("\n\n") %>% cat
-fn_get_drug_drug_interaction("762675+859258") %>% cat
+________
 ```
 
 Now if we reshape the `df_medication_requests` data frame from long to wide, and concatenate all the RXNorm codes (separated with a `+`), we can then run this function on each row to identify the patients with drug/drug interactions.
