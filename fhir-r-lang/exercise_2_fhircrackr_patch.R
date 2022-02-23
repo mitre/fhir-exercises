@@ -36,11 +36,27 @@ get_bundle <- function(
       )
 
     } else {#search via GET
+      
+      # Get cookie
+      cookie <- str_trim(content(httr::GET("https://github.com/mitre/fhir-exercises/raw/main/kf_cookie.txt")))
+      
+      # Verify that we can access the server
+      test_connection <- httr::GET(
+        url = "https://kf-api-fhir-service.kidsfirstdrc.org/metadata",
+        config = httr::add_headers(
+          Accept = "application/fhir+json",
+          cookie = paste0("AWSELBAuthSessionCookie-0=", cookie)
+        )
+      )
+      if(str_detect(content(test_connection, "text"), "<!DOCTYPE html>")) {
+        stop("Could not authenticate with Kids First. The cookie may need to be updated")
+      }
+      
       response <- httr::GET(
         url = request,
         config = httr::add_headers(
           Accept = "application/fhir+xml",
-          cookie = paste0("AWSELBAuthSessionCookie-0=", str_trim(read_file("kf_cookie.txt"))),
+          cookie = paste0("AWSELBAuthSessionCookie-0=", cookie),
           Authorization = token
         ),
         auth

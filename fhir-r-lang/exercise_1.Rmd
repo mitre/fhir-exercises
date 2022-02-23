@@ -17,6 +17,7 @@ Workshop attendees will learn how to:
 * Integrate other, non-FHIR based APIs
 
 ## Icons in this Guide
+
 📘A link to a useful external reference related to the section the icon appears in
 
 ## Introduction
@@ -24,6 +25,8 @@ Workshop attendees will learn how to:
 This notebook explores a FHIR server with a RESTful API which contains data with patients currently prescribed opioids. We'll explore the FHIR Server to learn about its capabilities, query for FHIR resources, and generate some basic visualizations from the data.
 
 ## Initial setup
+
+First, let's configure the environment with the libraries and settings that will be used throughtout the rest of the exercise.
 
 ```{r setup}
 library(fhircrackr)
@@ -42,7 +45,7 @@ library(ggthemes)
 theme_set(ggthemes::theme_economist_white())
 ```
 
-## Environment configuration
+### Environment configuration
 
 ```{r}
 fhir_server <- "https://api.logicahealth.org/opioids/open"
@@ -62,7 +65,7 @@ All servers are required to support the `capabilities` interaction which documen
 cs <- fhir_capability_statement(fhir_server)
 ```
 
-The CapabilityStatement is usually a very large resource so we'll focus on a few key elements. Namely, the FHIR version supported, the Resource formats supported, the number of RESTful Endpoints, and the endpoint types.
+The CapabilityStatement is usually a very large resource so we'll focus on a few key elements. Namely, the FHIR version supported, the Resource formats supported, and the endpoint types.
 
 ```{r}
 str_c("FHIR Version Supported: ", cs$Meta$fhirVersion, "\n") %>% cat
@@ -70,9 +73,14 @@ str_c("Formats Supported: ", cs$Meta$format, "\n") %>% cat
 str_c("FHIR Resources Supported: ", cs$Resources$type %>% length, "\n") %>% cat
 ```
 
-**TODO:** Add in RESTFul endpoints for parity with Python
-
 We can also see the details of the types of FHIR Resources available on this endpoint and the supported operations. Keep in mind that there might not be any data available for a particular FHIR resource even if the server supports that type.
+
+```{r}
+cs$Resources %>% glimpse
+```
+
+If you look at the full data frame below, the `interaction.code` column tells you which [FHIR interactions](https://www.hl7.org/fhir/http.html) are supported for a given resource type.
+
 
 ```{r}
 cs$Resources
@@ -80,7 +88,7 @@ cs$Resources
 
 #### Manually querying the FHIR server (without `fhircrackr`)
 
-You can also do this directly with the `httr` library to manually make the HTTP request and load the results into R, but this takes some extra work:
+You can also do this directly with the `httr` library to manually make the HTTP request and load the results into R, but this takes some extra work. You might find scenarios where you need to do this because of limitations of `fhircrackr`, so we will demonstrate this approach:
 
 ```{r}
 response <- httr::GET(
@@ -112,11 +120,50 @@ response_list$rest$resource[[1]] %>%
   select(type, searchParam)
 ```
 
+## FHIR Resources
+
+We can see that this FHIR server supports a lot of resources, but what resources might we typically expect a FHIR server to support and where can we learn more about them?
+
+The FHIR spec defines a large number of resources. Some of these resources have been widely implemented and have stable structures, while others are merely considered draft. As a standards framework, the FHIR specification itself largely does not require that an implementation support any specific resources.
+
+Implementation Guides, like the US Core Implementation Guide, which reflects the U.S. Core Data for Interoperability (USCDI) illustrate the resources and profiles on those resources that an implementation would be expected to support for most US health data.
+
+![](img/profiles.png)
+
+📘[Read more about FHIR Resources](https://www.hl7.org/fhir/resourcelist.html)
+
+📘[Read more about FHIR Maturity Levels](https://www.hl7.org/fhir/versions.html#std-process)
+
+📘[Read more about US Core](https://www.hl7.org/fhir/us/core/)
+
+📘[Read more about USCDI](https://www.healthit.gov/isa/sites/isa/files/2020-07/USCDI-Version-1-July-2020-Errata-Final.pdf)
+
+
+## FHIR Profiles and Data Types
+
+The structure of a FHIR resource is defined by a FHIR `StructureDefinition`. Some of the key things a FHIR `StructureDefinition` defines for a resource includes:
+
+* the elements and the data types of those elements within the FHIR resource
+* the `Cardinality`, or minimum and maximum number of times the element may appear in a resource
+* any terminology bindings which determine the value sets from which an coded element is expected or required to be from
+
+Profiles within Implementation Guides build off the `StructureDefinitions` within the base FHIR specification to further constrain requirements or add expectations around extensions to support additional information not covered by the base resource profile.
+
+![Base FHIR types](img/types.png)
+
+📘[Read more about StructureDefinitions](http://www.hl7.org/fhir/structuredefinition.html)
+
+📘[Read more about Data Types](https://www.hl7.org/fhir/datatypes.html)
+
+📘[Read more about Cardinality](https://www.hl7.org/fhir/conformance-rules.html#cardinality)
+
+📘[Read more about Terminology Bindings](https://www.hl7.org/fhir/terminologies.html)
+
 ### Querying the Server
 
 The FHIR Spec has a nice summary cheat sheet which is helpful for crafting queries and understanding the resources they return.
 
-![](fhir_cheatsheet.png)
+![FHIR cheatsheet](img/fhir_cheatsheet.png)
 
 (Source: <https://www.hl7.org/fhir/http.html#summary>)
 
@@ -146,7 +193,6 @@ response <- httr::GET(
 httr::content(response, as = "text", encoding = "UTF-8") %>% prettify()
 ```
 
-
 You'll notice that this data frame contains nested data frames, which makes it more difficult to work with than we want. While this can be resolved by manipulating the data frames with R, using the `fhircrackr` package from Exercise 0 circumvents this complexity.
 
 It also avoids some complexity around needing to make multiple requests to get multiple "pages" of responses from the FHIR server:
@@ -165,7 +211,7 @@ patient_bundle <- fhir_search(request = request)
 
 ```
 
-Next we need to define the table description for `fhircrackr` to convert from the FHIR resources into data frames. Note that `fhircrackr` requests XML responses rather than JSON from the server. To understand the structure of the XML, let's look at the second resource returned by the server (the first one is missing some data that the others have):
+Next we need to define the table description for `fhircrackr` to convert from the FHIR resources into data frames. Note that `fhircrackr` requests XML responses rather than JSON from the server. To understand the structure of the XML, let's look at the second resource returned by the server (using `./entry[2]/resource` as the XPath query to get the 2nd resource instead of `./entry[1]/resource` to get the first resource; the first one is missing some data that the others have):
 
 ```{r}
 xml2::xml_find_first(x = patient_bundle[[1]], xpath = "./entry[2]/resource") %>% 
@@ -290,7 +336,7 @@ response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8
 response_list$entry %>% glimpse
 ```
 
-Now we can use `fhircrackr` to quickly load these into a data frame:
+Again, using `httr` will involve nested data frames for most resources, so it will usually be easier to use `fhircrackr` instead to generate a data frame from the FHIR resource:
 
 ```{r}
 request <-
@@ -455,6 +501,7 @@ df_meds %>%
         ) %>% 
   select(patient, med_code_value, atc_class, everything())
 ```
+
 In Exercise 3 we'll work more with the RxNav APIs to detect drug interactions in a patient.
 
 There's other APIs we could use as well, including FDA APIs where we can retrieve things like adverse event reports or product labels for specific drugs.
@@ -484,3 +531,4 @@ As a recap, this this exercise you learned how to:
 * Understanding FHIR Resources to find data of interest
 * Exploring MedicationRequest
 * Integrate other, non-FHIR based APIs
+
