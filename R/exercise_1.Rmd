@@ -311,7 +311,7 @@ response <- httr::GET(
 # Convert from raw `httr` response into an R list for easier access
 response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
 
-response_list$parameter
+response_list$parameter[4,]$part
 ```
 
 Here we can see that the code is not inactive.
