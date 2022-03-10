@@ -40,10 +40,11 @@ In this exercise we're going to explore how to access the data needed to generat
 The Kids First Data Portal is accessible at https://portal.kidsfirstdrc.org/explore (login required, though signup is free with any Google account)
 
 For this exercise we'll be focusing on the following 4 graphs:
- - Demographics
- - Most frequent diagnoses
- - Age at diagnosis
- - Overall survival
+
+- Demographics
+- Most frequent diagnoses
+- Age at diagnosis
+- Overall survival
 
 (Note that the image shown depicts the statistics for the entire Kids First population, whereas all graphs in this exercise will be based on specific sub-cohorts of the population, so the graphs we generate today will look a little different.)
 
@@ -69,7 +70,7 @@ library(ggthemes)
 theme_set(ggthemes::theme_economist_white())
 
 # Survival analysis
-library(survival) 
+library(survival)
 library(survminer)
 ```
 
@@ -99,8 +100,8 @@ patient_bundle <- fhir_search(request = request, max_bundles = 10)
 
 Let's filter the bundle down to just the first Patient resource to see what it contains:
 ```{r}
-xml2::xml_find_first(x = patient_bundle[[1]], xpath = "./entry[1]/resource") %>% 
-  paste0 %>% 
+xml2::xml_find_first(x = patient_bundle[[1]], xpath = "./entry[1]/resource") %>%
+  paste0 %>%
   cat
 ```
 
@@ -165,9 +166,9 @@ Both the Race and Ethnicity extension use subextensions to represent the concept
    - `url` is "text"
    - `valueString` is free text
 
-📘[Read more about the US Core Race Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-race.html) 
+📘[Read more about the US Core Race Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-race.html)
 
-📘[Read more about the US Core Ethnicity Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-ethnicity.html) 
+📘[Read more about the US Core Ethnicity Extension](https://hl7.org/fhir/us/core/STU4/StructureDefinition-us-core-ethnicity.html)
 
 ----
 
@@ -204,8 +205,8 @@ table_desc_patient <- fhir_table_description(
     #   "/valueCoding",
     #   "/code"
     # ),
-    
-    
+
+
     # 🖐 Fill in the XPath query to extract the ethnicity from the `valueString` of the extension:
     ethnicity_string = str_c(
       "extension[@url=\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\"]",
@@ -283,22 +284,22 @@ Let's use grade III glioma as our condition of interest, with **MONDO:0021640** 
 
 ----
 
-In Exercise 1 we saw an instance of basic querying, when we searched for MedicationRequests associated to a given Patient. (Reminder: `"{FHIR_SERVER}/MedicationRequest?patient=10098"`) This is one of the most basic and fundamental types of query, where we get resources from a server, filtered by some aspect of the resource itself. In the previous example with medications, the MedicationRequest resource has a reference back to the Patient in the `patient` field so we can query that directly. 
-But what if we want to go in the other direction? For example, find all Patients that are taking a given Medication, or Patients that have been diagnosed with a given Condition? 
+In Exercise 1 we saw an instance of basic querying, when we searched for MedicationRequests associated to a given Patient. (Reminder: `"{FHIR_SERVER}/MedicationRequest?patient=10098"`) This is one of the most basic and fundamental types of query, where we get resources from a server, filtered by some aspect of the resource itself. In the previous example with medications, the MedicationRequest resource has a reference back to the Patient in the `patient` field so we can query that directly.
+But what if we want to go in the other direction? For example, find all Patients that are taking a given Medication, or Patients that have been diagnosed with a given Condition?
 
 Enter "chaining" and "reverse chaining". These are capabilities of FHIR that allow for more complex queries that can save a client and/or server from having to perform a series of operations.
 
 The FHIR documentation offers the following examples of chaining:
 
->  In order to save a client from performing a series of search operations, reference parameters may be "chained" by appending them with a period (.) followed by the name of a search parameter defined for the target resource. This can be done recursively, following a logical path through a graph of related resources, separated by `.`. For instance, given that the resource `DiagnosticReport` has a search parameter named `subject`, which is usually a reference to a `Patient` resource, and the `Patient` resource includes a parameter `name` which searches on patient name, then the search  
-> 
-> `GET [base]/DiagnosticReport?subject.name=peter`  
+>  In order to save a client from performing a series of search operations, reference parameters may be "chained" by appending them with a period (.) followed by the name of a search parameter defined for the target resource. This can be done recursively, following a logical path through a graph of related resources, separated by `.`. For instance, given that the resource `DiagnosticReport` has a search parameter named `subject`, which is usually a reference to a `Patient` resource, and the `Patient` resource includes a parameter `name` which searches on patient name, then the search
 >
-> is a request to return all the lab reports that have a `subject` whose `name` includes "peter". Because the Diagnostic Report subject can be one of a set of different resources, it's necessary to limit the search to a particular type:  
+> `GET [base]/DiagnosticReport?subject.name=peter`
 >
-> `GET [base]/DiagnosticReport?subject:Patient.name=peter`  
+> is a request to return all the lab reports that have a `subject` whose `name` includes "peter". Because the Diagnostic Report subject can be one of a set of different resources, it's necessary to limit the search to a particular type:
 >
-> This request returns all the lab reports that have a subject which is a patient, whose name includes "peter". 
+> `GET [base]/DiagnosticReport?subject:Patient.name=peter`
+>
+> This request returns all the lab reports that have a subject which is a patient, whose name includes "peter".
 
 
 
@@ -315,7 +316,7 @@ A complete example is:
 
 `[base]/Patient?_has:Observation:patient:code=1234-5`
 
-This requests the server to return Patient resources, where the patient resource is referred to by at least one Observation where the observation has a code of 1234, and where the Observation refers to the patient resource in the patient search parameter. 
+This requests the server to return Patient resources, where the patient resource is referred to by at least one Observation where the observation has a code of 1234, and where the Observation refers to the patient resource in the patient search parameter.
 
 
 Unfortunately we acknowledge the syntax is a little confusing. It may be easiest to read this query as as "Get Patients that have an Observation that links back to this Patient having a code of 1234-5"
@@ -373,7 +374,7 @@ Based on this, we can construct the XPath queries to pull these resources into a
 ```{r}
 table_desc_research_study <- fhir_table_description(
   resource = "ResearchStudy",
-  
+
   cols = c(
     id = "id",
     title = "title"
@@ -416,7 +417,7 @@ In this step we'll be looking at diagnoses, which are represented by the Conditi
 
 ### 2.1. Just the first conditions on the server
 
-As before, let's start with the simplest possible approach of just selecting an unfiltered and unsorted set of Condition resources. This time, let's tell the server we want 250 Conditions.   
+As before, let's start with the simplest possible approach of just selecting an unfiltered and unsorted set of Condition resources. This time, let's tell the server we want 250 Conditions.
 (Why 250? In this case it's the most the server will return in one response.)
 
 📘 Refresher: read more about [requesting a certain number of resources](https://www.hl7.org/fhir/search.html#count).
@@ -457,11 +458,11 @@ In JSON:
 In XML:
 
 ```
-<coding> 
-  <system value="http://snomed.info/sct"/> 
-  <code value="444814009"/> 
-  <display value="Viral sinusitis (disorder)"/> 
-</coding> 
+<coding>
+  <system value="http://snomed.info/sct"/>
+  <code value="444814009"/>
+  <display value="Viral sinusitis (disorder)"/>
+</coding>
 ```
 
 #### CodeableConcept
@@ -546,7 +547,7 @@ ggplot(
   df_condition %>% count(codeableconcept_text, sort = TRUE) %>% head(10),
   aes(x = reorder(codeableconcept_text, n), y = n)
   ) +
-  geom_bar(stat="identity") + 
+  geom_bar(stat="identity") +
   coord_flip() +
   xlab("Condition") +
   scale_y_continuous(breaks=c(0,2,4,6,8,10))
@@ -618,7 +619,7 @@ ggplot(
   df_condition_study %>% count(codeableconcept_text, sort = TRUE) %>% head(10),
   aes(x = reorder(codeableconcept_text, n), y = n)
   ) +
-  geom_bar(stat="identity") + 
+  geom_bar(stat="identity") +
   coord_flip() +
   xlab("Condition")
 ```
@@ -655,19 +656,19 @@ Then we'll look at one instance to see what it contains.
 request <- fhir_url(url = fhir_server, resource = "Condition", parameters = list("code" = "MONDO:0021640"))
 bundle <- fhir_search(request = request, max_bundles = 1)
 
-xml2::xml_find_first(x = bundle[[1]], xpath = "./entry[1]/resource") %>% 
-  paste0 %>% 
+xml2::xml_find_first(x = bundle[[1]], xpath = "./entry[1]/resource") %>%
+  paste0 %>%
   cat
 ```
 
-What we see here is that the Condition has a `recordedDate` field with an extension "http://hl7.org/fhir/StructureDefinition/relative-date", then nested below that are 3 sub-extensions representing the parts of a "relative date": 
+What we see here is that the Condition has a `recordedDate` field with an extension "http://hl7.org/fhir/StructureDefinition/relative-date", then nested below that are 3 sub-extensions representing the parts of a "relative date":
  - The event that this Condition is relative to
  - The relationship (before/after)
  - The numerical offset
- 
+
 See more about the relative-date extension here: http://hl7.org/fhir/R4/extension-relative-date.html
- 
- 
+
+
 Now let's put this into a data frame:
 
 🖐 Fill in the blank parts of the XPath query to extract the value and units.
@@ -708,7 +709,7 @@ Note: for data aggregated from multiple sources, you may encounter data in very 
 Given this assumption, convert the `recorded_duratrion` column into age in years:
 
 ```{r}
-df_condition_glioma <- df_condition_glioma %>% 
+df_condition_glioma <- df_condition_glioma %>%
   mutate(
     onsetAgeInYears = as.numeric(recorded_duration) / 365
   )
@@ -745,13 +746,13 @@ Note that this query also gets the Patient resources, but we don't need these fo
 Not all Conditions may have a `recordedDate`, so filter to just those that do and convert to onset in age:
 
 ```{r}
-df_condition_study <- df_condition_study %>% 
+df_condition_study <- df_condition_study %>%
   mutate(
     recorded_duration = as.numeric(recorded_duration)
   ) %>%
   filter(
     !is.na(recorded_duration)
-  ) %>% 
+  ) %>%
   mutate(
     onsetAgeInYears = recorded_duration / 365
   )
@@ -858,12 +859,12 @@ table_desc_observation <- fhir_table_description(
       "/valueDuration",
       "/unit"
     ),
-    
+
     # Get the code identifying the Observation as well
     code = "code/coding/code",
     code_display = "code/coding/display",
     code_system = "code/coding/system",
-    
+
     # Get the value for the observation
     value_code = "valueCodeableConcept/coding/code",
     value_display = "valueCodeableConcept/coding/display",
@@ -905,7 +906,7 @@ df_observation$effectiveDateTime_duration_units %>% freq
 If there are any `NA` values for the units, that means no `effectiveDateTime` is recorded. Let's drop any such records for simplicity of this exercise, but for research this would warrant deeper investigation.
 
 ```{r}
-df_observation <- df_observation %>% 
+df_observation <- df_observation %>%
   filter(!is.na(effectiveDateTime_duration_units))
 
 df_observation$effectiveDateTime_duration_units %>% freq
@@ -914,7 +915,7 @@ df_observation$effectiveDateTime_duration_units %>% freq
 For easier interpretability, let's change this from days to years:
 
 ```{r}
-df_observation <- df_observation %>% 
+df_observation <- df_observation %>%
   mutate(
     effectiveDateTime_duration = as.numeric(effectiveDateTime_duration)
   ) %>%
@@ -970,15 +971,15 @@ df_condition$recorded_duration_units %>% freq
 
 
 ```{r}
-df_condition_min_recorded_duration <- df_condition %>% 
+df_condition_min_recorded_duration <- df_condition %>%
   mutate(
     recorded_duration = as.numeric(recorded_duration)
-  ) %>% 
+  ) %>%
   # Remove rows with null recorded duration
   filter(!is.na(recorded_duration_units)) %>%
-  
+
   # Get the minimum recorded duration for each patient_id
-  group_by(patient_id) %>% 
+  group_by(patient_id) %>%
   summarize(
     min_recorded_duration_years = min(recorded_duration) / 365.25
   )
@@ -988,7 +989,7 @@ df_condition_min_recorded_duration
 Now we can merge with the observations to get our final data frame for input into the survival analysis:
 
 ```{r}
-df_survival <- df_observation %>% 
+df_survival <- df_observation %>%
   left_join(
     df_condition_min_recorded_duration,
     by = "patient_id"
@@ -1013,8 +1014,8 @@ If that matches with the number of rows in `df_survival`, we know that we haven'
 We can now run the survival analysis:
 
 ```{r}
-df_surv_input <- df_survival %>% 
-  select(patient_id, min_recorded_duration_years, observationEndAgeInYears, value_code, value_display) %>% 
+df_surv_input <- df_survival %>%
+  select(patient_id, min_recorded_duration_years, observationEndAgeInYears, value_code, value_display) %>%
   mutate(
     observation_time_years = observationEndAgeInYears - min_recorded_duration_years,
     event = case_when(
@@ -1045,7 +1046,7 @@ We're only using a small set of patients here so the graph is going to show a wi
 
 ## Summary
 
-Well done! We've just walked through eight different sample queries to build out content for four fundamental concepts. 
+Well done! We've just walked through eight different sample queries to build out content for four fundamental concepts.
 
 ### Learning Objectives and Key Concepts
 
