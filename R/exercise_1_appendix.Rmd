@@ -1,0 +1,106 @@
+---
+title: "FHIR for Research - Exercise 1 Appendix: Manually querying FHIR endpoints"
+output:
+  html_document:
+    df_print: paged
+---
+
+While `fhircrackr` provides an easy method for ingesting data from a FHIR server into R data frames, the `fhircrackr` library does not support all possible requests that can be made to a FHIR server. If you need to make a request that isn't supported by `fhircrackr`, you can use the `httr` package to manually construct and send HTTP requests, and `jsonlite` to convert the JSON response into R data frames. (Note that `fhircrackr` uses `httr` under the hood, but this is hidden with typical use of `fhircrackr`.)
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+
+# Used for direct RESTful queries against the FHIR server
+library(httr)
+library(jsonlite)
+```
+
+Set the FHIR server:
+
+```{r}
+fhir_server <- "https://api.logicahealth.org/opioids/open"
+```
+
+## Example 1: Capability statements
+
+Recall from Exercise 1, we requested the FHIR server's Capability Statement with `fhircrackr::fhir_capability_statement(fhir_server)`
+
+This is how you would accomplish the same request directly with `httr`.
+#### Manually querying the FHIR server (without `fhircrackr`)
+
+```{r}
+response <- httr::GET(
+        url = str_interp("${fhir_server}/metadata"),
+
+        # Note that we request JSON rather than XML from the FHIR server. These are simply different
+        # representations of the same underlying data. JSON is easier to work with directly than XML.
+        config = list(add_headers( Accept = 'application/fhir+json'))
+)
+
+# Convert from raw `httr` response into an R list for easier access
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+```
+
+Here's what it looks like to pull out the interactions and search parameters from the Capability Statement into R data frames:
+
+```{r}
+# Interactions by resource
+response_list$rest$resource[[1]] %>%
+  mutate(
+    interaction = paste(interaction[[1]]$code, collapse = ", ")
+  ) %>%
+  select(type, interaction)
+```
+```{r}
+# Searches by resource type
+response_list$rest$resource[[1]] %>%
+  mutate(
+    searchParam = paste(searchParam[[1]]$name, collapse = ", ")
+  ) %>%
+  select(type, searchParam)
+```
+
+## Example 2: Simple FHIR search query
+
+In Exercise 1, we request a Bundle of Patient resources from the server with `fhircrackr` like:
+
+```
+request <- fhir_url(url = fhir_server, resource = "Patient")
+patient_bundle <- fhir_search(request = request)
+```
+
+To do this with `httr`:
+
+```{r}
+response <- httr::GET(
+        url = str_interp("${fhir_server}/Patient"),
+        config = list(add_headers( Accept = 'application/json'))
+)
+
+# Look at raw JSON
+httr::content(response, as = "text", encoding = "UTF-8") %>% prettify()
+```
+
+To convert to an R data frame:
+
+```{r}
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+```
+
+## Example 3: Another FHIR search query
+
+Let's request the MedicationRequest resources for a specific patient from the server:
+
+```{r}
+response <- httr::GET(
+  url = str_interp("${fhir_server}/MedicationRequest?patient=10098"),
+  config = list(add_headers( Accept = 'application/fhir+json'))
+)
+
+# Convert from raw `httr` response into an R list for easier access
+response_list <- fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), flatten = TRUE)
+
+response_list$entry %>% glimpse
+```
