@@ -26,12 +26,12 @@ jobs:
 
       - run: |
           touch ssh_key
-          echo "${{ secrets.GITHUB_DEPLOY_KEY }}" > ssh_key
+          echo "${{ secrets.FHIR_EXERCISES_DEPLOY_KEY }}" > ssh_key
       
       # Deploy the output
       - run: |
           git config --global user.email "noreply@mitre.org"
-          git config --global user.name "FSH Finder Build"
+          git config --global user.name "Autobuild"
           git branch -D r-binder &>/dev/null
           git branch r-binder
           echo "r-4.1-2022-01-10" > runtime.txt
