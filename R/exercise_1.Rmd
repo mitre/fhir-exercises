@@ -161,7 +161,7 @@ xml2::xml_structure(
 )
 ```
 
-Each instance of a given resource will be _roughly_ the same (assuming the FHIR server is working properly), so looking at the structure of just one resource typically provides _most_ of the information you'll need to extract the data from _all_ the resources. By incrementing the `[[1]]` to `[[2]]`, etc. in the commands above you can look at additional resource instances.
+Each instance of a given resource will be _roughly_ the same (assuming the FHIR server is working properly), so looking at the structure of just one resource typically provides _most_ of the information you'll need to extract the data from _all_ the resources. By incrementing `entry[1]` to `entry[2]` (to see the next resource in the bundle) or `[[1]]` to `[[2]]` (to see the nth resource in the 2nd bundle), etc. in the commands above you can look at additional resource instances.
 
 You may also want to reference the [FHIR specification](https://www.hl7.org/fhir/resourcelist.html) for the resource you're working with (in this case, [Patient](https://www.hl7.org/fhir/patient.html)) to better understand what elements may be available, as well as documentation specific to the server's implementation (which may be found in a [FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html)).
 
