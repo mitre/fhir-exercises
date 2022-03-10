@@ -1,14 +1,14 @@
 # Geting started without installation
-These exercises are implemented using both Python and R. 
+These exercises are implemented using both Python and R.
 
 ## To run Python/Jupyter Notebook without installation
- - Click [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/stevetsa/fhir-exercises/HEAD)
+ - Click [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mitre/fhir-exercises/HEAD)
  - Select the notebook (Exercises*) from the left panel
 
 ## To run R/RStudio without installation
  - Create an account or sign in at [RStudio Cloud](https://rstudio.cloud/)
  - Click "New Project" and select from the dropdown menu "New Project from Git Repository"
- - Enter URL of this repository (https://github.com/stevetsa/fhir-exercises) and click OK
+ - Enter URL of this repository (https://github.com/mitre/fhir-exercises) and click OK
  - As you start each exercise, you will be prompted to install the packages needed for that exercise.
 
 
