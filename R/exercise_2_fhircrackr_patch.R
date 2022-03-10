@@ -36,10 +36,10 @@ get_bundle <- function(
       )
 
     } else {#search via GET
-      
+
       # Get cookie
-      cookie <- str_trim(content(httr::GET("https://github.com/mitre/fhir-exercises/raw/main/kf_cookie.txt")))
-      
+      cookie <- str_trim(content(httr::GET(kf_cookie_url)))
+
       # Verify that we can access the server
       test_connection <- httr::GET(
         url = "https://kf-api-fhir-service.kidsfirstdrc.org/metadata",
@@ -51,7 +51,7 @@ get_bundle <- function(
       if(str_detect(content(test_connection, "text"), "<!DOCTYPE html>")) {
         stop("Could not authenticate with Kids First. The cookie may need to be updated")
       }
-      
+
       response <- httr::GET(
         url = request,
         config = httr::add_headers(

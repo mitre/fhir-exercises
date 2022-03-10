@@ -54,7 +54,10 @@ Load needed libraries:
 
 ```{r setup}
 library(fhircrackr)
-source("exercise_2_fhircrackr_patch.R") # Support Kids First cookie
+
+# Support cookie authentication required for access to Kids First data
+kf_cookie_url <<- "https://github.com/mitre/fhir-exercises/raw/main/kf_cookie.txt"
+source("exercise_2_fhircrackr_patch.R")
 
 library(tidyverse)
 library(skimr)
