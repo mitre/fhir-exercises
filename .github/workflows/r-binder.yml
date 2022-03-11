@@ -25,11 +25,6 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v2
 
-      - name: Create SSH key for deploying on container filesystem
-        run: |
-          touch ssh_key
-          echo "${{ secrets.FHIR_EXERCISES_DEPLOY_KEY }}" > ssh_key
-      
       # Deploy the output
       - name: Git config
         run: |
@@ -38,12 +33,15 @@ jobs:
       
       - name: Create new r-binder branch
         run: git branch r-binder
+        
+      - name: Check out r-binder branch
+        run: git checkout r-binder
       
       - name: Create runtime.txt file
         run: echo "r-4.1-2022-01-10" > runtime.txt
       
       - name: Stage all files 
-        run: git add -A
+        run: git add runtime.txt
         
       - name: Commit files
         run: git commit -m "Add runtime"
