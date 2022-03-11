@@ -41,7 +41,7 @@ jobs:
         run: echo "r-4.1-2022-01-10" > runtime.txt
         
       - name: Create postBuild file
-        run: echo "R -e 'install.packages(\"renv\"); renv::restore()'" > postBuild
+        run: echo "R -e 'setwd(\"R\"); source(\"renv/activate.R\"); renv::restore()'" > postBuild
       
       - name: Stage files 
         run: git add -A
