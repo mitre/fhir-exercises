@@ -22,19 +22,34 @@ jobs:
     steps:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Check out repo
+        uses: actions/checkout@v2
 
-      - run: |
+      - name: Create SSH key for deploying on container filesystem
+        run: |
           touch ssh_key
           echo "${{ secrets.FHIR_EXERCISES_DEPLOY_KEY }}" > ssh_key
       
       # Deploy the output
-      - run: |
+      - name: Git config
+        run: |
           git config --global user.email "noreply@mitre.org"
           git config --global user.name "Autobuild"
-          git branch -D r-binder &>/dev/null
-          git branch r-binder
-          echo "r-4.1-2022-01-10" > runtime.txt
-          git add -A
-          git commit -m "Add runtime"
-          GIT_SSH_COMMAND='ssh -i ' git push -f -u origin r-binder
+      
+      - name: Delete existing r-binder branch if it exists
+        run: git branch -D r-binder &>/dev/null
+      
+      - name: Create new r-binder branch
+        run: git branch r-binder
+      
+      - name: Create runtime.txt file
+        run: echo "r-4.1-2022-01-10" > runtime.txt
+      
+      - name: Stage all files 
+        run: git add -A
+        
+      - name: Commit files
+        run: git commit -m "Add runtime"
+      
+      - name: Push r-binder branch back to GitHub
+        run: GIT_SSH_COMMAND='ssh -i ' git push -f -u origin r-binder
