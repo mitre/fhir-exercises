@@ -1,22 +1,25 @@
-# FHIR for Research Workshop - R version
+# FHIR for Research Exercises - R version
 
-## Initial setup on RStudio Server
+Note: For more information, see <a href="../README.md">the README in the root folder</a>.
 
-This project uses [`renv`](https://rstudio.github.io/renv/articles/renv.html) for dependency management.
+## Running
 
-To get started in an RStudio Server environment:
+You can run with one of the following:
 
-1. Create a .zip file of the contents of the `fhir-r-lang/` folder
-2. Upload this .zip to your RStudio Server
-3. Open the `fhir-r-lang.Rproj` file on RStudio Server, which will automatically install `renv` (if you don't have it already)
-4. Run `renv::restore()` to install the dependencies
-5. Open `exercise_0.Rmd` to test if the project works
+1. Binder
+    1. Click here to launch this project in a free cloud JupyterLab environment: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mitre/fhir-exercises/r-binder?urlpath=rstudio)
+    2. Wait for RStudio to load (may take a few minutes to install all the dependencies).
+    3. Follow "RStudio Instructions" below, **starting with Step 2**
+2. RStudio Cloud
+    1. Follow "RStudio Instructions" below
+3. Local RStudio or your own RStudio Server instance
+    1. Follow "RStudio Instructions" below
 
-## Knitted versions of RMarkdown notebooks
+### RStudio Instructions
 
-You can view the knitted versions of the RMarkdown notebooks here:
+After local RStudio is open, or your RStudio Server instance loads in your web browser:
 
-- <https://mitre.github.io/fhir-exercises/exercise_0.html>
-- <https://mitre.github.io/fhir-exercises/exercise_1.html>
-- <https://mitre.github.io/fhir-exercises/exercise_2.html>
-- <https://mitre.github.io/fhir-exercises/exercise_3.html>
+1. Click the "Terminal" tab and run `git clone https://github.com/mitre/fhir-exercises`
+2. In the "Files" pane, navigate to the `fhir-exercises/R/` folder and click `fhir-exercises-R.Rproj`. Click "Yes" in the confirmation dialog to load the project.
+3. In the "Console", run `renv::restore()` and answer `y` when prompted (may take a few minutes).
+4. In the "Files" pane, click the exercise you wish to open (e.g., `exercise_0.Rmd`). This should open the RMarkdown file for the exercise in the editor.
