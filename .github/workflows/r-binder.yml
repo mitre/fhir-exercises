@@ -39,12 +39,15 @@ jobs:
       
       - name: Create runtime.txt file
         run: echo "r-4.1-2022-01-10" > runtime.txt
+        
+      - name: Create postBuild file
+        run: echo "R -e 'install.packages(\"renv\"); renv::restore()'" > postBuild
       
-      - name: Stage all files 
-        run: git add runtime.txt
+      - name: Stage files 
+        run: git add -A
         
       - name: Commit files
-        run: git commit -m "Add runtime"
+        run: git commit -m "Add R-related files for Binder"
       
       - name: Push r-binder branch back to GitHub
         run: GIT_SSH_COMMAND='ssh -i ' git push -f -u origin r-binder
