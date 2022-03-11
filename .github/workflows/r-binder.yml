@@ -36,9 +36,6 @@ jobs:
           git config --global user.email "noreply@mitre.org"
           git config --global user.name "Autobuild"
       
-      - name: Delete existing r-binder branch if it exists
-        run: git branch -D r-binder &>/dev/null
-      
       - name: Create new r-binder branch
         run: git branch r-binder
       
