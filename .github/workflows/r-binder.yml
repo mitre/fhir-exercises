@@ -44,7 +44,7 @@ jobs:
         run: echo "R -e 'setwd(\"R\"); source(\"renv/activate.R\"); renv::restore()'" > postBuild
       
       - name: Create apt.txt file
-        run: echo "cmake" > apt.txt # Needed for nloptr R package
+        run: echo "libnlopt-dev" > apt.txt # Needed for nloptr R package
       
       - name: Stage files 
         run: git add -A
