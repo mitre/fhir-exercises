@@ -11,15 +11,15 @@ Workshop attendees will learn how to query FHIR resources in various ways, to en
 
 What will participants do as part of the exercise?
 
- - Connecting to Kids First
- - Fetching and Examining Demographic Data
- - Finding a ResearchStudy
- - Fetching Patients enrolled in a ResearchStudy
- - Dealing with Extensions (e.g., age of onset)
- - Identifying Patients with desired diagnosis and data elements across multiple studies/datasets
- - Utilize APIs to explore the data (e.g., demographics)
- - Utilize APIs for research analyses (e.g., phenotype analysis)
- - Building Graphs from FHIR data
+- Connecting to Kids First
+- Fetching and Examining Demographic Data
+- Finding a ResearchStudy
+- Fetching Patients enrolled in a ResearchStudy
+- Dealing with Extensions (e.g., age of onset)
+- Identifying Patients with desired diagnosis and data elements across multiple studies/datasets
+- Utilize APIs to explore the data (e.g., demographics)
+- Utilize APIs for research analyses (e.g., phenotype analysis)
+- Building Graphs from FHIR data
   - Demographics
   - Most Frequent Diagnoses
   - Age at Diagnosis
