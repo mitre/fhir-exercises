@@ -39,9 +39,10 @@ jobs:
       
       - name: Create runtime.txt file
         run: echo "r-4.1-2022-01-10" > runtime.txt
-        
-      - name: Create postBuild file
-        run: echo "R -e 'setwd(\"R\"); source(\"renv/activate.R\"); renv::restore()'" > postBuild
+       
+      # Times out - run inside of RStudio instead
+      # - name: Create postBuild file
+      #  run: echo "R -e 'setwd(\"R\"); source(\"renv/activate.R\"); renv::restore()'" > postBuild
       
       - name: Create apt.txt file
         run: echo "libnlopt-dev" > apt.txt # Needed for nloptr R package
