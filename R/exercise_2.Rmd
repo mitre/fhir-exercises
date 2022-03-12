@@ -35,7 +35,7 @@ What will participants do as part of the exercise?
 
 In this exercise we're going to explore how to access the data needed to generate the summary information from the Kids First dashboard in a few different ways. A snapshot of the Kids First dashboard is shown below:
 
-![KF Dashboard](../img/kf_dashboard.png)
+![KF Dashboard](img/kf_dashboard.png)
 
 The Kids First Data Portal is accessible at https://portal.kidsfirstdrc.org/explore (login required, though signup is free with any Google account)
 
