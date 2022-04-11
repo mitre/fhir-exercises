@@ -2,7 +2,7 @@
 
 ## Developing Locally
 
-### System Requirements**
+### System Requirements
 * [Python 3](https://www.python.org/downloads/)
 
 ### Set up a virtual environment _(Optional, but recommended)_
