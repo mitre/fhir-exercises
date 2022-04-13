@@ -37,7 +37,7 @@ pip install -r requirements.txt
 
 ### Running
 
-A live-reloading dosc server can be started with:
+A live-reloading docs server can be started with:
 ```shell
 mkdocs serve
 ```
