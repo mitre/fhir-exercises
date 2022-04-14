@@ -3,7 +3,7 @@ name: ghpages
 on:
   push:
     branches:
-      - exercise-4-scaffold
+      - main
 
 defaults:
   run:
