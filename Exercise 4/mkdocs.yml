@@ -1,0 +1,5 @@
+site_name: FHIR for Researchers
+
+theme:
+  name: material
+
