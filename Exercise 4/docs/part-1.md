@@ -12,6 +12,8 @@
 ### EHR Technical Architecture
 * To better understand the data elements contained in an EHR, it is important to understand the logical architecture of an EHR system. This section describes the major architectural components of an EHR system, and the interactions between these components.
 
+![EHR System Components](img/ehr_system.png)
+
 ### High-Level Overview of Access and Regulatory Considerations
 * PII and PHI Infomation and Cocnerns
     * Before potentially accessing EHR data, it is important to note that such information is considered highly sensitive and is subject to considerable safeguards. Specifically, much of the data contained within an EHR carries a legal designation of Protected Health Information (PHI).
@@ -165,6 +167,8 @@ ICD-10 is the 10th revision of the International Statistical Classification of D
 For disease reporting, the US utilizes its own national variant of ICD-10 called the ICD-10 Clinical Modification (ICD-10-CM). A procedural classification called ICD-10 Procedure Coding System (ICD-10-PCS] has also been developed for capturing inpatient procedures] The ICD-10-CM and ICD-10-PCS were developed by the Centers for Medicare and Medicaid Services(CMS) and the National Center for Health Statistics (NCHS)
 
 ICD-10-CM codes may consist of up to seven digits, with the seventh digit extensions representing visit encounter or sequelae for injuries and external causes.
+
+![ICD-10 Format](img/icd_10_format.png)
 
 Example codes:
 
