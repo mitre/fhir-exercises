@@ -305,6 +305,36 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="conclusion/" class="md-nav__link">
+        Wrapping up!
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -388,51 +418,71 @@
 
 <h1 id="welcome">Welcome!</h1>
 <h2 id="overview">Overview</h2>
-<p>This exercise is intended to augment <a href="https://github.com/mitre/fhir-exercises">FHIR for Research Exercises 0-3</a> with a broad view of EHR, terminology systems, and how USCDI and Implementation Guides like US Core enable remote access and interoperability.</p>
+<p>This exercise is intended to augment the R and Jupyter notebooks within the <a href="https://github.com/mitre/fhir-exercises">FHIR® for Research Exercises</a> with a broad view of Electronic Health Record (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability.</p>
+<p>For those interested in learning more about the FHIR® Standard please also consider reviewing the <a href="https://www.youtube.com/watch?v=_ZwQW0BJJx0">Introduction to FHIR® for Research webinar</a> and the <a href="https://github.com/mitre/fhir-exercises">FHIR® for Research Exercises 0-3 Workshop</a></p>
+<p>Upon completion of this exercise, NIH Researchers or Program Officers will have a foundational understanding of where FHIR®-enabled data comes from, and how to eventually access and utilize it.</p>
 <h2 id="sections">Sections:</h2>
 <h3 id="part-1-ehr-data">Part 1: EHR Data</h3>
-<p><strong>Background:</strong>  Electronic Health Records (EHR) contain important healthcare-related data. Understanding the purpose and structure of data inside the EHR is a necessary foundation for understanding how to access and exchange it.</p>
-<p><strong>Learning Objectives:</strong> for NIH Researchers or Program Officers to be able to identify how and why EHR data can be used for research purposes.</p>
-<p><strong>Components:</strong></p>
+<p><strong>Background:</strong>  Electronic Health Record (EHR) contain important healthcare-related data. Understanding the purpose and structure of data inside an EHR is a necessary foundation for understanding what data is captured, how it is captured, and how it might be queryable through an API.</p>
+<div class="admonition check">
+<p class="admonition-title">Learning Objectives</p>
+<p>Be able to identify how and why EHR data can be used for research purposes.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Components</p>
 <ul>
-<li>Background</li>
+<li>Overview of EHR Technology Ecosystem</li>
+<li>EHR Technical Architecture</li>
+<li>Access and Regulatory Considerations</li>
 <li>Data Composition</li>
-<li>What information is contained in an EHR record</li>
-<li>Patient flow and associated data inuts</li>
-<li>Codes and medical terminology</li>
-<li>File-types</li>
+<li>Sample EHR Data Exercise</li>
+<li>Codes and Medical Terminology</li>
+<li>LOINC</li>
+<li>CPT</li>
+<li>SNOMED CT</li>
+<li>ICD-10</li>
+<li>RxNorm</li>
 </ul>
+</div>
 <h3 id="part-2-uscdi-and-associated-terminology">Part 2: USCDI and Associated Terminology</h3>
-<p><strong>Background:</strong> Understanding the origin of the EHR data that researchers can work with is the first step to understanding how to eventually access and utilize it. A next step is understanding the technical standards that enable remote access and interoperability.</p>
-<p><strong>Learning Objective:</strong> o introduce NIH Program Officers and Researchers to the concept of health data exchange and interoperability, and an understanding of the core interoperable standard United States Core Data for Interoperability (USCDI). </p>
-<p><strong>Components:</strong></p>
+<p><strong>Background:</strong> Understanding EHR data that researchers could possibly work with is the first step to understanding how to eventually access and utilize it. A next step is understanding the technical standards that enable remote access and interoperability.</p>
+<div class="admonition check">
+<p class="admonition-title">Learning Objectives</p>
+<p>Understand the concept of health data exchange, interoperability, and the core interoperable standard United States Core Data for Interoperability (USCDI). </p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Components</p>
 <ul>
-<li>Background</li>
-<li>Goals of healthcare data interoperability</li>
-<li>Universal data standards and mapping approach</li>
-<li>USCDI</li>
+<li>Background on Health Data Interoperability</li>
+<li>History</li>
+<li>How Healthcare Data Standards Support Interoperability</li>
+<li>Introduction to USCDI</li>
 <li>Background and history</li>
-<li>Structure of Standard</li>
-<li>Classes and Component Elements</li>
+<li>Structure of the USCDI Standard</li>
 <li>Mapping USCDI to EHR data components</li>
-<li>USCDI and FHIR</li>
+<li>USCDI and FHIR®</li>
 </ul>
+</div>
 <h3 id="part-3-implementation-guides-and-us-core">Part 3: Implementation Guides and US Core</h3>
-<p><strong>Background:</strong> At this stage, you are now familiar with EHR data, and its conversion to standardized elements through a standard like USCDI. But while USCDI provides a standard for <strong>WHAT</strong> information must be included in an interoperable framework, it doesn’t specify <strong>HOW</strong> it must be packaged and rendered to external entities. The final piece in the interoperable framework then, is a standard geared precisely for information exchange. </p>
-<p>This standard is known as FHIR®, or the Fast Healthcare Interoperability Resources. (See:  <a href="hl7.org/fhir">hl7.org/fhir</a>)</p>
-<p><strong>Learning Objective:</strong> To help NIH Program Officers and Researchers understand the role that Implementation Guides like US Core play in standardizing the precise data elements made available in specific FHIR-enabled data exchanges. </p>
-<p><strong>Components:</strong></p>
+<p><strong>Background:</strong> By Part 3, readers should be familiar with EHR data, and its conversion to standardized elements through a standard like USCDI. But while USCDI provides a standard for <strong>WHAT</strong> information must be included in an interoperable framework, it doesn’t specify <strong>HOW</strong> it must be packaged and rendered to external entities. The final piece in the interoperable framework then, is a standard geared precisely for information exchange. </p>
+<p>This standard is known as HL7 FHIR®, or the Fast Healthcare Interoperability Resources. (See:  <a href="hl7.org/fhir">hl7.org/fhir</a></p>
+<div class="admonition check">
+<p class="admonition-title">Learning Objectives</p>
+<p>Understand the role that Implementation Guides like US Core play in standardizing the precise data elements made available in specific HL7 FHIR-enabled data exchanges. </p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Components</p>
 <ul>
-<li>Implementation Guides</li>
-<li>Definition, components and documentation</li>
-<li>How IGs are developed</li>
-<li>How to examine and utilize an IG for research</li>
-<li>IGs and the HL7 process</li>
+<li>Background on FHIR</li>
+<li>How Implementation Guides (IG) are developed</li>
+<li>Introducing Implementation Guides</li>
 <li>US Core</li>
-<li>Review specifics of the US Core IG including relationships to USCDI</li>
+<li>Specifics of the US Core IG including relationship to USCDI</li>
 <li>Requirements and elements to be US Core compliant</li>
-<li>IG navigation by example</li>
+<li>IG navigation example by detailed US Core walkthrough</li>
 </ul>
+</div>
+<p><strong>Please note, a Glossary of Acronyms used throughout this site is available in the navigation menu for easy access, should any confusion about an acronym arise.</strong></p>
 
               
             </article>

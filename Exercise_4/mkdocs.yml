@@ -22,3 +22,12 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+
+nav:
+- 'index.md'
+- 'part-1.md'
+- 'part-2.md'
+- 'part-3.md'
+- 'conclusion.md'
+- 'glossary.md'
+
