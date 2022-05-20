@@ -1,4 +1,4 @@
-# Glossary
+# Glossary of Abbreviations and Acronyms
 
 | Acronym | Definition| 
 |---------|-----------|

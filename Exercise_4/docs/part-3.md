@@ -8,7 +8,7 @@ to be available securely to those who have a need to access it, and to those who
 
 The FHIR® standard is developed and maintained by the (Health Level Seven®)  HL7® organization.
 
-??? Abstract "More about FHIR®"
+??? Example "More about FHIR®"
     HL7 FHIR is a robust and comprehensive standard, but for the purposes of this tutorial here is a very simplified view.
    
     * FHIR defines a set of **Resources** that can be exchanged.
@@ -51,7 +51,7 @@ The result of this, however, is that the potential exists for two health IT syst
 
 FHIR® IGs are typically published on the web after they are generated.
 
-??? note "For more information on the general process for IG creation, continue here"
+??? example "For more information on the general process for IG creation, continue here"
     * FHIR® has a specific process for publishing IG available here: [https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation](https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation)
 
     * FHIR® also includes the `ImplementationGuide` resource: a single resource that defines the logical content of the IG, along with the important entry pages into the publication, so that the logical package that the IG represents, so that the contents are computable. 
@@ -132,9 +132,9 @@ We can see details of the elements of the medication profile: [http://build.fhir
 ??? question "Knowledge Check: Which element(s) of this profile must be supported in order to be US Core Compliant?"
     `Medication.code` element
 
-Going back to our **smoking example** take a look here: [http://hl7.org/fhir/us/core/STU5/StructureDefinition-us-core-smokingstatus.html#mandatory-and-must-support-data-elements](http://hl7.org/fhir/us/core/STU5/StructureDefinition-us-core-smokingstatus.html#mandatory-and-must-support-data-elements)
+Going back to our **smoking example** take a look here: [http://hl7.org/fhir/us/core/STU5/StructureDefinition-us-core-smokingstatus.html#mandatory-and-must-support-data-elements](http://hl7.org/fhir/us/core/STU5/StructureDefinition-us-core-smokingstatus.html#mandatory-and-must-support-data-elements){target=_blank}
 
-![Smoking core profile](img/smoking_core.png)
+![Smoking core profile](img/smoking_core.png){: style="height:750px;width:750px"}
 
 We can see here a list of required elements this profile must support.
 
@@ -197,4 +197,4 @@ Link here: [http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smo
     * Video from the HL7 FHIR® Connectathon features hands-on FHIR® development and testing. Implementers and developers can gain hands-on experience developing FHIR-based solutions by participating in one of many tracks. [https://vimeo.com/542197402/8fb80fea04](https://vimeo.com/542197402/8fb80fea04)
 
 !!! check "Key Point: Why this matters:"
-    **Researchers accessing data through the FHIR® standard are almost guaranteed to encounter novel implementations based on the particulars of the system they are accessing. The US Core IG, however, serves as a baseline researchers will be able to depend on for United States-based EHR data. Familiarity with the US Core IG provides a foundational grasp of available data.**
+    **Researchers accessing data through the FHIR® standard are almost guaranteed to encounter novel implementations based on the particulars of the system they are accessing. The US Core IG, however, serves as a baseline researchers will be able to reference for United States-based EHR data. Familiarity with the US Core IG provides a foundational grasp of available data.**

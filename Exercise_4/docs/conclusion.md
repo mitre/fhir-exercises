@@ -1,4 +1,4 @@
-# Wrapping up!
+# Wrapping Up
 
 **Congratulations on completing this training module. We hope you've found the material educational and informative!**
 

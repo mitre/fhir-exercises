@@ -41,6 +41,8 @@ Finally, in December of 2016, Congress passed the **21st Century Cures Act**, wh
     * Like MACRA, the 21st Century Cures Act mandated support for interoperable network exchange to be spearheaded by the ONC in collaboration with the National Institute of Standards and Technology and other divisions of HHS. 
     * This work included establishing and publishing details about a trusted exchange framework along with a directory of participating health information networks and rules for these networks to apply. 
 
+    More about the Cures Act final rule is available here: [https://www.healthit.gov/cures/sites/default/files/cures/2020-03/TheONCCuresActFinalRule.pdf](https://www.healthit.gov/cures/sites/default/files/cures/2020-03/TheONCCuresActFinalRule.pdf)
+
 ## How Healthcare Data Standards Support Interoperability 
 **It is often assumed that interoperability shortfalls are primarily due to the siloed nature of data within ecosystems. Although data blocking is a concern, most EHR vendors have met the minimum requirements for sharing information. However, evidence suggests that even though EHR vendors are meeting these minimum requirements, they are not facilitating the data exchanges to maximize the opportunities for interoperability.**
 
