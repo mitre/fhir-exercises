@@ -23,14 +23,14 @@ The FHIR® standard is developed and maintained by the (Health Level Seven®)  H
    
     * A lot of optionality can be a good thing, but with exchanging health data for a particular use-case, that optionality and flexibility allows for too much ambiguity and differences. Therefore, the FHIR community also develops **Implementation Guides** to specify exactly how FHIR should be used for many real-world use-cases.
 
-> More information and an overview can be found here: [https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf](https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf)
+> More information and an overview can be found here: [https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf](https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf){target=_blank}
 
-!!! note "Additional Information Available"
+!!! danger "Additional Resources Available"
     * Please note, NIH has created a webinar and associated interactive workshop focused specifically on the FHIR® standard.  
-        * Webinar: [https://www.youtube.com/watch?v=_ZwQW0BJJx0](https://www.youtube.com/watch?v=_ZwQW0BJJx0)
-        * Workshop in Python: [https://www.youtube.com/watch?v=yGT3ottE7LY](https://www.youtube.com/watch?v=yGT3ottE7LY)
-        * Workshop in R: [https://www.youtube.com/watch?v=TpjueS9L-5o](https://www.youtube.com/watch?v=TpjueS9L-5o)
-        * Link to github exercises: [https://github.com/mitre/fhir-exercises](https://github.com/mitre/fhir-exercises)
+        * Webinar: [https://www.youtube.com/watch?v=_ZwQW0BJJx0](https://www.youtube.com/watch?v=_ZwQW0BJJx0){target=_blank}
+        * Workshop in Python: [https://www.youtube.com/watch?v=yGT3ottE7LY](https://www.youtube.com/watch?v=yGT3ottE7LY){target=_blank}
+        * Workshop in R: [https://www.youtube.com/watch?v=TpjueS9L-5o](https://www.youtube.com/watch?v=TpjueS9L-5o){target=_blank}
+        * Link to github exercises: [https://github.com/mitre/fhir-exercises](https://github.com/mitre/fhir-exercises){target=_blank}
 
 
 ## How Implementation Guides (IG) are developed
@@ -52,7 +52,7 @@ The result of this, however, is that the potential exists for two health IT syst
 FHIR® IGs are typically published on the web after they are generated.
 
 ??? example "For more information on the general process for IG creation, continue here"
-    * FHIR® has a specific process for publishing IG available here: [https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation](https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation)
+    * FHIR® has a specific process for publishing IG available here: [https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation](https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation){target=_blank}
 
     * FHIR® also includes the `ImplementationGuide` resource: a single resource that defines the logical content of the IG, along with the important entry pages into the publication, so that the logical package that the IG represents, so that the contents are computable. 
 
@@ -67,7 +67,7 @@ So, if there are a variety of IGs available for FHIR® implementation, is there 
 > Yes! The US Core IG does exactly that.
 
 The US Core IG is based on FHIR® Version R4 
-> Link for further info on FHIR® Version R4 Summary – FHIR® v4.0.1: [https://www.hl7.org/fhir/summary.html](https://www.hl7.org/fhir/summary.html) 
+> Link for further info on FHIR® Version R4 Summary – FHIR® v4.0.1: [https://www.hl7.org/fhir/summary.html](https://www.hl7.org/fhir/summary.html){target=_blank} 
 
 >The US Core IG defines the **minimum set of constraints on the FHIR® resources** to create the US Core Profiles. It also defines the **minimum set of FHIR® RESTful interactions** for each of the US Core Profiles to access patient data. By establishing the **“floor”** of standards to promote interoperability and adoption through common implementation, it allows for further standards development evolution for specific uses cases. 
 
@@ -77,13 +77,13 @@ Let’s take a closer look at how USCDI maps to US Core. The following table map
 ![uscore_uscdi_mapping](img/uscore_uscdi_mapping.png)
 
 The complete table is available here:
-[https://www.hl7.org/fhir/us/core/general-guidance.html](https://www.hl7.org/fhir/us/core/general-guidance.html)
+[https://www.hl7.org/fhir/us/core/general-guidance.html](https://www.hl7.org/fhir/us/core/general-guidance.html){target=_blank}
 
 ### Requirements and elements to be US Core compliant
 The complete list of **US Core Profiles** is below. Each profile defines the minimum mandatory elements, extensions and terminology requirements that **MUST** be present to satisfy that profile. 
 
 For each profile, requirements and guidance are given in a simple narrative summary.
-??? Note "Complete list of US Core Profiles"
+??? example "Complete list of US Core Profiles"
     * US Core AllergyIntolerance Profile
     * US Core BMI Profile
     * US Core Blood Pressure Profile
@@ -125,16 +125,18 @@ Looking at the complete list of US Core Profiles one might notice that **SMOKING
 ### IG navigation example by detailed US Core walkthrough
 
 Let’s look specifically at the US Core Medication Profile here.
-![uscore_medications](img/uscore_medications.png)
+![uscore_medications](img/uscoremedications1.png)
 
-We can see details of the elements of the medication profile: [http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-medication.html](http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-medication.html)
+We can see details of the elements of the medication profile: [http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-medication.html](http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-medication.html){target=_blank}
 
 ??? question "Knowledge Check: Which element(s) of this profile must be supported in order to be US Core Compliant?"
     `Medication.code` element
 
 Going back to our **smoking example** take a look here: [http://hl7.org/fhir/us/core/STU5/StructureDefinition-us-core-smokingstatus.html#mandatory-and-must-support-data-elements](http://hl7.org/fhir/us/core/STU5/StructureDefinition-us-core-smokingstatus.html#mandatory-and-must-support-data-elements){target=_blank}
 
-![Smoking core profile](img/smoking_core.png){: style="height:750px;width:750px"}
+![Smoking core profile part 1](img/smokingcore1.png)
+![Smoking core profile part 2](img/smokingcore2.png)
+
 
 We can see here a list of required elements this profile must support.
 
@@ -146,7 +148,7 @@ We can see here a list of required elements this profile must support.
 
 Let’s take a look at the raw unformatted **JSON code** for the resource:
 
-??? note "Sample JSON code of the Smoking Resource"
+??? example "Sample JSON code of the Smoking Resource"
     ```JSON
     {
     "resourceType": "Observation",
@@ -184,17 +186,17 @@ Let’s take a look at the raw unformatted **JSON code** for the resource:
     }
     }
     ```
-Check out this patient profile here: HL7.FHIR.US.CORE\Some Day Smoker Example - JSON Representation [http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html](http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html)
+Check out this patient profile here: HL7.FHIR.US.CORE\Some Day Smoker Example - JSON Representation [http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html](http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html){target=_blank}
 
-Link here: [http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html](http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html)
+Link here: [http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html](http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html){target=_blank}
 
 ??? question "Knowledge Check: When was this observation taken?"
     July 25, 2012
 ??? question "Knowledge Check: Is she a smoker and if so, what kind?"
     Never smoker
 
-!!! check "Additional Resources:"
-    * Video from the HL7 FHIR® Connectathon features hands-on FHIR® development and testing. Implementers and developers can gain hands-on experience developing FHIR-based solutions by participating in one of many tracks. [https://vimeo.com/542197402/8fb80fea04](https://vimeo.com/542197402/8fb80fea04)
+!!! danger "Additional Resources:"
+    * Video from the HL7 FHIR® Connectathon features hands-on FHIR® development and testing. Implementers and developers can gain hands-on experience developing FHIR-based solutions by participating in one of many tracks. [https://vimeo.com/542197402/8fb80fea04](https://vimeo.com/542197402/8fb80fea04){target=_blank}
 
-!!! check "Key Point: Why this matters:"
+!!! quote "Key Point: Why this matters:"
     **Researchers accessing data through the FHIR® standard are almost guaranteed to encounter novel implementations based on the particulars of the system they are accessing. The US Core IG, however, serves as a baseline researchers will be able to reference for United States-based EHR data. Familiarity with the US Core IG provides a foundational grasp of available data.**

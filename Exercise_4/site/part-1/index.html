@@ -1,0 +1,1051 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+    
+    
+      
+        <title>Part 1: EHR Data - FHIR for Researchers</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#part-1-ehr-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FHIR for Researchers" class="md-header__button md-logo" aria-label="FHIR for Researchers" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FHIR for Researchers
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part 1: EHR Data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FHIR for Researchers" class="md-nav__button md-logo" aria-label="FHIR for Researchers" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    FHIR for Researchers
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Welcome
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Part 1: EHR Data
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Part 1: EHR Data
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-the-ehr-technology-ecosystem" class="md-nav__link">
+    Overview of the EHR Technology Ecosystem
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview of the EHR Technology Ecosystem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ehr-technical-architecture" class="md-nav__link">
+    EHR Technical Architecture
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-and-regulatory-considerations" class="md-nav__link">
+    Access and Regulatory Considerations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-composition" class="md-nav__link">
+    Data Composition
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Composition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sample-ehr-data-exercise" class="md-nav__link">
+    Sample EHR Data Exercise
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#codes-and-medical-terminology" class="md-nav__link">
+    Codes and Medical Terminology
+  </a>
+  
+    <nav class="md-nav" aria-label="Codes and Medical Terminology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loinc" class="md-nav__link">
+    LOINC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpt" class="md-nav__link">
+    CPT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snomed" class="md-nav__link">
+    SNOMED
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icd-10" class="md-nav__link">
+    ICD-10
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rxnorm" class="md-nav__link">
+    RxNorm
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-2/" class="md-nav__link">
+        Part 2: USCDI and Associated Terminology
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3/" class="md-nav__link">
+        Part 3: Implementation Guides and US Core
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        Wrapping Up
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        Glossary of Abbreviations and Acronyms
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-the-ehr-technology-ecosystem" class="md-nav__link">
+    Overview of the EHR Technology Ecosystem
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview of the EHR Technology Ecosystem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ehr-technical-architecture" class="md-nav__link">
+    EHR Technical Architecture
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-and-regulatory-considerations" class="md-nav__link">
+    Access and Regulatory Considerations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-composition" class="md-nav__link">
+    Data Composition
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Composition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sample-ehr-data-exercise" class="md-nav__link">
+    Sample EHR Data Exercise
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#codes-and-medical-terminology" class="md-nav__link">
+    Codes and Medical Terminology
+  </a>
+  
+    <nav class="md-nav" aria-label="Codes and Medical Terminology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loinc" class="md-nav__link">
+    LOINC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpt" class="md-nav__link">
+    CPT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snomed" class="md-nav__link">
+    SNOMED
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icd-10" class="md-nav__link">
+    ICD-10
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rxnorm" class="md-nav__link">
+    RxNorm
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="part-1-ehr-data">Part 1: EHR Data</h1>
+<h2 id="overview-of-the-ehr-technology-ecosystem">Overview of the EHR Technology Ecosystem</h2>
+<p><strong>At its core level, an electronic health record (EHR) is a digital version of a patient’s paper medical chart. EHRs are digital patient-centered records that make information securely available to authorized users.</strong></p>
+<ul>
+<li>EHRs are intended to be operated by a healthcare practice or system and consolidate inputs by multiple providers within that system including physicians from differing specialties, nurses, and more that engage with a patient over the time they are receiving care.  </li>
+<li>In an idealized implementation, an EHR may include all the key administrative clinical data relevant to that patient’s care received through the health system. This includes demographics, progress notes, problems, medications, vital signs, past medical history, immunizations, laboratory data and radiology reports. These data may be in the form of both structured data (e.g., lab results) or unstructured data (e.g., clinical notes). </li>
+<li>In practice, even  EHRs connected across hospital systems may not be well integrated, and information may not be harmonized.  This situation can be made worse when an EHR system is customized in different settings (e.g., in different hospital systems, offices, etc.).  </li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Additionally, while initially a tool to facilitate electronic billing, an EHR system can increasingly go beyond standard clinical data collected in a provider’s office and can be inclusive of a broader, patient-centric view of their care. This may include incorporating data from external care providers, as well as integrating with clinical decision support and other supplemental data sources to enhance an understanding of a patient’s wellbeing.</p>
+</div>
+<h3 id="ehr-technical-architecture">EHR Technical Architecture</h3>
+<p>To better understand the data elements contained in an EHR, it is important to understand the technical architecture of an EHR system. This section describes the major architectural components of an EHR system, and the interactions between these components.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>EHR System Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="computer" src="../img/computer.png" /></td>
+<td><strong>User Interface</strong></td>
+<td>The user interface (UI) is a fundamental component of almost any clinical application, and is used within an EHR to both enter and display patient health records.</td>
+</tr>
+<tr>
+<td><img alt="computer" src="../img/records.png" /></td>
+<td><strong>Record Services</strong></td>
+<td>Record services are a set of services for managing patient health records. Record services provide functions like entering data into health records, searching for and retrieving health records, querying or extracting data from health records, and communicating or exchanging health records with other systems or applications. Record services interact with other components in this model such as the UI.</td>
+</tr>
+<tr>
+<td><img alt="computer" src="../img/services.png" /></td>
+<td><strong>Terminology Services</strong></td>
+<td>Terminology services are those services that directly manage the terminology resources. They include functions like querying concepts, relationships and reference sets, and installing or updating SNOMED CT from release files.</td>
+</tr>
+<tr>
+<td><img alt="computer" src="../img/api.png" /></td>
+<td><strong>API Services</strong></td>
+<td>Application Program Interface (API) services are a set of services for managing exchange of patient health record information with external parties. These services interface closely with terminology and record services to package information for export, and injest and unpack incoming information for internal storage and utilization.</td>
+</tr>
+</tbody>
+</table>
+<p>Source <a href="https://confluence.ihtsdotools.org/display/DOCCDS/2.1.+EHR+System+Architecture" target="_blank">https://confluence.ihtsdotools.org/display/DOCCDS/2.1.+EHR+System+Architecture</a></p>
+<h2 id="access-and-regulatory-considerations">Access and Regulatory Considerations</h2>
+<p><strong>Given the highly sensitive nature of data potentially contained within the EHR, significant regulatory and programmatic considerations come into play.</strong></p>
+<p>To learn more about PII, PHI, and HIPAA, please expand the clipboards below.</p>
+<details class="example"><summary>PII and PHI Information and Concerns</summary><ul>
+<li>Before potentially accessing EHR data, it is important to note that such information is considered highly sensitive and is subject to considerable safeguards. Specifically, much of the data contained within an EHR carries a legal designation of Personnally Identifiable Information (PII) and Protected Health Information (PHI).</li>
+<li>PII is information that can be used to distinguish or trace an individual's identity, either alone or when combined with other personal or identifying information that is linked or linkable to a specific individual.<ul>
+<li>Source: Glossary of NIH Terms <a href="https://grants.nih.gov/grants/glossary.htm#P" target="_blank">https://grants.nih.gov/grants/glossary.htm#P</a></li>
+</ul>
+</li>
+<li>PHI is information that relates to:<ul>
+<li>the individual’s past, present or future physical or mental health or condition, </li>
+<li>the provision of health care to the individual, or </li>
+<li>the past, present, or future payment for the provision of health care to the individual, and that identifies the individual or for which there is a reasonable basis to believe it can be used to identify the individual.</li>
+<li>Individually identifiable health information includes many common identifiers (e.g., name, address, birth date, Social Security Number).</li>
+<li>Source: <a href="source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html" target="_blank">source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html</a></li>
+</ul>
+</li>
+<li>It should be noted that often researchers will work with de-identified EHR data that has purposely been stripped of PII. This may negate specific privacy concerns but there are other, additional privacy protections and considerations for handling even de-identified data.</li>
+<li>There could also be privacy issues if multiple records of the same individual are linked together to create a more robust dataset.</li>
+<li>Read more about the privacy rule here: <a href="https://www.hhs.gov/sites/default/files/privacysummary.pdf" target="_blank"> https://www.hhs.gov/sites/default/files/privacysummary.pdf</a></li>
+<li>Read more about privacy and security of health information here: <a href="https://www.healthit.gov/sites/default/files/pdf/privacy/onc_privacy_and_security_chapter4_v1_022112.pdf" target="_blank">https://www.healthit.gov/sites/default/files/pdf/privacy/onc_privacy_and_security_chapter4_v1_022112.pdf</a></li>
+</ul>
+</details>
+<details class="example"><summary>HIPAA and other regulatory considerations</summary><ul>
+<li>The Health Insurance Portability and Accountability Act of 1996 (HIPAA), and the Standards for Privacy of Individually Identifiable Health Information (Privacy Rule) issued by the US Department of Health and Human Services (HHS) to implement it, protects all "individually identifiable health information" held or transmitted by a covered entity or its business associate, in any form or media, whether electronic, paper, or oral.
+    Source: Glossary of NIH Terms <a href="https://grants.nih.gov/grants/glossary.htm#H" target="_blank">https://grants.nih.gov/grants/glossary.htm#H</a></li>
+<li>Several central tenets of the Privacy Rule are:<ul>
+<li>In general, authorized healthcare professionals may use or disclose protected health information for the purposes of treatment, payment, and health care operations without obtaining a patient’s written permission.</li>
+</ul>
+</li>
+<li>For other purposes, including research, one may need to obtain an individual’s authorization to use PHI.</li>
+<li>Accessing PHI from a third-party institution will likely require  formalized business associate arrangement or data use agreements that must require all parties to comply with HIPAA, including breach notification requirements.</li>
+<li>
+<p>Generally, access to, use of, and disclosure of protected health information must be kept to the minimum necessary to carry out an action. This is called the “minimum necessary rule.”</p>
+<ul>
+<li>Source: <a href="https://www.healthit.gov/sites/default/files/pdf/privacy/onc_privacy_and_security_chapter4_v1_022112.pdf" target="_blank">https://www.healthit.gov/sites/default/files/pdf/privacy/onc_privacy_and_security_chapter4_v1_022112.pdf</a></li>
+</ul>
+</li>
+<li>
+<p>There are also concerns about discrimination based on healthcare data that have resulted in regulatory protections. One such example is The Genetic Information Nondiscrimination Act (GINA) of 2008 which protects Americans from discrimination based on their genetic information in both health insurance (Title I) and employment (Title II). Source: <a href="https://www.genome.gov/about-genomics/policy-issues/Genetic-Discrimination" target="_blank">https://www.genome.gov/about-genomics/policy-issues/Genetic-Discrimination</a></p>
+</li>
+</ul>
+</details>
+<h2 id="data-composition">Data Composition</h2>
+<p>The information contained in an EHR record can often be traced to a patient’s flow through the medical system. While each patient encounter may vary drastically based on the encounter type and the severity of the patient’s condition, we will explore the types of data in an EHR through the use-case of a typical annual wellness encounter (i.e., an annual patient visit to a primary care physician). </p>
+<p>To illustrate this scenario, this exercise references the "Wellness Encounter" from the Synthea Module Builder to show one possible process flow. The tool allows users to view and customize several possible health care scenarios, charting the process flow, and the associated data elements that come out of each step in the process​:</p>
+<p>Source: <a href="https://synthetichealth.github.io/module-builder/#wellness_encounters" target="_blank">https://synthetichealth.github.io/module-builder/#wellness_encounters</a></p>
+<div class="admonition note">
+<p class="admonition-title">Processes can vary drastically</p>
+<p>It should also be noted that these steps are not always a uniformly linear progression as patients may cycle back and forth through varying steps depending on their particular set of circumstances.</p>
+</div>
+<p>We'll check out an example of a wellness encounter between a patient and their outpatient healthcare provider. </p>
+<p><img alt="wellness check" src="../img/wellness_encounter.png" /></p>
+<p>Here we see the initialization of the wellness encounter with the patient receiving an initial screening.</p>
+<p>The Provider begins by recording the patient’s height, which is captured as a Logical Observation Identifiers Names and Codes (LOINC) code (see <a href="#loinc">details on LOINC below</a>).</p>
+<p>In this case, height is recorded with the LOINC code of <code>8302-2</code> which is <code>Body Height</code>.</p>
+<p>Next, the Provider inquires about the patient’s current pain level and again records the result as a LOINC code. In this case, pain is recorded with the LOINC code of <code>72514-3</code> which has a human-readable description of <code>Pain Severity - 0-10 verbal numerical rating [Score] - Reported</code>.</p>
+<p>Further down in the process flow we find our provider inquiring about the patient’s smoking status. </p>
+<p><img alt="Smoking Decision Tree" src="../img/smoking0.png" /></p>
+<p>Depending on the smoking status, we see that there are three options (in this example there are three, but more exist in the real world).
+All three options use the same LOINC code <code>72166-2</code> with the human-readable description of <code>Tobacco smoking status</code> -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three SNOMED-CT codes (<a href="#snomed">learn more about SNOMED-CT below</a>), one where the smoker attribute is true, the second where the <code>quit smoking date</code> is not null, and finally 3, an <code>else</code> default finding:</p>
+<ol>
+<li>
+<p>SNOMED-CT <code>449868002</code> with the human-readable description <code>Smokes tobacco daily (finding)</code>
+<img alt="Daily Smoker Code" src="../img/smoking1.png" /></p>
+</li>
+<li>
+<p>SNOMED-CT <code>8517006</code> with the human-readable description <code>Ex-smoker (finding)</code>
+<img alt="Smoking Decision Tree" src="../img/smoking2.png" /></p>
+</li>
+<li>
+<p>SNOMED-CT <code>266919005</code> with the human-readable description <code>Never smoked tobacco (finding)</code>
+<img alt="Smoking Decision Tree" src="../img/smoking3.png" /></p>
+</li>
+</ol>
+<p>More generally, an EHR record will contain patient health information accumulated through this process, typically broken out by date, category, and information type. While the specific composition of this data can vary depending on EHR implementation, a reasonable example of data type and composition is available with the Synthea dataset.</p>
+<p>It can be helpful to explore example EHR records in further detail to better understand what information they contain. In lieu of access to actual PHI, the Synthea project can come in handy to view specific data fields and associated elements.</p>
+<p>Synthea, which has also produced the modeling tool we just used, is a Synthetic Patient Population Simulation that is used to generate synthetic patients. Synthea outputs synthetic, realistic (but not real) patient data and associated health records in a variety of formats. All the following screenshots are from Synthea, so remember, all data you’ll be viewing is synthetic and contains no actual PII.</p>
+<details class="example"><summary>To find out more about Synthea check here</summary><ul>
+<li>Synthea is a Synthetic Patient Population Simulation that is used to generate the synthetic patients. Synthea outputs synthetic, realistic (but not real) patient data and associated health records in a variety of formats.</li>
+<li>Access Synthea project datasets here: <a href="https://synthea.mitre.org/about" target="_blank">https://synthea.mitre.org/about</a></li>
+</ul>
+</details>
+<h3 id="sample-ehr-data-exercise">Sample EHR Data Exercise</h3>
+<p>The following exercise leverages synthetic data to explore some data elements contained in an EHR.</p>
+<p>First let's look at the overall schema. Synthea’s EHR data is broken into a series of CSV files, each corresponding to a data table you might find in an EHR's relational database. </p>
+<p>If you want to see details on all available tables in Synthea check out the following:</p>
+<details class="example"><summary>Synthea Data Tables and Descriptions</summary><table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>allergies.csv</td>
+<td>Patient allergy data</td>
+</tr>
+<tr>
+<td>careplans.csv</td>
+<td>Patient care plan data, including goals.</td>
+</tr>
+<tr>
+<td>claims.csv</td>
+<td>Patient claim data.</td>
+</tr>
+<tr>
+<td>claims_transactions.csv</td>
+<td>Transactions per line item per claim.</td>
+</tr>
+<tr>
+<td>conditions.csv</td>
+<td>Patient conditions or diagnoses.</td>
+</tr>
+<tr>
+<td>devices.csv</td>
+<td>Patient-affixed permanent and semi-permanent devices.</td>
+</tr>
+<tr>
+<td>encounters.csv</td>
+<td>Patient encounter data.</td>
+</tr>
+<tr>
+<td>imaging_studies.csv</td>
+<td>Patient imaging metadata.</td>
+</tr>
+<tr>
+<td>immunizations.csv</td>
+<td>Patient immunization data.</td>
+</tr>
+<tr>
+<td>medications.csv</td>
+<td>Patient medication data.</td>
+</tr>
+<tr>
+<td>observations.csv</td>
+<td>Patient observations including vital signs and lab reports.</td>
+</tr>
+<tr>
+<td>organizations.csv</td>
+<td>Provider organizations including hospitals.</td>
+</tr>
+<tr>
+<td>patients.csv</td>
+<td>Patient demographic data.</td>
+</tr>
+<tr>
+<td>payer_transitions.csv</td>
+<td>Payer Transition data (i.e. changes in health insurance).</td>
+</tr>
+<tr>
+<td>payers.csv</td>
+<td>Payer organization data.</td>
+</tr>
+<tr>
+<td>procedures.csv</td>
+<td>Patient procedure data including surgeries.</td>
+</tr>
+<tr>
+<td>providers.csv</td>
+<td>Clinicians that provide patient care.</td>
+</tr>
+<tr>
+<td>supplies.csv</td>
+<td>Supplies used in the provision of care.</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p>For example, in an EHR, we might view a list of patients as a table:</p>
+<details class="example"><summary>Patients Table</summary><p><img alt="patients" src="../img/ehr_patients_1.png" /></p>
+</details>
+<p>We can see demographic data about these patients. Don’t worry, these are synthetic patients.</p>
+<p>Each patient also has a list of Encounters (these are the visits) where they received care. For example:</p>
+<details class="example"><summary>Encounters Table</summary><p><img alt="encounters" src="../img/encounters_2.png" /></p>
+</details>
+<p>In these examples, the Encounters have a CODE (a structured set of alpha-numeric patterns that map to detailed information such as diagnoses, procedures, etc.) with a corresponding description. Some of these Encounters also have a REASONCODE. Both codes use Systemized Nomenclature of Medicine – Clinical Terms (SNOMED CT) (which we will discuss shortly). These are mainly used for diagnosis, procedure tracking, and symptom monitoring purposes within a healthcare setting.  The better documented "encounters" can also provide a wealth of information retrospectively for understanding etiology of diseases or can be used for epidemiological studies (e.g., hospital acquired infections or infection control and containment).</p>
+<p>Patients also have a list of Conditions or Diagnoses. For example:</p>
+<details class="example"><summary>Diagnoses Table</summary><p><img alt="diagnoses" src="../img/conditions_3.png" /></p>
+</details>
+<p>In these examples, we see each condition or diagnosis has a CODE. Again, these examples use SNOMED CT codes, but other common terminologies include International Statistical Classification of Diseases and Related Health Problems (Tenth Revision) (ICD-10). We can see from the descriptions that some of these codes are clinical diagnoses, such as Hyperlipidemia, a history of Stroke, and Diabetic Retinopathy. However, some of these data points can also be Social Determinants of Health (SDoH) such as stress, limited social contact, and social isolation.</p>
+<p>During an Encounter, the clinical staff may perform Procedures on patients, which are recorded with CODEs. Some of these procedures also document a REASONCODE. These examples use SNOMED CT codes, but other common terminologies to encode procedures include Current Procedural Terminology (CPT) and Healthcare Common Procedure Coding System (HCPCS).</p>
+<details class="example"><summary>Procedures Table</summary><p><img alt="procedures" src="../img/procedures_4.png" /></p>
+</details>
+<p>Other common data elements include medications, either administered or prescribed, and diagnostic lab results and vital sign measurements. Sometimes the measurements and results are called Observations.</p>
+<details class="example"><summary>Medications Table</summary><p><img alt="medications" src="../img/medications_5.png" /></p>
+</details>
+<p>These medications include information about the patient, a CODE, often the REASONCODE for the medication, the number of dispenses, and other information. In these examples, the CODEs used are RxNorm codes, and the REASONCODES are SNOMED CT.</p>
+<details class="example"><summary>Observations Table</summary><p><img alt="observations" src="../img/observations_6.png" /></p>
+</details>
+<p>An Observations table might look like the above. This table contains several different CATEGORIES of data, for example, vital-signs, laboratory, social-history, and survey data. Each data element has a CODE, description, value, and units of measure. In this example, the CODE is using LOINC, and the units of measure are using Unified Code for Units of Measure (UCUM).</p>
+<div class="admonition note">
+<p class="admonition-title">Note:</p>
+<p>Take a special look at one “social-history” observation in the table that records a patient smoking status. We’ll talk about this more when we discuss USCDI in the next section.</p>
+</div>
+<p>In an EHR system, this structured data can be shown in a consolidated patient view (as opposed to a set of different tables). In an EHR, the patient record could also include unstructured clinical notes. A very rudimentary and abridged example of an unstructured clinical note may look like this:</p>
+<blockquote>
+<p>Cecil300 is a 50 year-old non-Hispanic white male. Patient has a history of acute bacterial sinusitis, part-time employment , limited social contact, reports of violence in the environment, social isolation, and stress. Patient is single. Patient is an active smoker and is an alcoholic. Patient identifies as heterosexual. Patient comes from a high socioeconomic background and has completed some college courses. Patient currently has coverage through Friendly Insurance Company. No Known Allergies. No Active Medications. Cecil300 presents to the office with a chief complaint of "sore throat for one week." Patient reports that his sore throat began last Saturday, and has been getting worse since then. He reports that his throat is very sore and it hurts to swallow. He has also developed a fever of 101 degrees Fahrenheit and a headache. He denies any other symptoms, including cough, runny nose, or congestion. He reports that he has been taking ibuprofen and drinking lots of fluids, but his symptoms have not improved.</p>
+</blockquote>
+<p>So, now you’ve seen some codes from different terminologies like SNOMED CT, LOINC, and RxNorm.  You’ve also seen some unstructured data as shown in the clinical note example. Let’s dive a little deeper into these codes and terminologies in the next section.</p>
+<h2 id="codes-and-medical-terminology">Codes and Medical Terminology</h2>
+<p><strong>When dealing with EHR data you will likely encounter two types: structured and unstructured.</strong></p>
+<ul>
+<li>Unstructured data, typically taking the form of encounter notes, audio, video, or image files, has its own set of significant challenges, and will be out of scope for this tutorial.</li>
+<li>Structured data, in-contrast, is, as the name suggests, restricted to heavily formatted data types and structures. This could include text fields like name, regular-expressions, like phone number, and alpha-numeric coding terminology. </li>
+</ul>
+<p>Commonly used coding standards for structured data include:  <strong>LOINC, CPT, SNOMED CT, ICD-10, and RxNorm, etc.</strong>​ It is important to have a general understanding of these coding systems because they have become the standard for rendering structured data in an interoperable manner.</p>
+<h3 id="loinc">LOINC</h3>
+<p><strong>Logical Observation Identifiers Names and Codes (LOINC®)</strong>, is a proprietary clinical terminology that is important for laboratory test orders and results, and is one of a suite of designated standards for use in U.S. Federal Government systems for the electronic exchange of clinical health information. </p>
+<p>Managed by the Regenstrief Institute, LOINC has been identified by the Health Level 7 (HL7) Standards Development Organization as a preferred diagnostic report code set for laboratory test identification in transactions between health care facilities, laboratories, laboratory testing devices and public health authorities.</p>
+<p>See here: <a href="https://www.hl7.org/fhir/diagnosticreport-definitions.html#DiagnosticReport.code" target="_blank">https://www.hl7.org/fhir/diagnosticreport-definitions.html#DiagnosticReport.code</a></p>
+<p>LOINC codes are divided into Test Order and Test Result codes.</p>
+<details class="example"><summary>Test Order Code Structure and Examples</summary><p>Test Order codes are 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X</p>
+<p>e.g.,
+    As an example, one of the more popular codes is: <code>2160-0</code> for <code>Creatinine [Mass/volume] in Serum or Plasma</code>
+    Source:  <a href="https://loinc.org/2160-0/" target="_blank">https://loinc.org/2160-0/</a></p>
+<p>Additional attributes associated with LOINC test codes include:</p>
+<ul>
+<li>LOINC code</li>
+<li>Long Common Name</li>
+<li>Status
+*Additional names</li>
+<li>Class</li>
+<li>Type</li>
+<li>Order vs. Observation</li>
+<li>Member of these panels</li>
+<li>Member of these groups</li>
+<li>Example Units</li>
+</ul>
+<p>e.g.,
+An example can be found here: <a href="https://loinc.org/69049-5/" target="_blank"> https://loinc.org/69049-5/</a> and <a href="https://loinc.org/kb/users-guide/introduction/" target="_blank">https://loinc.org/kb/users-guide/introduction/</a></p>
+<table>
+<thead>
+<tr>
+<th>Test ID</th>
+<th>Test Order Name</th>
+<th>Order LOINC Code</th>
+<th>LOINC Attributes</th>
+<th>Method Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10AIH</td>
+<td>Factor X Inhibitor Profile, Professional Interpretation</td>
+<td>69049-5</td>
+<td>Coagulation specialist review:Imp:Pt:XXX:Nar:</td>
+<td>Only orderable as a reflex. For more information see 10INE / Factor X Inhibitor Evaluation, Plasma. Medical Interpretation</td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="example"><summary>Test Result Code Structure and Examples</summary><p>LOINC Test Result codes are also 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X</p>
+<p>Additional attributes associated with LOINC Test Result codes are:</p>
+<ul>
+<li>LOINC Values Updated</li>
+<li>Test ID</li>
+<li>Test Order Name</li>
+<li>Result ID</li>
+<li>Result LOINC Code</li>
+<li>LOINC Attributes</li>
+<li>Method Name</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>LOINC Values Updated</th>
+<th>Test ID</th>
+<th>Test Order Name</th>
+<th>Result ID</th>
+<th>Test Result Name</th>
+<th>Result LOINC Code</th>
+<th>LOINC Attributes</th>
+<th>Method Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2022-03-11</td>
+<td>CNSA</td>
+<td>Central Nervous System Consultation, Autopsy, Varies</td>
+<td>71070</td>
+<td>Interpretation</td>
+<td>18743-5</td>
+<td Setting="Setting">Autopsy report:Find:Pt:</td>
+<td>Includes hermatoxylin and eosin stains. Additional special stains or procedures necessary for diagnosis will be billed separately.</td>
+</tr>
+</tbody>
+</table>
+<p>Source: <a href="https://loinc.org/kb/users-guide/introduction/" target="_blank">https://loinc.org/kb/users-guide/introduction/</a></p>
+</details>
+<div class="admonition danger">
+<p class="admonition-title">Additional Resource on LOINC codes</p>
+<p>Additonal infomration on the <strong>LOINC coding terminology</strong> is available here: <a href="https://loinc.org" target="_blank">https://loinc.org</a></p>
+</div>
+<details class="question"><summary>Knowledge Check: Where would I look to find human-readable description of the specific LOINC code?</summary><p>The <code>Test Order Name</code> attribute provides additional details on the specific LOINC code.</p>
+</details>
+<h3 id="cpt">CPT</h3>
+<p><strong>Current Procedural Terminology (CPT)</strong> codes are assigned to each task and service a healthcare provider offers. They include medical, surgical, and diagnostic services. Insurers use CPT codes to determine how much money to pay a provider for a given task or service.</p>
+<div class="admonition note">
+<p class="admonition-title">Code Similarities</p>
+<p>CPT codes are also a subset of codes comprising the Healthcare Common Procedure Coding System (HCPCS) used for Medicare reimbursements.
+Source: <a href="https://www.cms.gov/Medicare/Coding/MedHCPCSGenInfo" target="_blank">https://www.cms.gov/Medicare/Coding/MedHCPCSGenInfo</a></p>
+</div>
+<p>CPT codes are developed, maintained, and copyrighted by the American Medical Association (AMA).</p>
+<details class="example"><summary>CPT Code Structure and Examples</summary><p>A CPT code is a five-character code. Typically, most characters within the code are numbers without decimal marks. Some codes have four numbers and one letter.</p>
+<p>There are several categories of CPT codes, including:</p>
+<ul>
+<li><strong>Category I:</strong> Procedures, services, devices, and drugs, including vaccines</li>
+<li><strong>Category II:</strong> Performance measures and quality of care</li>
+<li><strong>Category III:</strong> Services and procedures using emerging technology</li>
+<li>PLA codes, which are used for lab testing</li>
+</ul>
+<p>Here are some examples:</p>
+<ul>
+<li><code>99214</code> may be used for an office visit</li>
+<li><code>99397</code> may be used for a preventive exam if you are over 65</li>
+<li><code>90658</code> indicates a flu shot</li>
+<li><code>90716</code> may be used for the chickenpox vaccine (varicella)</li>
+<li><code>12002</code> may be used when a healthcare provider stitches up a 1-inch cut on your arm</li>
+</ul>
+</details>
+<p>It should also be noted that some CPT codes indicate bundled services. That is, one code describes several services performed together.</p>
+<div class="admonition danger">
+<p class="admonition-title">Additional Resources on CPT codes</p>
+<ul>
+<li>Updated list of codes: <a href="https://www.cms.gov/Medicare/Fraud-and-Abuse/PhysicianSelfReferral" target="_blank">https://www.cms.gov/Medicare/Fraud-and-Abuse/PhysicianSelfReferral</a></li>
+<li>CPT code lookup tool: <a href="https://www.aapc.com/codes/cpt-codes-range/" target="_blank">https://www.aapc.com/codes/cpt-codes-range/</a></li>
+</ul>
+</div>
+<h3 id="snomed">SNOMED</h3>
+<p><strong>Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT®</strong> is a standardized, international, multilingual core set of clinical healthcare terminology that can be used in EHR.</p>
+<p>SNOMED International is the non-profit standards development organization that creates and distributes SNOMED CT, and it is operated by the International Health Standards Development Organization. The National Library of Medicine (NLM) is the release center for SNOMED CT in the United States and supports the distribution of SNOMED CT for United States users.</p>
+<div class="admonition note">
+<p class="admonition-title">SNOMED CT is a critical part of interoperability</p>
+<p>SNOMED CT is one of a suite of designated standards for use in U.S. Federal Government systems for the electronic exchange of clinical health information and is also a required standard in interoperability specifications of the U.S. Healthcare Information Technology Standards Panel.</p>
+</div>
+<details class="example"><summary>SNOMED CT Code Structure and Examples</summary><p>SNOMED CT codes are numerical and are a minimum of six digits long.</p>
+<p>For instance, <code>271737000</code> is the code for anemia (disorder).
+A common procedural code is Renal dialysis (procedure) <code>265764009</code>.</p>
+</details>
+<div class="admonition danger">
+<p class="admonition-title">Additional Resource on SNOMED CT codes</p>
+<p>Resources and code lookups can be found here: <a href="https://www.nlm.nih.gov/healthit/snomedct/index.html" target="_blank">https://www.nlm.nih.gov/healthit/snomedct/index.html</a></p>
+</div>
+<h3 id="icd-10">ICD-10</h3>
+<p>ICD-10 is the 10th revision of the <strong>International Statistical Classification of Diseases and Related Health Problems (ICD)</strong>, a medical classification list by the World Health Organization (WHO).</p>
+<p>For disease reporting, the US utilizes its own national variant of ICD-10 called the ICD-10 Clinical Modification (ICD-10-CM). A procedural classification called ICD-10 Procedure Coding System (ICD-10-PCS) has also been developed for capturing inpatient procedures. The ICD-10-CM and ICD-10-PCS were developed by the Centers for Medicare and Medicaid Services (CMS) and the National Center for Health Statistics (NCHS).</p>
+<details class="example"><summary>ICD-10 Code Structure and Examples</summary><p>ICD-10-CM codes may consist of up to seven digits, with the seventh digit extensions representing visit encounter or sequelae for injuries and external causes.</p>
+<p><img alt="ICD-10 Format" src="../img/icd_10_format.png" /></p>
+<p>Example codes:</p>
+<ul>
+<li><code>E08.22</code>, Diabetes mellitus due to an underlying condition with diabetic chronic kidney disease  </li>
+<li><code>T81.535</code>, Perforation due to foreign body accidently left in body following heart catheterization  </li>
+<li>Code extensions (seventh character) have been added for injuries and external causes to identify the encounter: initial, subsequent, or sequela. The extensions are:  <ul>
+<li><code>A</code> Initial encounter  </li>
+<li><code>D</code> Subsequent encounter  </li>
+<li><code>S</code> Sequelae </li>
+</ul>
+</li>
+</ul>
+</details>
+<div class="admonition danger">
+<p class="admonition-title">Additional Resources on ICD-10 codes</p>
+<ul>
+<li><a href="https://www.cms.gov/Medicare/Coding/ICD10" target="_blank">https://www.cms.gov/Medicare/Coding/ICD10</a></li>
+<li>ICD-10 CM Browser from the CDC: <a href="https://icd10cmtool.cdc.gov" target="_blank">https://icd10cmtool.cdc.gov</a></li>
+<li>ICD Browser from the World Health Organization: <a href="https://icd.who.int/browse10/2019/en" target="_blank">https://icd.who.int/browse10/2019/en</a></li>
+</ul>
+</div>
+<h3 id="rxnorm">RxNorm</h3>
+<p><strong>RxNorm</strong> is a normalized naming system for generic and branded drugs; it is a tool for supporting semantic interoperation between drug terminologies and pharmacy knowledge base systems. </p>
+<p>It does this by providing normalized names for clinical drugs and links its names to many of the drug vocabularies commonly used in pharmacy management and drug interaction software, including those of First Databank, Micromedex, and Gold Standard Drug Database. By providing links between these vocabularies, RxNorm can mediate messages between systems not using the same software and vocabulary.</p>
+<p>The National Library of Medicine (NLM) produces RxNorm. Source: <a href="https://www.nlm.nih.gov/research/umls/rxnorm/overview.html" target="_blank">https://www.nlm.nih.gov/research/umls/rxnorm/overview.html</a></p>
+<p>RxNorm also provides a set of codes for clinical drugs, which are the combination of active ingredients, dose form, and strength of a drug. </p>
+<p>For example, the most prescribed drug in the US is <strong>Atorvastatin</strong> (also known as Lipitor, to 24M Americans) to lower cholesterol. Its RXNorm code is <code>83367</code>. Sources: <a href="https://clincalc.com/DrugStats/Drugs/Atorvastatin" target="_blank">https://clincalc.com/DrugStats/Drugs/Atorvastatin</a>, <a href="https://mor.nlm.nih.gov/RxNav/search?searchBy=RXCUI&amp;searchTerm=83367" target="_blank">https://mor.nlm.nih.gov/RxNav/search?searchBy=RXCUI&amp;searchTerm=83367</a></p>
+<p>In the National Drug Code (NDC) system, if more than one manufacturer produces the same medication, each assigns different NDCs. In contrast, the RxNorm vocabulary creates standard names and identifiers for the combinations of ingredients, strengths, and dose forms.</p>
+<div class="admonition danger">
+<p class="admonition-title">Additional Resource on RxNorm codes</p>
+<ul>
+<li><a href="https://www.nih.gov/news-events/news-releases/drug-naming-standard-electronic-health-records-enhanced" target="_blank">https://www.nih.gov/news-events/news-releases/drug-naming-standard-electronic-health-records-enhanced</a></li>
+</ul>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Key Point: Why this matters:</p>
+<p><strong>EHR are a vast resource of information, chronicling each individual’s health. Significant work has gone into standardizing this information into a uniform set of coding terminologies with the aim of ensuring that health records can be interpreted across providers and patients. Understanding these terminologies and the information types contained within them is a critical first step to unlocking the potential research value of this data.</strong></p>
+</div>
+<details class="question"><summary>Knowledge Check: What code systems are used to identify clinical measurements?</summary><p>LOINC</p>
+</details>
+<details class="question"><summary>Knowledge Check: What code systems are used to identify medications?</summary><ul>
+<li>RxNorm</li>
+<li>NDC </li>
+</ul>
+</details>
+<details class="question"><summary>Knowledge Check: What code systems are used to identify procedures?</summary><ul>
+<li>CPT</li>
+<li>HCPCS</li>
+<li>SNOMED</li>
+</ul>
+</details>
+<details class="question"><summary>Knowledge Check: What code systems are used to identify diagnoses?</summary><ul>
+<li>SNOMED</li>
+<li>ICD-10</li>
+</ul>
+</details>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Welcome" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Welcome
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../part-2/" class="md-footer__link md-footer__link--next" aria-label="Next: Part 2: USCDI and Associated Terminology" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Part 2: USCDI and Associated Terminology
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      
+    
+  </body>
+</html>

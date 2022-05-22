@@ -1,0 +1,727 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+    
+    
+      
+        <title>Part 3: Implementation Guides and US Core - FHIR for Researchers</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#part-3-implementation-guides-and-us-core" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FHIR for Researchers" class="md-header__button md-logo" aria-label="FHIR for Researchers" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FHIR for Researchers
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part 3: Implementation Guides and US Core
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FHIR for Researchers" class="md-nav__button md-logo" aria-label="FHIR for Researchers" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    FHIR for Researchers
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Welcome
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-1/" class="md-nav__link">
+        Part 1: EHR Data
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-2/" class="md-nav__link">
+        Part 2: USCDI and Associated Terminology
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Part 3: Implementation Guides and US Core
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Part 3: Implementation Guides and US Core
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background-on-fhir" class="md-nav__link">
+    Background on FHIR®
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-implementation-guides-ig-are-developed" class="md-nav__link">
+    How Implementation Guides (IG) are developed
+  </a>
+  
+    <nav class="md-nav" aria-label="How Implementation Guides (IG) are developed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introducing-implementation-guides" class="md-nav__link">
+    Introducing Implementation Guides
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#us-core" class="md-nav__link">
+    US Core
+  </a>
+  
+    <nav class="md-nav" aria-label="US Core">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specifics-of-the-us-core-ig-including-relationship-to-uscdi" class="md-nav__link">
+    Specifics of the US Core IG including relationship to USCDI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirements-and-elements-to-be-us-core-compliant" class="md-nav__link">
+    Requirements and elements to be US Core compliant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ig-navigation-example-by-detailed-us-core-walkthrough" class="md-nav__link">
+    IG navigation example by detailed US Core walkthrough
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        Wrapping Up
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        Glossary of Abbreviations and Acronyms
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background-on-fhir" class="md-nav__link">
+    Background on FHIR®
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-implementation-guides-ig-are-developed" class="md-nav__link">
+    How Implementation Guides (IG) are developed
+  </a>
+  
+    <nav class="md-nav" aria-label="How Implementation Guides (IG) are developed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introducing-implementation-guides" class="md-nav__link">
+    Introducing Implementation Guides
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#us-core" class="md-nav__link">
+    US Core
+  </a>
+  
+    <nav class="md-nav" aria-label="US Core">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specifics-of-the-us-core-ig-including-relationship-to-uscdi" class="md-nav__link">
+    Specifics of the US Core IG including relationship to USCDI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirements-and-elements-to-be-us-core-compliant" class="md-nav__link">
+    Requirements and elements to be US Core compliant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ig-navigation-example-by-detailed-us-core-walkthrough" class="md-nav__link">
+    IG navigation example by detailed US Core walkthrough
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="part-3-implementation-guides-and-us-core">Part 3: Implementation Guides and US Core</h1>
+<h2 id="background-on-fhir">Background on FHIR®</h2>
+<p><strong>The HL7® FHIR® (Fast Healthcare Interoperability Resources) standard defines both the method and structure for HOW healthcare information can be exchanged between different systems regardless of how it is stored in those systems.</strong></p>
+<p>It allows healthcare information, including clinical and administrative data, 
+to be available securely to those who have a need to access it, and to those who have the right to do so for the benefit of a patient receiving care. </p>
+<p>The FHIR® standard is developed and maintained by the (Health Level Seven®)  HL7® organization.</p>
+<details class="example"><summary>More about FHIR®</summary><p>HL7 FHIR is a robust and comprehensive standard, but for the purposes of this tutorial here is a very simplified view.</p>
+<ul>
+<li>
+<p>FHIR defines a set of <strong>Resources</strong> that can be exchanged.</p>
+</li>
+<li>
+<p>These Resources are structured data building blocks that group together commonly used and related data fields.</p>
+</li>
+<li>
+<p>Examples of Resources are things like <code>Patient</code>, <code>Encounter</code>, <code>Condition</code>, <code>AllergyIntolerance</code>, <code>Medication</code>, <code>Procedure</code>, and <code>Observation</code>. Some of these concepts should be familiar from Part 1. FHIR defines over 140 resources.</p>
+</li>
+<li>
+<p>FHIR also defines an <strong>Application Programming Interface (API)</strong>* which is a way for applications to programmatically query and request data Resource by Resource.</p>
+</li>
+<li>
+<p>While FHIR defines these Resources and API, it also specifies that a large majority of the features are optional.</p>
+</li>
+<li>
+<p>A lot of optionality can be a good thing, but with exchanging health data for a particular use-case, that optionality and flexibility allows for too much ambiguity and differences. Therefore, the FHIR community also develops <strong>Implementation Guides</strong> to specify exactly how FHIR should be used for many real-world use-cases.</p>
+</li>
+</ul>
+</details>
+<blockquote>
+<p>More information and an overview can be found here: <a href="https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf" target="_blank">https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf</a></p>
+</blockquote>
+<div class="admonition danger">
+<p class="admonition-title">Additional Resources Available</p>
+<ul>
+<li>Please note, NIH has created a webinar and associated interactive workshop focused specifically on the FHIR® standard.  <ul>
+<li>Webinar: <a href="https://www.youtube.com/watch?v=_ZwQW0BJJx0" target="_blank">https://www.youtube.com/watch?v=_ZwQW0BJJx0</a></li>
+<li>Workshop in Python: <a href="https://www.youtube.com/watch?v=yGT3ottE7LY" target="_blank">https://www.youtube.com/watch?v=yGT3ottE7LY</a></li>
+<li>Workshop in R: <a href="https://www.youtube.com/watch?v=TpjueS9L-5o" target="_blank">https://www.youtube.com/watch?v=TpjueS9L-5o</a></li>
+<li>Link to github exercises: <a href="https://github.com/mitre/fhir-exercises" target="_blank">https://github.com/mitre/fhir-exercises</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="how-implementation-guides-ig-are-developed">How Implementation Guides (IG) are developed</h2>
+<h3 id="introducing-implementation-guides">Introducing Implementation Guides</h3>
+<p>A principal challenge for healthcare standards is how to handle the wide variability caused by diverse healthcare processes. Over time, more fields and optionality are added to the specification, gradually adding cost and complexity to the resulting implementations. The alternative is relying on custom extensions, but these create many implementation problems too.</p>
+<p>FHIR® solves this challenge by <strong>defining a simple framework for extending the existing resources to encompass new information</strong> and describe their use with Profiles. All systems that are FHIR-enabled can read all resources provided in a data exchange, but applications can add more control and meaning using profiles. </p>
+<p>Many healthcare contexts therefore require extensive local agreements.</p>
+<div class="admonition note">
+<p class="admonition-title">How FHIR® Adapts to the Diverse Array of Healthcare Data Requirements</p>
+<p>By its nature, FHIR® is designed to be both as comprehensive and expandable as possible to cover the widest range of health-related modalities. Its extensibility is a critical enabler for bringing in the widest possible array of potential use-cases and stakeholders into an interoperable health IT framework.</p>
+</div>
+<p>The result of this, however, is that the potential exists for two health IT systems, <strong>even when both are on the FHIR® standard, to have vastly divergent sets of information available.</strong> Because of this, there exists a need for FHIR® standard guidelines that define the precise implementations of FHIR® a specific health IT system has deployed and supports. These guides have been formalized in FHIR® as <strong>Implementations Guides (IG)</strong>.</p>
+<blockquote>
+<p>An IG is a set of rules about how FHIR® resources are used (or should be used) to solve a particular problem, with associated documentation to support and clarify the usage.</p>
+</blockquote>
+<p>FHIR® IGs are typically published on the web after they are generated.</p>
+<details class="example"><summary>For more information on the general process for IG creation, continue here</summary><ul>
+<li>
+<p>FHIR® has a specific process for publishing IG available here: <a href="https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation" target="_blank">https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation</a></p>
+</li>
+<li>
+<p>FHIR® also includes the <code>ImplementationGuide</code> resource: a single resource that defines the logical content of the IG, along with the important entry pages into the publication, so that the logical package that the IG represents, so that the contents are computable. </p>
+</li>
+<li>
+<p>In particular, validators are able to use the <code>CapabilityStatement</code> resource to validate content against the IG as a whole. The capability statement is a key part of the overall conformance framework in FHIR. It is used as a statement of the features of actual software, or of a set of rules for an application to provide. This statement connects to all the detailed statements of functionality, such as StructureDefinitions and ValueSets. This composite statement of application capability may be used for system compatibility testing, code generation, or as the basis for a conformance assessment. For further information about Conformance testing, see Conformance Rules and Profiling FHIR.
+More on this resource here: <a href="https://build.fhir.org/capabilitystatement.html">https://build.fhir.org/capabilitystatement.html</a> </p>
+</li>
+</ul>
+</details>
+<p>It should also be noted that while individual organizations and entities can develop their own IG, the development process should also be guided and supported by the HL7 community.</p>
+<h2 id="us-core">US Core</h2>
+<p>So, if there are a variety of IGs available for FHIR® implementation, is there a particular one that maps to the USCDI data standard, one whose adoption would ensure that an EHR system fully met Promoting Interoperability guidelines?</p>
+<blockquote>
+<p>Yes! The US Core IG does exactly that.</p>
+</blockquote>
+<p>The US Core IG is based on FHIR® Version R4 </p>
+<blockquote>
+<p>Link for further info on FHIR® Version R4 Summary – FHIR® v4.0.1: <a href="https://www.hl7.org/fhir/summary.html" target="_blank">https://www.hl7.org/fhir/summary.html</a> </p>
+<p>The US Core IG defines the <strong>minimum set of constraints on the FHIR® resources</strong> to create the US Core Profiles. It also defines the <strong>minimum set of FHIR® RESTful interactions</strong> for each of the US Core Profiles to access patient data. By establishing the <strong>“floor”</strong> of standards to promote interoperability and adoption through common implementation, it allows for further standards development evolution for specific uses cases. </p>
+</blockquote>
+<h3 id="specifics-of-the-us-core-ig-including-relationship-to-uscdi">Specifics of the US Core IG including relationship to USCDI</h3>
+<p>Let’s take a closer look at how USCDI maps to US Core. The following table maps the relationship between the <strong>USCDI v1 Summary of Data Classes and Data Elements</strong>, it’s corresponding <strong>US Core Profile</strong>, and finally the associated <strong>FHIR® Resource</strong>. We can see the first few examples here:
+<img alt="uscore_uscdi_mapping" src="../img/uscore_uscdi_mapping.png" /></p>
+<p>The complete table is available here:
+<a href="https://www.hl7.org/fhir/us/core/general-guidance.html" target="_blank">https://www.hl7.org/fhir/us/core/general-guidance.html</a></p>
+<h3 id="requirements-and-elements-to-be-us-core-compliant">Requirements and elements to be US Core compliant</h3>
+<p>The complete list of <strong>US Core Profiles</strong> is below. Each profile defines the minimum mandatory elements, extensions and terminology requirements that <strong>MUST</strong> be present to satisfy that profile. </p>
+<p>For each profile, requirements and guidance are given in a simple narrative summary.</p>
+<details class="example"><summary>Complete list of US Core Profiles</summary><ul>
+<li>US Core AllergyIntolerance Profile</li>
+<li>US Core BMI Profile</li>
+<li>US Core Blood Pressure Profile</li>
+<li>US Core Body Height Profile</li>
+<li>US Core Body Temperature Profile</li>
+<li>US Core Body Weight Profile</li>
+<li>US Core CarePlan Profile</li>
+<li>US Core CareTeam Profile</li>
+<li>US Core Condition Profile</li>
+<li>US Core DiagnosticReport Profile for Laboratory Results Reporting</li>
+<li>US Core DiagnosticReport Profile for Report and Note exchange</li>
+<li>US Core DocumentReference Profile</li>
+<li>US Core Encounter Profile</li>
+<li>US Core Goal Profile</li>
+<li>US Core Head Circumference Profile</li>
+<li>US Core Heart Rate Profile</li>
+<li>US Core Immunization Profile</li>
+<li>US Core Implantable Device Profile</li>
+<li>US Core Laboratory Result Observation Profile</li>
+<li>US Core Location Profile</li>
+<li>US Core Medication Profile</li>
+<li>US Core MedicationRequest Profile</li>
+<li>US Core Organization Profile</li>
+<li>US Core Patient Profile</li>
+<li>US Core Pediatric BMI for Age Observation Profile</li>
+<li>US Core Pediatric Head Occipital-frontal Circumference Percentile Profile</li>
+<li>US Core Pediatric Weight for Height Observation Profile</li>
+<li>US Core Practitioner Profile</li>
+<li>US Core PractitionerRole Profile</li>
+<li>US Core Procedure Profile</li>
+<li>US Core Provenance Profile</li>
+<li>US Core Pulse Oximetry Profile</li>
+<li>US Core Respiratory Rate Profile</li>
+<li><strong>US Core Smoking Status Observation Profile</strong></li>
+<li>US Core Vital Signs Profile</li>
+</ul>
+</details>
+<p>Looking at the complete list of US Core Profiles one might notice that <strong>SMOKING STATUS</strong> again! It was in the EHR data we saw, and it was in the USCDI criteria... we’ll revisit this example soon...</p>
+<h3 id="ig-navigation-example-by-detailed-us-core-walkthrough">IG navigation example by detailed US Core walkthrough</h3>
+<p>Let’s look specifically at the US Core Medication Profile here.
+<img alt="uscore_medications" src="../img/uscore_medications.png" /></p>
+<p>We can see details of the elements of the medication profile: <a href="http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-medication.html" target="_blank">http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-medication.html</a></p>
+<details class="question"><summary>Knowledge Check: Which element(s) of this profile must be supported in order to be US Core Compliant?</summary><p><code>Medication.code</code> element</p>
+</details>
+<p>Going back to our <strong>smoking example</strong> take a look here: <a href="http://hl7.org/fhir/us/core/STU5/StructureDefinition-us-core-smokingstatus.html#mandatory-and-must-support-data-elements" target="_blank">http://hl7.org/fhir/us/core/STU5/StructureDefinition-us-core-smokingstatus.html#mandatory-and-must-support-data-elements</a></p>
+<p><img alt="Smoking core profile" src="../img/smoking_core.png" style="height:750px;width:750px" /></p>
+<p>We can see here a list of required elements this profile must support.</p>
+<details class="question"><summary>Knowledge Check: How many elements are required and what are they?</summary><p>7 required elements. They include a <code>status</code>, a category slice, and then a specific category code of <code>social-history</code>, a code for smoking observation, a patient, when the observation occurred, a result value code for smoking status</p>
+</details>
+<details class="question"><summary>Knowledge Check: Where would I find the reference ID of the patient?</summary><p><code>Subject code</code></p>
+</details>
+<p>Let’s take a look at the raw unformatted <strong>JSON code</strong> for the resource:</p>
+<details class="example"><summary>Sample JSON code of the Smoking Resource</summary><div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="nt">&quot;resourceType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Observation&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;056f4fe8-cd0a-db01-9d8b-0b3bf098368c&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;meta&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;profile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
+<span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;final&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;coding&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://terminology.hl7.org/CodeSystem/observation-category&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;social-history&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;social-history&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}]</span><span class="w"></span>
+<span class="p">}],</span><span class="w"></span>
+<span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;coding&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://loinc.org&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;72166-2&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tobacco smoking status NHIS&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tobacco smoking status NHIS&quot;</span><span class="w"></span>
+<span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;subject&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;reference&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;urn:uuid:c37a6b5c-a13c-835d-bfe2-e215df91cb3c&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;encounter&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;reference&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;urn:uuid:0f7f8554-0896-65dd-7bed-fe85762791dd&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;effectiveDateTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-07-25T10:07:28-04:00&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;issued&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-07-25T10:07:28.029-04:00&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;valueCodeableConcept&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;coding&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://snomed.info/sct&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;266919005&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Never smoker&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Never smoker&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+</details>
+<p>Check out this patient profile here: HL7.FHIR.US.CORE\Some Day Smoker Example - JSON Representation <a href="http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html" target="_blank">http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html</a></p>
+<p>Link here: <a href="http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html" target="_blank">http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html</a></p>
+<details class="question"><summary>Knowledge Check: When was this observation taken?</summary><p>July 25, 2012</p>
+</details>
+<details class="question"><summary>Knowledge Check: Is she a smoker and if so, what kind?</summary><p>Never smoker</p>
+</details>
+<div class="admonition danger">
+<p class="admonition-title">Additional Resources:</p>
+<ul>
+<li>Video from the HL7 FHIR® Connectathon features hands-on FHIR® development and testing. Implementers and developers can gain hands-on experience developing FHIR-based solutions by participating in one of many tracks. <a href="https://vimeo.com/542197402/8fb80fea04" target="_blank">https://vimeo.com/542197402/8fb80fea04</a></li>
+</ul>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Key Point: Why this matters:</p>
+<p><strong>Researchers accessing data through the FHIR® standard are almost guaranteed to encounter novel implementations based on the particulars of the system they are accessing. The US Core IG, however, serves as a baseline researchers will be able to reference for United States-based EHR data. Familiarity with the US Core IG provides a foundational grasp of available data.</strong></p>
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../part-2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Part 2: USCDI and Associated Terminology" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Part 2: USCDI and Associated Terminology
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../conclusion/" class="md-footer__link md-footer__link--next" aria-label="Next: Wrapping Up" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Wrapping Up
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      
+    
+  </body>
+</html>

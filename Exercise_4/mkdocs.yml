@@ -17,7 +17,6 @@ theme:
       example: octicons/beaker-16
       quote: octicons/quote-16
 
-
 markdown_extensions:
   - admonition
   - pymdownx.details

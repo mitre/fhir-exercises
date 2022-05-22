@@ -2,9 +2,9 @@
 
 ## Overview
 
-This exercise is intended to augment the R and Jupyter notebooks within the [FHIR® for Research Exercises](https://github.com/mitre/fhir-exercises) with a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability.
+This exercise is intended to augment the R and Jupyter notebooks within the [FHIR® for Research Exercises](https://github.com/mitre/fhir-exercises){target=_blank} with a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability.
 
-For those interested in learning more about the FHIR® Standard please also consider reviewing the [Introduction to FHIR® for Research Webinar](https://www.youtube.com/watch?v=_ZwQW0BJJx0) and the [FHIR® for Research Exercises 0-3 Workshop](https://github.com/mitre/fhir-exercises)
+For those interested in learning more about the FHIR® Standard please also consider reviewing the [Introduction to FHIR® for Research Webinar](https://www.youtube.com/watch?v=_ZwQW0BJJx0){target=_blank} and the [FHIR® for Research Exercises 0-3 Workshop](https://github.com/mitre/fhir-exercises){target=_blank}
 
 Upon completion of this exercise, NIH researchers or program officers will have a foundational understanding of where FHIR®-enabled data comes from, and how to eventually access and utilize it.
 
@@ -48,7 +48,7 @@ Upon completion of this exercise, NIH researchers or program officers will have 
 
 **Background:** By Part 3, readers should be familiar with EHR data, and its alignment to standardized elements through a standard like USCDI. But while USCDI provides a standard for **WHAT** information must be included in an interoperable framework, it doesn’t specify **HOW** it must be packaged and rendered to external entities. The final piece in the interoperable framework then, is a standard geared precisely for information exchange. 
 
-This standard is known as HL7 FHIR®, or the Fast Healthcare Interoperability Resources. (See:  [hl7.org/fhir](hl7.org/fhir)
+This standard is known as HL7 FHIR®, or the Fast Healthcare Interoperability Resources. (See:  [hl7.org/fhir](hl7.org/fhir){target=_blank}
 
 !!! check "Learning Objectives"
     Understand the role that Implementation Guides like US Core play in standardizing the precise data elements made available in specific HL7 FHIR-enabled data exchanges. 
