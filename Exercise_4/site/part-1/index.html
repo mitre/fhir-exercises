@@ -296,8 +296,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#snomed" class="md-nav__link">
-    SNOMED
+  <a href="#snomed-ct" class="md-nav__link">
+    SNOMED-CT
   </a>
   
 </li>
@@ -485,8 +485,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#snomed" class="md-nav__link">
-    SNOMED
+  <a href="#snomed-ct" class="md-nav__link">
+    SNOMED-CT
   </a>
   
 </li>
@@ -584,7 +584,7 @@
 <li>the provision of health care to the individual, or </li>
 <li>the past, present, or future payment for the provision of health care to the individual, and that identifies the individual or for which there is a reasonable basis to believe it can be used to identify the individual.</li>
 <li>Individually identifiable health information includes many common identifiers (e.g., name, address, birth date, Social Security Number).</li>
-<li>Source: <a href="source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html" target="_blank">source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html</a></li>
+<li>Source: <a href="https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html" target="_blank">source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html</a></li>
 </ul>
 </li>
 <li>It should be noted that often researchers will work with de-identified EHR data that has purposely been stripped of PII. This may negate specific privacy concerns but there are other, additional privacy protections and considerations for handling even de-identified data.</li>
@@ -615,7 +615,7 @@
 </details>
 <h2 id="data-composition">Data Composition</h2>
 <p>The information contained in an EHR record can often be traced to a patient’s flow through the medical system. While each patient encounter may vary drastically based on the encounter type and the severity of the patient’s condition, we will explore the types of data in an EHR through the use-case of a typical annual wellness encounter (i.e., an annual patient visit to a primary care physician). </p>
-<p>To illustrate this scenario, this exercise references the "Wellness Encounter" from the Synthea Module Builder to show one possible process flow. The tool allows users to view and customize several possible health care scenarios, charting the process flow, and the associated data elements that come out of each step in the process​:</p>
+<p>To illustrate this scenario, this exercise references the "Wellness Encounter" from the Synthea Module Builder to show one possible process flow. The tool allows users to view and customize several possible health care scenarios, charting the process flow, and the associated data elements that come out of each step in the process​.</p>
 <p>Source: <a href="https://synthetichealth.github.io/module-builder/#wellness_encounters" target="_blank">https://synthetichealth.github.io/module-builder/#wellness_encounters</a></p>
 <div class="admonition note">
 <p class="admonition-title">Processes can vary drastically</p>
@@ -630,7 +630,7 @@
 <p>Further down in the process flow we find our provider inquiring about the patient’s smoking status. </p>
 <p><img alt="Smoking Decision Tree" src="../img/smoking0.png" /></p>
 <p>Depending on the smoking status, we see that there are three options (in this example there are three, but more exist in the real world).
-All three options use the same LOINC code <code>72166-2</code> with the human-readable description of <code>Tobacco smoking status</code> -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three SNOMED-CT codes (<a href="#snomed">learn more about SNOMED-CT below</a>), one where the smoker attribute is true, the second where the <code>quit smoking date</code> is not null, and finally 3, an <code>else</code> default finding:</p>
+All three options use the same LOINC code <code>72166-2</code> with the human-readable description of <code>Tobacco smoking status</code> -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT® codes (<a href="#snomed">learn more about SNOMED-CT below</a>), one where the smoker attribute is true, the second where the <code>quit smoking date</code> is not null, and finally 3, an <code>else</code> default finding:</p>
 <ol>
 <li>
 <p>SNOMED-CT <code>449868002</code> with the human-readable description <code>Smokes tobacco daily (finding)</code>
@@ -741,25 +741,1001 @@ All three options use the same LOINC code <code>72166-2</code> with the human-re
 </table>
 </details>
 <p>For example, in an EHR, we might view a list of patients as a table:</p>
-<details class="example"><summary>Patients Table</summary><p><img alt="patients" src="../img/ehr_patients_1.png" /></p>
+<details class="example"><summary>Patients Table</summary><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>BIRTHDATE</th>
+<th>DEATHDATE</th>
+<th>SSN</th>
+<th>DRIVERS</th>
+<th>PASSPORT</th>
+<th>PREFIX</th>
+<th>FIRST</th>
+<th>LAST</th>
+<th>SUFFIX</th>
+<th>MAIDEN</th>
+<th>MARITAL</th>
+<th>RACE</th>
+<th>ETHNICITY</th>
+<th>GENDER</th>
+<th>BIRTHPLACE</th>
+<th>ADDRESS</th>
+<th>CITY</th>
+<th>STATE</th>
+<th>COUNTY</th>
+<th>ZIP</th>
+<th>LAT</th>
+<th>LON</th>
+<th>HEALTHCARE_EXPENSES</th>
+<th>HEALTHCARE_COVERAGE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>2017-08-04</td>
+<td></td>
+<td>999-20-7307</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Torie475</td>
+<td>Effertz744</td>
+<td></td>
+<td></td>
+<td></td>
+<td>black</td>
+<td>nonhispanic</td>
+<td>F</td>
+<td>Concord  California  US</td>
+<td>585 Olson Neck Apt 22</td>
+<td>Oakley</td>
+<td>California</td>
+<td>Contra Costa County</td>
+<td>94561</td>
+<td>37.974941339405255</td>
+<td>-121.64559719784606</td>
+<td>75225.57</td>
+<td>65.28</td>
+</tr>
+<tr>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>2001-12-22</td>
+<td></td>
+<td>999-72-8255</td>
+<td>S99955340</td>
+<td>X28520028X</td>
+<td>Ms.</td>
+<td>Micaela928</td>
+<td>Castañeda925</td>
+<td></td>
+<td></td>
+<td></td>
+<td>white</td>
+<td>hispanic</td>
+<td>F</td>
+<td>Roseau  Saint George  DM</td>
+<td>905 Kuvalis Lane Suite 6</td>
+<td>Los Angeles</td>
+<td>California</td>
+<td>Los Angeles County</td>
+<td>90077</td>
+<td>34.17799692198641</td>
+<td>-118.45345768459985</td>
+<td>519801.03</td>
+<td>354.99</td>
+</tr>
+<tr>
+<td>cc837cec-8d1b-31d3-ff1b-4554b32bce35</td>
+<td>2002-10-04</td>
+<td></td>
+<td>999-71-4536</td>
+<td>S99991837</td>
+<td></td>
+<td>Ms.</td>
+<td>Lorinda137</td>
+<td>Ankunding277</td>
+<td></td>
+<td></td>
+<td></td>
+<td>white</td>
+<td>nonhispanic</td>
+<td>F</td>
+<td>Glendora  California  US</td>
+<td>1040 Hintz Fork Suite 42</td>
+<td>Alpaugh</td>
+<td>California</td>
+<td>Tulare County</td>
+<td>93201</td>
+<td>35.85467564565039</td>
+<td>-119.49516206503664</td>
+<td>67434.37</td>
+<td>105532.46</td>
+</tr>
+<tr>
+<td>db56e012-d085-bc77-be8d-b2cb7540f813</td>
+<td>1994-11-07</td>
+<td></td>
+<td>999-40-5557</td>
+<td>S99975480</td>
+<td>X18819519X</td>
+<td>Mrs.</td>
+<td>Keisha459</td>
+<td>Walsh511</td>
+<td></td>
+<td>Heidenreich818</td>
+<td>M</td>
+<td>asian</td>
+<td>nonhispanic</td>
+<td>F</td>
+<td>Huntington Beach  California  US</td>
+<td>227 Abernathy Boulevard Unit 19</td>
+<td>San Francisco</td>
+<td>California</td>
+<td>San Francisco County</td>
+<td>94111</td>
+<td>37.78431771268959</td>
+<td>-122.44773848994711</td>
+<td>937646.90</td>
+<td>99.97</td>
+</tr>
+<tr>
+<td>cc1c0787-b215-3ce4-ef57-41c4b7169434</td>
+<td>1973-08-27</td>
+<td></td>
+<td>999-31-9860</td>
+<td>S99990549</td>
+<td>X13756124X</td>
+<td>Mr.</td>
+<td>Dana512</td>
+<td>Nitzsche158</td>
+<td></td>
+<td></td>
+<td>M</td>
+<td>white</td>
+<td>hispanic</td>
+<td>M</td>
+<td>American Canyon  California  US</td>
+<td>787 Ernser Walk</td>
+<td>Santa Clarita</td>
+<td>California</td>
+<td>Los Angeles County</td>
+<td>91355</td>
+<td>34.4617083155669</td>
+<td>-118.56212511979317</td>
+<td>1740481.36</td>
+<td>8317.76</td>
+</tr>
+<tr>
+<td>d4321c71-bdaa-4085-61a1-43cfd876afdc</td>
+<td>1990-11-19</td>
+<td></td>
+<td>999-90-7254</td>
+<td>S99919958</td>
+<td>X69927630X</td>
+<td>Mr.</td>
+<td>Frances376</td>
+<td>Lynch190</td>
+<td></td>
+<td></td>
+<td>M</td>
+<td>asian</td>
+<td>nonhispanic</td>
+<td>M</td>
+<td>Salinas  California  US</td>
+<td>227 McClure Skyway</td>
+<td>Santa Rosa</td>
+<td>California</td>
+<td>Sonoma County</td>
+<td>95403</td>
+<td>38.46180438357993</td>
+<td>-122.72061413299186</td>
+<td>860907.41</td>
+<td>459.33</td>
+</tr>
+<tr>
+<td>bf494d2b-8dcf-b448-92c0-a9bb496ad81c</td>
+<td>1970-04-16</td>
+<td></td>
+<td>999-57-3297</td>
+<td>S99966587</td>
+<td>X21870103X</td>
+<td>Mr.</td>
+<td>Roberto515</td>
+<td>Ferrer164</td>
+<td></td>
+<td></td>
+<td>M</td>
+<td>white</td>
+<td>hispanic</td>
+<td>M</td>
+<td>Caguas  Puerto Rico  PR</td>
+<td>117 Gleason Mission</td>
+<td>Long Beach</td>
+<td>California</td>
+<td>Los Angeles County</td>
+<td>90713</td>
+<td>33.825405425893045</td>
+<td>-118.16523195240173</td>
+<td>1294493.97</td>
+<td>4725.56</td>
+</tr>
+<tr>
+<td>19543ef9-644c-1c9d-d0d5-e0fcec4670da</td>
+<td>1985-06-11</td>
+<td></td>
+<td>999-90-3002</td>
+<td>S99931470</td>
+<td>X2800981X</td>
+<td>Mrs.</td>
+<td>Omega729</td>
+<td>Trantow673</td>
+<td></td>
+<td>Hessel84</td>
+<td>M</td>
+<td>white</td>
+<td>hispanic</td>
+<td>F</td>
+<td>Torrance  California  US</td>
+<td>318 Schaden Manor</td>
+<td>Phelan</td>
+<td>California</td>
+<td>San Bernardino County</td>
+<td>92371</td>
+<td>34.434310800795046</td>
+<td>-117.5878097238367</td>
+<td>1981802.53</td>
+<td>22848.21</td>
+</tr>
+<tr>
+<td>e5bffa4c-f113-e154-28ec-5dd5a51efc74</td>
+<td>1999-06-20</td>
+<td></td>
+<td>999-10-3386</td>
+<td>S99980475</td>
+<td>X214587X</td>
+<td>Ms.</td>
+<td>Raeann749</td>
+<td>Hauck852</td>
+<td></td>
+<td></td>
+<td></td>
+<td>white</td>
+<td>nonhispanic</td>
+<td>F</td>
+<td>Sausalito  California  US</td>
+<td>411 Feil Well Suite 13</td>
+<td>Malaga</td>
+<td>California</td>
+<td>Fresno County</td>
+<td></td>
+<td>36.65117620339231</td>
+<td>-119.74924813381965</td>
+<td>904124.12</td>
+<td>4949.56</td>
+</tr>
+<tr>
+<td>43a16fb4-b96c-b481-4fa0-c9c39c130224</td>
+<td>1957-08-12</td>
+<td></td>
+<td>999-57-9595</td>
+<td>S99953108</td>
+<td>X81604053X</td>
+<td>Mrs.</td>
+<td>Jolanda321</td>
+<td>Flatley871</td>
+<td></td>
+<td>Zieme486</td>
+<td>M</td>
+<td>white</td>
+<td>nonhispanic</td>
+<td>F</td>
+<td>Rocklin  California  US</td>
+<td>541 Wintheiser Avenue Unit 42</td>
+<td>Beaumont</td>
+<td>California</td>
+<td>Riverside County</td>
+<td>92223</td>
+<td>33.781281235931075</td>
+<td>-116.90570546282912</td>
+<td>1630601.76</td>
+<td>428479.92</td>
+</tr>
+</tbody>
+</table>
 </details>
 <p>We can see demographic data about these patients. Don’t worry, these are synthetic patients.</p>
 <p>Each patient also has a list of Encounters (these are the visits) where they received care. For example:</p>
-<details class="example"><summary>Encounters Table</summary><p><img alt="encounters" src="../img/encounters_2.png" /></p>
+<details class="example"><summary>Encounters Table</summary><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>START</th>
+<th>STOP</th>
+<th>PATIENT</th>
+<th>ORGANIZATION</th>
+<th>PROVIDER</th>
+<th>PAYER</th>
+<th>ENCOUNTERCLASS</th>
+<th>CODE</th>
+<th>DESCRIPTION</th>
+<th>BASE_ENCOUNTER_COST</th>
+<th>TOTAL_CLAIM_COST</th>
+<th>PAYER_COVERAGE</th>
+<th>REASONCODE</th>
+<th>REASONDESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1988a1e8-be1c-f376-0947-e6ef3d851706</td>
+<td>2017-08-04T14:30:14Z</td>
+<td>2017-08-04T14:45:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>f4fb0326-c6ce-34f2-96fc-451af75cdde9</td>
+<td>65d369aa-dc8d-3a67-a054-e8e2e5148c91</td>
+<td>42c4fca7-f8a9-3cd1-982a-dd9751bf3e2a</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>402.69</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>43f55900-14f6-4310-440b-c34398531881</td>
+<td>2013-01-05T15:06:33Z</td>
+<td>2013-01-05T15:21:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>d93b6804-6ca1-345d-a334-3e497b52e0f7</td>
+<td>3ac820b9-b38e-304b-b9b6-8958ad2ffc63</td>
+<td>4d71f845-a6a9-3c39-b242-14d25ef86a8d</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>1629.70</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>e6b49657-1b8a-a3f8-ba68-abfb7ceb8429</td>
+<td>2017-09-08T14:30:14Z</td>
+<td>2017-09-08T14:45:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>f4fb0326-c6ce-34f2-96fc-451af75cdde9</td>
+<td>65d369aa-dc8d-3a67-a054-e8e2e5148c91</td>
+<td>42c4fca7-f8a9-3cd1-982a-dd9751bf3e2a</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>826.98</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>43756071-53a9-c553-9e53-d5579d869a59</td>
+<td>2014-01-11T15:06:33Z</td>
+<td>2014-01-11T15:21:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>d93b6804-6ca1-345d-a334-3e497b52e0f7</td>
+<td>3ac820b9-b38e-304b-b9b6-8958ad2ffc63</td>
+<td>d47b3510-2895-3b70-9897-342d681c769d</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>1645.25</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3dfe4128-1081-13b3-5157-0708939fb2f9</td>
+<td>2015-01-17T15:06:33Z</td>
+<td>2015-01-17T15:21:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>d93b6804-6ca1-345d-a334-3e497b52e0f7</td>
+<td>3ac820b9-b38e-304b-b9b6-8958ad2ffc63</td>
+<td>5059a55e-5d6e-34d1-b6cb-d83d16e57bcf</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>1019.26</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>39ee963b-e4dd-e869-1fc3-662aab3b2bb0</td>
+<td>2016-01-23T15:06:33Z</td>
+<td>2016-01-23T15:21:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>d93b6804-6ca1-345d-a334-3e497b52e0f7</td>
+<td>3ac820b9-b38e-304b-b9b6-8958ad2ffc63</td>
+<td>5059a55e-5d6e-34d1-b6cb-d83d16e57bcf</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>883.26</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>8ced2121-b15e-8d4b-4734-a7ee3a40db1a</td>
+<td>2017-11-10T14:30:14Z</td>
+<td>2017-11-10T14:45:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>f4fb0326-c6ce-34f2-96fc-451af75cdde9</td>
+<td>65d369aa-dc8d-3a67-a054-e8e2e5148c91</td>
+<td>42c4fca7-f8a9-3cd1-982a-dd9751bf3e2a</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>1442.36</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>b2cc5208-4d02-7cd1-6032-a06920d4b106</td>
+<td>2017-01-28T15:06:33Z</td>
+<td>2017-01-28T15:21:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>d93b6804-6ca1-345d-a334-3e497b52e0f7</td>
+<td>3ac820b9-b38e-304b-b9b6-8958ad2ffc63</td>
+<td>4d71f845-a6a9-3c39-b242-14d25ef86a8d</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>1350.13</td>
+<td>0.00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>bb11eefe-e1b3-1595-9700-dd4e1b3258e0</td>
+<td>2018-01-12T14:30:14Z</td>
+<td>2018-01-12T14:45:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>f4fb0326-c6ce-34f2-96fc-451af75cdde9</td>
+<td>65d369aa-dc8d-3a67-a054-e8e2e5148c91</td>
+<td>42c4fca7-f8a9-3cd1-982a-dd9751bf3e2a</td>
+<td>wellness</td>
+<td>410620009</td>
+<td>Well child visit (procedure)</td>
+<td>146.76</td>
+<td>826.76</td>
+<td>65.28</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>258df7cd-c3fd-9446-4e7a-3028bfadf3cc</td>
+<td>2017-10-25T22:06:33Z</td>
+<td>2017-10-25T22:21:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>7dbe8a71-ceef-3e3e-b99e-fc3d1b5921a1</td>
+<td>04fddee1-adc9-3f08-9e90-dac1b01cf48f</td>
+<td>4d71f845-a6a9-3c39-b242-14d25ef86a8d</td>
+<td>ambulatory</td>
+<td>185345009</td>
+<td>Encounter for symptom</td>
+<td>82.02</td>
+<td>87.68</td>
+<td>0.00</td>
+<td>10509002</td>
+<td>Acute bronchitis (disorder)</td>
+</tr>
+</tbody>
+</table>
 </details>
-<p>In these examples, the Encounters have a CODE (a structured set of alpha-numeric patterns that map to detailed information such as diagnoses, procedures, etc.) with a corresponding description. Some of these Encounters also have a REASONCODE. Both codes use Systemized Nomenclature of Medicine – Clinical Terms (SNOMED CT) (which we will discuss shortly). These are mainly used for diagnosis, procedure tracking, and symptom monitoring purposes within a healthcare setting.  The better documented "encounters" can also provide a wealth of information retrospectively for understanding etiology of diseases or can be used for epidemiological studies (e.g., hospital acquired infections or infection control and containment).</p>
+<p>In these examples, the Encounters have a CODE (a structured set of alpha-numeric patterns that map to detailed information such as diagnoses, procedures, etc.) with a corresponding description. Some of these Encounters also have a REASONCODE. Both codes use SNOMED CT (see <a href="#snomed-ct">details on SNOMED CT below</a>). These are mainly used for diagnosis, procedure tracking, and symptom monitoring purposes within a healthcare setting.  The better documented "encounters" can also provide a wealth of information retrospectively for understanding etiology of diseases or can be used for epidemiological studies (e.g., hospital acquired infections or infection control and containment).</p>
 <p>Patients also have a list of Conditions or Diagnoses. For example:</p>
-<details class="example"><summary>Diagnoses Table</summary><p><img alt="diagnoses" src="../img/conditions_3.png" /></p>
+<details class="example"><summary>Diagnoses Table</summary><table>
+<thead>
+<tr>
+<th>START</th>
+<th>STOP</th>
+<th>PATIENT</th>
+<th>ENCOUNTER</th>
+<th>CODE</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2016-01-23</td>
+<td>2017-01-28</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>39ee963b-e4dd-e869-1fc3-662aab3b2bb0</td>
+<td>160968000</td>
+<td>Risk activity involvement (finding)</td>
+</tr>
+<tr>
+<td>2017-10-25</td>
+<td>2017-11-11</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>258df7cd-c3fd-9446-4e7a-3028bfadf3cc</td>
+<td>10509002</td>
+<td>Acute bronchitis (disorder)</td>
+</tr>
+<tr>
+<td>2018-03-23</td>
+<td>2018-04-17</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>4a5fc869-345d-8cc0-e0f8-daf14cc5635e</td>
+<td>444814009</td>
+<td>Viral sinusitis (disorder)</td>
+</tr>
+<tr>
+<td>2019-01-26</td>
+<td>2019-07-12</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>ea468580-5bda-25e8-8a84-efdc02c0afc7</td>
+<td>65363002</td>
+<td>Otitis media</td>
+</tr>
+<tr>
+<td>2019-08-04</td>
+<td>2019-08-04</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>b39b04fd-afce-4d7a-7ec1-9d2d483bfae3</td>
+<td>91861009</td>
+<td>Acute myeloid leukemia  disease (disorder)</td>
+</tr>
+<tr>
+<td>2019-08-04</td>
+<td>2019-08-04</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1455e3d7-31ef-58c7-9d8f-420d8efd2db3</td>
+<td>409089005</td>
+<td>Febrile neutropenia (disorder)</td>
+</tr>
+<tr>
+<td>2019-08-04</td>
+<td>2019-08-04</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1455e3d7-31ef-58c7-9d8f-420d8efd2db3</td>
+<td>5758002</td>
+<td>Bacteremia (finding)</td>
+</tr>
+<tr>
+<td>2020-02-22</td>
+<td>2020-03-03</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>d3460ec9-1d24-487c-51bf-23e97219111d</td>
+<td>195662009</td>
+<td>Acute viral pharyngitis (disorder)</td>
+</tr>
+<tr>
+<td>2020-03-01</td>
+<td>2020-03-27</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>110756a8-a06b-285d-c7de-5aa411585fd5</td>
+<td>444814009</td>
+<td>Viral sinusitis (disorder)</td>
+</tr>
+<tr>
+<td>2020-08-02</td>
+<td>2020-08-20</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>adfbf7e0-8d90-ad8d-d9c1-1e7bf02f9ea2</td>
+<td>444814009</td>
+<td>Viral sinusitis (disorder)</td>
+</tr>
+</tbody>
+</table>
 </details>
 <p>In these examples, we see each condition or diagnosis has a CODE. Again, these examples use SNOMED CT codes, but other common terminologies include International Statistical Classification of Diseases and Related Health Problems (Tenth Revision) (ICD-10). We can see from the descriptions that some of these codes are clinical diagnoses, such as Hyperlipidemia, a history of Stroke, and Diabetic Retinopathy. However, some of these data points can also be Social Determinants of Health (SDoH) such as stress, limited social contact, and social isolation.</p>
 <p>During an Encounter, the clinical staff may perform Procedures on patients, which are recorded with CODEs. Some of these procedures also document a REASONCODE. These examples use SNOMED CT codes, but other common terminologies to encode procedures include Current Procedural Terminology (CPT) and Healthcare Common Procedure Coding System (HCPCS).</p>
-<details class="example"><summary>Procedures Table</summary><p><img alt="procedures" src="../img/procedures_4.png" /></p>
+<details class="example"><summary>Procedures Table</summary><table>
+<thead>
+<tr>
+<th>START</th>
+<th>STOP</th>
+<th>PATIENT</th>
+<th>ENCOUNTER</th>
+<th>CODE</th>
+<th>DESCRIPTION</th>
+<th>BASE_COST</th>
+<th>REASONCODE</th>
+<th>REASONDESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2013-01-05T15:06:33Z</td>
+<td>2013-01-05T15:21:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43f55900-14f6-4310-440b-c34398531881</td>
+<td>430193006</td>
+<td>Medication Reconciliation (procedure)</td>
+<td>819.01</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2014-01-11T15:06:33Z</td>
+<td>2014-01-11T15:17:17Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43756071-53a9-c553-9e53-d5579d869a59</td>
+<td>171207006</td>
+<td>Depression screening (procedure)</td>
+<td>600.50</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2014-01-11T15:06:33Z</td>
+<td>2014-01-11T15:21:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43756071-53a9-c553-9e53-d5579d869a59</td>
+<td>430193006</td>
+<td>Medication Reconciliation (procedure)</td>
+<td>625.99</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2014-01-11T15:17:17Z</td>
+<td>2014-01-11T15:37:26Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43756071-53a9-c553-9e53-d5579d869a59</td>
+<td>715252007</td>
+<td>Depression screening using Patient Health Questionnaire Nine Item score (procedure)</td>
+<td>43.04</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2014-01-11T15:37:26Z</td>
+<td>2014-01-11T15:51:39Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43756071-53a9-c553-9e53-d5579d869a59</td>
+<td>428211000124100</td>
+<td>Assessment of substance use (procedure)</td>
+<td>600.50</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2014-01-11T15:51:39Z</td>
+<td>2014-01-11T16:19:37Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43756071-53a9-c553-9e53-d5579d869a59</td>
+<td>868187001</td>
+<td>Assessment using Car  Relax  Alone  Forget  Friends  Trouble Screening Test (procedure)</td>
+<td>600.50</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2014-01-11T16:19:37Z</td>
+<td>2014-01-11T16:33:57Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43756071-53a9-c553-9e53-d5579d869a59</td>
+<td>386516004</td>
+<td>Anticipatory guidance (procedure)</td>
+<td>600.50</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2015-01-17T15:06:33Z</td>
+<td>2015-01-17T15:19:22Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>3dfe4128-1081-13b3-5157-0708939fb2f9</td>
+<td>428211000124100</td>
+<td>Assessment of substance use (procedure)</td>
+<td>600.50</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2015-01-17T15:19:22Z</td>
+<td>2015-01-17T15:32:51Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>3dfe4128-1081-13b3-5157-0708939fb2f9</td>
+<td>868187001</td>
+<td>Assessment using Car  Relax  Alone  Forget  Friends  Trouble Screening Test (procedure)</td>
+<td>600.50</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2015-01-17T15:32:51Z</td>
+<td>2015-01-17T15:38:38Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>3dfe4128-1081-13b3-5157-0708939fb2f9</td>
+<td>386516004</td>
+<td>Anticipatory guidance (procedure)</td>
+<td>600.50</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </details>
 <p>Other common data elements include medications, either administered or prescribed, and diagnostic lab results and vital sign measurements. Sometimes the measurements and results are called Observations.</p>
-<details class="example"><summary>Medications Table</summary><p><img alt="medications" src="../img/medications_5.png" /></p>
+<details class="example"><summary>Medications Table</summary><table>
+<thead>
+<tr>
+<th>START</th>
+<th>STOP</th>
+<th>PATIENT</th>
+<th>PAYER</th>
+<th>ENCOUNTER</th>
+<th>CODE</th>
+<th>DESCRIPTION</th>
+<th>DISPENSES</th>
+<th>REASONCODE</th>
+<th>REASONDESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10/25/17</td>
+<td>11/11/17</td>
+<td>38b9dfb6</td>
+<td>4d71f845</td>
+<td>258df7cd</td>
+<td>313782</td>
+<td>Acetaminophen 325 MG Oral Tablet</td>
+<td>1</td>
+<td>10509002</td>
+<td>Acute bronchitis (disorder)</td>
+</tr>
+<tr>
+<td>12/11/17</td>
+<td>12/6/18</td>
+<td>38b9dfb6</td>
+<td>4d71f845</td>
+<td>dab2c529</td>
+<td>748879</td>
+<td>Levora 0.15/30 28 Day Pack</td>
+<td>12</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>12/26/18</td>
+<td></td>
+<td>42574859</td>
+<td>b1c428d6</td>
+<td>f8878c7e</td>
+<td>1014676</td>
+<td>cetirizine hydrochloride 5 MG Oral Tablet</td>
+<td>41</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>12/26/18</td>
+<td></td>
+<td>42574859</td>
+<td>b1c428d6</td>
+<td>f8878c7e</td>
+<td>1870230</td>
+<td>NDA020800 0.3 ML Epinephrine 1 MG/ML Auto-Injector</td>
+<td>41</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1/26/19</td>
+<td>2/9/19</td>
+<td>42574859</td>
+<td>b1c428d6</td>
+<td>ea468580</td>
+<td>313820</td>
+<td>Acetaminophen 160 MG Chewable Tablet</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>12/1/19</td>
+<td>11/25/20</td>
+<td>38b9dfb6</td>
+<td>42c4fca7</td>
+<td>f6bae05e</td>
+<td>1367439</td>
+<td>NuvaRing 0.12/0.015 MG per 24HR 21 Day Vaginal Ring</td>
+<td>12</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>8/4/19</td>
+<td>8/4/19</td>
+<td>42574859</td>
+<td>4d71f845</td>
+<td>1455e3d7</td>
+<td>199885</td>
+<td>levofloxacin 500 MG Oral Tablet</td>
+<td>1</td>
+<td>91861009</td>
+<td>Acute myeloid leukemia  disease (disorder)</td>
+</tr>
+<tr>
+<td>3/3/21</td>
+<td>3/17/21</td>
+<td>42574859</td>
+<td>4d71f845</td>
+<td>ac66a7e2</td>
+<td>308192</td>
+<td>Amoxicillin 500 MG Oral Tablet</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3/3/21</td>
+<td>3/17/21</td>
+<td>42574859</td>
+<td>4d71f845</td>
+<td>ac66a7e2</td>
+<td>198405</td>
+<td>Ibuprofen 100 MG Oral Tablet</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>11/25/20</td>
+<td>11/20/21</td>
+<td>38b9dfb6</td>
+<td>047f6ec3</td>
+<td>6744ffa1</td>
+<td>751905</td>
+<td>Trinessa 28 Day Pack</td>
+<td>12</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </details>
 <p>These medications include information about the patient, a CODE, often the REASONCODE for the medication, the number of dispenses, and other information. In these examples, the CODEs used are RxNorm codes, and the REASONCODES are SNOMED CT.</p>
-<details class="example"><summary>Observations Table</summary><p><img alt="observations" src="../img/observations_6.png" /></p>
+<details class="example"><summary>Observations Table</summary><table>
+<thead>
+<tr>
+<th>DATE</th>
+<th>PATIENT</th>
+<th>ENCOUNTER</th>
+<th>CATEGORY</th>
+<th>CODE</th>
+<th>DESCRIPTION</th>
+<th>VALUE</th>
+<th>UNITS</th>
+<th>TYPE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2017-08-04T14:30:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1988a1e8-be1c-f376-0947-e6ef3d851706</td>
+<td>vital-signs</td>
+<td>8302-2</td>
+<td>Body Height</td>
+<td>53.5</td>
+<td>cm</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2017-08-04T14:30:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1988a1e8-be1c-f376-0947-e6ef3d851706</td>
+<td>vital-signs</td>
+<td>72514-3</td>
+<td>Pain severity - 0-10 verbal numeric rating [Score] - Reported</td>
+<td>3.0</td>
+<td score="score"></td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2017-08-04T14:30:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1988a1e8-be1c-f376-0947-e6ef3d851706</td>
+<td>vital-signs</td>
+<td>29463-7</td>
+<td>Body Weight</td>
+<td>4.1</td>
+<td>kg</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2017-08-04T14:30:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1988a1e8-be1c-f376-0947-e6ef3d851706</td>
+<td>vital-signs</td>
+<td>77606-2</td>
+<td>Weight-for-length Per age and sex</td>
+<td>18.6</td>
+<td>%</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2013-01-05T15:06:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43f55900-14f6-4310-440b-c34398531881</td>
+<td>vital-signs</td>
+<td>8302-2</td>
+<td>Body Height</td>
+<td>138.9</td>
+<td>cm</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2017-08-04T14:30:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1988a1e8-be1c-f376-0947-e6ef3d851706</td>
+<td>vital-signs</td>
+<td>9843-4</td>
+<td>Head Occipital-frontal circumference</td>
+<td>36.0</td>
+<td>cm</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2013-01-05T15:06:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43f55900-14f6-4310-440b-c34398531881</td>
+<td>vital-signs</td>
+<td>72514-3</td>
+<td>Pain severity - 0-10 verbal numeric rating [Score] - Reported</td>
+<td>1.0</td>
+<td score="score"></td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2017-08-04T14:30:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1988a1e8-be1c-f376-0947-e6ef3d851706</td>
+<td>vital-signs</td>
+<td>8462-4</td>
+<td>Diastolic Blood Pressure</td>
+<td>71.0</td>
+<td>mm[Hg]</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2013-01-05T15:06:33Z</td>
+<td>38b9dfb6-29f6-60c8-ef37-6210064feac0</td>
+<td>43f55900-14f6-4310-440b-c34398531881</td>
+<td>vital-signs</td>
+<td>29463-7</td>
+<td>Body Weight</td>
+<td>28.0</td>
+<td>kg</td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>2017-08-04T14:30:14Z</td>
+<td>42574859-0c77-3889-9b2e-d5476bd0cbd6</td>
+<td>1988a1e8-be1c-f376-0947-e6ef3d851706</td>
+<td>vital-signs</td>
+<td>8480-6</td>
+<td>Systolic Blood Pressure</td>
+<td>119.0</td>
+<td>mm[Hg]</td>
+<td>numeric</td>
+</tr>
+</tbody>
+</table>
 </details>
 <p>An Observations table might look like the above. This table contains several different CATEGORIES of data, for example, vital-signs, laboratory, social-history, and survey data. Each data element has a CODE, description, value, and units of measure. In this example, the CODE is using LOINC, and the units of measure are using Unified Code for Units of Measure (UCUM).</p>
 <div class="admonition note">
@@ -801,24 +1777,34 @@ All three options use the same LOINC code <code>72166-2</code> with the human-re
 <li>Example Units</li>
 </ul>
 <p>e.g.,
-An example can be found here: <a href="https://loinc.org/69049-5/" target="_blank"> https://loinc.org/69049-5/</a> and <a href="https://loinc.org/kb/users-guide/introduction/" target="_blank">https://loinc.org/kb/users-guide/introduction/</a></p>
+An example can be found here: <a href="https://loinc.org/69049-5/" target="_blank"> https://loinc.org/69049-5/</a> and further details here <a href="https://loinc.org/kb/users-guide/introduction/" target="_blank">https://loinc.org/kb/users-guide/introduction/</a></p>
 <table>
 <thead>
 <tr>
-<th>Test ID</th>
-<th>Test Order Name</th>
-<th>Order LOINC Code</th>
-<th>LOINC Attributes</th>
-<th>Method Name</th>
+<th>LOINC code</th>
+<th>Long Common Name</th>
+<th>Status</th>
+<th>Additional names</th>
+<th>Class</th>
+<th>Type</th>
+<th>Order vs. Observation</th>
+<th>Member of these panels</th>
+<th>Member of these groups</th>
+<th>Example Units</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>10AIH</td>
-<td>Factor X Inhibitor Profile, Professional Interpretation</td>
 <td>69049-5</td>
-<td>Coagulation specialist review:Imp:Pt:XXX:Nar:</td>
-<td>Only orderable as a reflex. For more information see 10INE / Factor X Inhibitor Evaluation, Plasma. Medical Interpretation</td>
+<td>Coagulation specialist review of results</td>
+<td>Active</td>
+<td>Coagulation specialist review[Interp]</td>
+<td>MISC</td>
+<td>Laboratory</td>
+<td>Observation</td>
+<td>93321-8   PT mixing study panel - Platelet poor plasma by Coagulation ass</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -901,8 +1887,8 @@ Source: <a href="https://www.cms.gov/Medicare/Coding/MedHCPCSGenInfo" target="_b
 <li>CPT code lookup tool: <a href="https://www.aapc.com/codes/cpt-codes-range/" target="_blank">https://www.aapc.com/codes/cpt-codes-range/</a></li>
 </ul>
 </div>
-<h3 id="snomed">SNOMED</h3>
-<p><strong>Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT®</strong> is a standardized, international, multilingual core set of clinical healthcare terminology that can be used in EHR.</p>
+<h3 id="snomed-ct">SNOMED-CT</h3>
+<p><strong>Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT®</strong> is a standardized, international, multilingual core set of clinical healthcare terminology that can be used in an EHR.</p>
 <p>SNOMED International is the non-profit standards development organization that creates and distributes SNOMED CT, and it is operated by the International Health Standards Development Organization. The National Library of Medicine (NLM) is the release center for SNOMED CT in the United States and supports the distribution of SNOMED CT for United States users.</p>
 <div class="admonition note">
 <p class="admonition-title">SNOMED CT is a critical part of interoperability</p>
@@ -920,7 +1906,8 @@ A common procedural code is Renal dialysis (procedure) <code>265764009</code>.</
 <p>ICD-10 is the 10th revision of the <strong>International Statistical Classification of Diseases and Related Health Problems (ICD)</strong>, a medical classification list by the World Health Organization (WHO).</p>
 <p>For disease reporting, the US utilizes its own national variant of ICD-10 called the ICD-10 Clinical Modification (ICD-10-CM). A procedural classification called ICD-10 Procedure Coding System (ICD-10-PCS) has also been developed for capturing inpatient procedures. The ICD-10-CM and ICD-10-PCS were developed by the Centers for Medicare and Medicaid Services (CMS) and the National Center for Health Statistics (NCHS).</p>
 <details class="example"><summary>ICD-10 Code Structure and Examples</summary><p>ICD-10-CM codes may consist of up to seven digits, with the seventh digit extensions representing visit encounter or sequelae for injuries and external causes.</p>
-<p><img alt="ICD-10 Format" src="../img/icd_10_format.png" /></p>
+<p><img alt="ICD-10 Format" src="../img/icd10.png" /></p>
+<p>source: <a href="https://www.aapc.com/icd-10/conversion-mapping.aspx" target="_blank">https://www.aapc.com/icd-10/conversion-mapping.aspx</a></p>
 <p>Example codes:</p>
 <ul>
 <li><code>E08.22</code>, Diabetes mellitus due to an underlying condition with diabetic chronic kidney disease  </li>
@@ -956,7 +1943,7 @@ A common procedural code is Renal dialysis (procedure) <code>265764009</code>.</
 </div>
 <div class="admonition quote">
 <p class="admonition-title">Key Point: Why this matters:</p>
-<p><strong>EHR are a vast resource of information, chronicling each individual’s health. Significant work has gone into standardizing this information into a uniform set of coding terminologies with the aim of ensuring that health records can be interpreted across providers and patients. Understanding these terminologies and the information types contained within them is a critical first step to unlocking the potential research value of this data.</strong></p>
+<p><strong>EHRs are a vast resource of information, chronicling each individual’s health. Significant work has gone into standardizing this information into a uniform set of coding terminologies with the aim of ensuring that health records can be interpreted across providers and patients. Understanding these terminologies and the information types contained within them is a critical first step to unlocking the potential research value of this data.</strong></p>
 </div>
 <details class="question"><summary>Knowledge Check: What code systems are used to identify clinical measurements?</summary><p>LOINC</p>
 </details>

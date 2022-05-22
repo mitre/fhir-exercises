@@ -294,12 +294,11 @@ LOINC codes are divided into Test Order and Test Result codes.
 
 
     e.g.,
-    An example can be found here: [ https://loinc.org/69049-5/]( https://loinc.org/69049-5/){target=_blank} and [https://loinc.org/kb/users-guide/introduction/](https://loinc.org/kb/users-guide/introduction/){target=_blank}
+    An example can be found here: [ https://loinc.org/69049-5/]( https://loinc.org/69049-5/){target=_blank} and further details here [https://loinc.org/kb/users-guide/introduction/](https://loinc.org/kb/users-guide/introduction/){target=_blank}
 
-
-    | Test ID | Test Order Name | Order LOINC Code | LOINC Attributes | Method Name |
-    |---------|-----------------|------------------|------------------|-------------|
-    | 10AIH  | Factor X Inhibitor Profile, Professional Interpretation | 69049-5 | Coagulation specialist review:Imp:Pt:XXX:Nar: | Only orderable as a reflex. For more information see 10INE / Factor X Inhibitor Evaluation, Plasma. Medical Interpretation |
+    |LOINC code|Long Common Name|Status|Additional names|Class|Type|Order vs. Observation|Member of these panels|Member of these groups|Example Units|
+    |---------|-----------------|------------------|------------------|-------------|-----|-----|------|----|----|
+    | 69049-5  | Coagulation specialist review of results | Active | Coagulation specialist review[Interp] | MISC | Laboratory | Observation| 93321-8	PT mixing study panel - Platelet poor plasma by Coagulation ass | | |
 
 ??? example "Test Result Code Structure and Examples"
     LOINC Test Result codes are also 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X
