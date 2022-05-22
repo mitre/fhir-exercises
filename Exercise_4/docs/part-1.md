@@ -39,7 +39,7 @@ To learn more about PII, PHI, and HIPAA, please expand the clipboards below.
         * the provision of health care to the individual, or 
         * the past, present, or future payment for the provision of health care to the individual, and that identifies the individual or for which there is a reasonable basis to believe it can be used to identify the individual.
 	    * Individually identifiable health information includes many common identifiers (e.g., name, address, birth date, Social Security Number).
-        * Source: [source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html](source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html){target=_blank}
+        * Source: [source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html](https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html){target=_blank}
     * It should be noted that often researchers will work with de-identified EHR data that has purposely been stripped of PII. This may negate specific privacy concerns but there are other, additional privacy protections and considerations for handling even de-identified data.
     * There could also be privacy issues if multiple records of the same individual are linked together to create a more robust dataset.
     * Read more about the privacy rule here: [ https://www.hhs.gov/sites/default/files/privacysummary.pdf](https://www.hhs.gov/sites/default/files/privacysummary.pdf){target=_blank}
@@ -62,7 +62,7 @@ To learn more about PII, PHI, and HIPAA, please expand the clipboards below.
 
 The information contained in an EHR record can often be traced to a patient’s flow through the medical system. While each patient encounter may vary drastically based on the encounter type and the severity of the patient’s condition, we will explore the types of data in an EHR through the use-case of a typical annual wellness encounter (i.e., an annual patient visit to a primary care physician). 
 
-To illustrate this scenario, this exercise references the "Wellness Encounter" from the Synthea Module Builder to show one possible process flow. The tool allows users to view and customize several possible health care scenarios, charting the process flow, and the associated data elements that come out of each step in the process​:
+To illustrate this scenario, this exercise references the "Wellness Encounter" from the Synthea Module Builder to show one possible process flow. The tool allows users to view and customize several possible health care scenarios, charting the process flow, and the associated data elements that come out of each step in the process​.
 
 Source: [https://synthetichealth.github.io/module-builder/#wellness_encounters](https://synthetichealth.github.io/module-builder/#wellness_encounters){target=_blank}
 
@@ -87,7 +87,7 @@ Further down in the process flow we find our provider inquiring about the patien
 ![Smoking Decision Tree](img/smoking0.png)
 
 Depending on the smoking status, we see that there are three options (in this example there are three, but more exist in the real world).
-All three options use the same LOINC code `72166-2` with the human-readable description of `Tobacco smoking status` -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three SNOMED-CT codes ([learn more about SNOMED-CT below](#snomed)), one where the smoker attribute is true, the second where the `quit smoking date` is not null, and finally 3, an `else` default finding:
+All three options use the same LOINC code `72166-2` with the human-readable description of `Tobacco smoking status` -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT® codes ([learn more about SNOMED-CT below](#snomed)), one where the smoker attribute is true, the second where the `quit smoking date` is not null, and finally 3, an `else` default finding:
 
 1. SNOMED-CT `449868002` with the human-readable description `Smokes tobacco daily (finding)`
 ![Daily Smoker Code](img/smoking1.png)
@@ -172,7 +172,7 @@ Each patient also has a list of Encounters (these are the visits) where they rec
     |bb11eefe-e1b3-1595-9700-dd4e1b3258e0|2018-01-12T14:30:14Z|2018-01-12T14:45:14Z|42574859-0c77-3889-9b2e-d5476bd0cbd6|f4fb0326-c6ce-34f2-96fc-451af75cdde9|65d369aa-dc8d-3a67-a054-e8e2e5148c91|42c4fca7-f8a9-3cd1-982a-dd9751bf3e2a|wellness      |410620009   |Well child visit (procedure)                                    |146.76             |826.76          |65.28         |           |                 |
     |258df7cd-c3fd-9446-4e7a-3028bfadf3cc|2017-10-25T22:06:33Z|2017-10-25T22:21:33Z|38b9dfb6-29f6-60c8-ef37-6210064feac0|7dbe8a71-ceef-3e3e-b99e-fc3d1b5921a1|04fddee1-adc9-3f08-9e90-dac1b01cf48f|4d71f845-a6a9-3c39-b242-14d25ef86a8d|ambulatory    |185345009   |Encounter for symptom                                           |82.02              |87.68           |0.00          |10509002   |Acute bronchitis (disorder)|
 
-In these examples, the Encounters have a CODE (a structured set of alpha-numeric patterns that map to detailed information such as diagnoses, procedures, etc.) with a corresponding description. Some of these Encounters also have a REASONCODE. Both codes use Systemized Nomenclature of Medicine – Clinical Terms (SNOMED CT) (which we will discuss shortly). These are mainly used for diagnosis, procedure tracking, and symptom monitoring purposes within a healthcare setting.  The better documented "encounters" can also provide a wealth of information retrospectively for understanding etiology of diseases or can be used for epidemiological studies (e.g., hospital acquired infections or infection control and containment).
+In these examples, the Encounters have a CODE (a structured set of alpha-numeric patterns that map to detailed information such as diagnoses, procedures, etc.) with a corresponding description. Some of these Encounters also have a REASONCODE. Both codes use SNOMED CT (see [details on SNOMED CT below](#snomed-ct)). These are mainly used for diagnosis, procedure tracking, and symptom monitoring purposes within a healthcare setting.  The better documented "encounters" can also provide a wealth of information retrospectively for understanding etiology of diseases or can be used for epidemiological studies (e.g., hospital acquired infections or infection control and containment).
 
 Patients also have a list of Conditions or Diagnoses. For example:
 ??? example "Diagnoses Table"
@@ -363,8 +363,8 @@ It should also be noted that some CPT codes indicate bundled services. That is, 
     * Updated list of codes: [https://www.cms.gov/Medicare/Fraud-and-Abuse/PhysicianSelfReferral](https://www.cms.gov/Medicare/Fraud-and-Abuse/PhysicianSelfReferral){target=_blank}
     * CPT code lookup tool: [https://www.aapc.com/codes/cpt-codes-range/](https://www.aapc.com/codes/cpt-codes-range/){target=_blank}
 
-### SNOMED
-**Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT®** is a standardized, international, multilingual core set of clinical healthcare terminology that can be used in EHR.
+### SNOMED-CT
+**Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT®** is a standardized, international, multilingual core set of clinical healthcare terminology that can be used in an EHR.
 
 SNOMED International is the non-profit standards development organization that creates and distributes SNOMED CT, and it is operated by the International Health Standards Development Organization. The National Library of Medicine (NLM) is the release center for SNOMED CT in the United States and supports the distribution of SNOMED CT for United States users.
 
@@ -424,7 +424,7 @@ In the National Drug Code (NDC) system, if more than one manufacturer produces t
     * [https://www.nih.gov/news-events/news-releases/drug-naming-standard-electronic-health-records-enhanced](https://www.nih.gov/news-events/news-releases/drug-naming-standard-electronic-health-records-enhanced){target=_blank}
 
 !!! quote "Key Point: Why this matters:"
-    **EHR are a vast resource of information, chronicling each individual’s health. Significant work has gone into standardizing this information into a uniform set of coding terminologies with the aim of ensuring that health records can be interpreted across providers and patients. Understanding these terminologies and the information types contained within them is a critical first step to unlocking the potential research value of this data.**
+    **EHRs are a vast resource of information, chronicling each individual’s health. Significant work has gone into standardizing this information into a uniform set of coding terminologies with the aim of ensuring that health records can be interpreted across providers and patients. Understanding these terminologies and the information types contained within them is a critical first step to unlocking the potential research value of this data.**
 
 ??? question "Knowledge Check: What code systems are used to identify clinical measurements?"
     LOINC

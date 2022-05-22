@@ -30,7 +30,7 @@ The **Medicare Access and CHIP Reauthorization Act (MACRA)** of 2015 also was pi
     MACRA also served as a vehicle for Congress to declare a goal of achieving widespread exchange of health information through interoperable certified EHR technology by December 31, 2018. MACRA stated that there should be “widespread interoperability” and established metrics to determine whether, and to what extent, objectives have been met by this time. 
     Source: [https://www.congress.gov/bill/114th-congress/house-bill/2/text](https://www.congress.gov/bill/114th-congress/house-bill/2/text){target=_blank}.
 
-Finally, in December of 2016, Congress passed the **21st Century Cures Act**, which will require EHR systems to provide Patient and Clinician access to patient data encoded with USCDI and implemented with HL7 FHIR and US Core. We'll talk about each of these topics in sequence.
+Finally, in December of 2016, Congress passed the **21st Century Cures Act**, which will require EHR systems to provide Patient and Clinician access to patient data encoded with USCDI and implemented with HL7 FHIR® and US Core. We'll talk about each of these topics in sequence.
 
 ??? example "Read more on the CURES Act here"
     * The CURES Act revised a definition of interoperability with three characteristics:
@@ -41,14 +41,24 @@ Finally, in December of 2016, Congress passed the **21st Century Cures Act**, wh
     * Like MACRA, the 21st Century Cures Act mandated support for interoperable network exchange to be spearheaded by the ONC in collaboration with the National Institute of Standards and Technology and other divisions of HHS. 
     * This work included establishing and publishing details about a trusted exchange framework along with a directory of participating health information networks and rules for these networks to apply. 
 
-    More about the Cures Act final rule is available here: [https://www.healthit.gov/cures/sites/default/files/cures/2020-03/TheONCCuresActFinalRule.pdf](https://www.healthit.gov/cures/sites/default/files/cures/2020-03/TheONCCuresActFinalRule.pdf){target=_blank}
+    More about the Cures Act final rule is available here: 
+    * [https://www.healthit.gov/cures/sites/default/files/cures/2020-03/TheONCCuresActFinalRule.pdf](https://www.healthit.gov/cures/sites/default/files/cures/2020-03/TheONCCuresActFinalRule.pdf){target=_blank}
+    * [https://nexus.od.nih.gov/all/2020/07/31/leveraging-standardized-clinical-data-to-advance-discovery/](https://nexus.od.nih.gov/all/2020/07/31/leveraging-standardized-clinical-data-to-advance-discovery/){target=_blank}
+
+!!! note "CURES Act's Impact for Researchers"
+    * The Cures Act has been instrumental in increasing access to and interoperability of electronic health information for clinical care. This, in turn, has paved the way to leverage relevant policies, systems, and infrastructure to accelerate research. 
+    * In parallel, researchers have been challenged to make data from a single research study, once collected, useful for other research endeavors. 
+    * Data sharing is essential for expedited translation of research resources into human health improvements. Specifically, sharing scientific data and results enables researchers to more vigorously test the validity of research findings, strengthen analyses by combining data sets, and explore new frontiers.
+    * Source: [https://nexus.od.nih.gov/all/2020/07/31/leveraging-standardized-clinical-data-to-advance-discovery/](https://nexus.od.nih.gov/all/2020/07/31/leveraging-standardized-clinical-data-to-advance-discovery/){target=_blank}
+
+The implementation of the Cures Act has laid the groundwork for increased use of health care data standards that can benefit research. 
 
 ## How Healthcare Data Standards Support Interoperability 
 **It is often assumed that interoperability shortfalls are primarily due to the siloed nature of data within ecosystems. Although data blocking is a concern, most EHR vendors have met the minimum requirements for sharing information. However, evidence suggests that even though EHR vendors are meeting these minimum requirements, they are not facilitating the data exchanges to maximize the opportunities for interoperability.**
 
 Previous research has shown that the complexity of facilitating exchange, lack of standards, and costs were the primary roadblocks vendors identified when asked to expedite interoperability solutions.  To comply with the law, vendors would sometimes provide only the most basic information in PDF files for transfer, which are not interpretable or computable by other EHRs. Such transfers, while possibly meeting minimum compliance according to the letter of the law, should also be viewed as an element of data blocking.
 
-Source: [www.healthit.gov/sites/default/files/reports/info_blocking_040915.pdf](www.healthit.gov/sites/default/files/reports/info_blocking_040915.pdf){target=_blank}
+Source: [www.healthit.gov/sites/default/files/reports/info_blocking_040915.pdf](https://www.healthit.gov/sites/default/files/reports/info_blocking_040915.pdf){target=_blank}
 
 !!! note "Enabling Interoperability"
     Therefore, to fully enable interoperability, significant work was required to create a uniform set of terminology standards and tools to facilitate the exchange of computable and interpretable health data. 

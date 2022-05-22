@@ -9,19 +9,19 @@ to be available securely to those who have a need to access it, and to those who
 The FHIR® standard is developed and maintained by the (Health Level Seven®)  HL7® organization.
 
 ??? Example "More about FHIR®"
-    HL7 FHIR is a robust and comprehensive standard, but for the purposes of this tutorial here is a very simplified view.
+    HL7 FHIR® is a robust and comprehensive standard, but for the purposes of this tutorial here is a very simplified view.
    
-    * FHIR defines a set of **Resources** that can be exchanged.
+    * FHIR® defines a set of **Resources** that can be exchanged.
    
     * These Resources are structured data building blocks that group together commonly used and related data fields.
    
-    * Examples of Resources are things like `Patient`, `Encounter`, `Condition`, `AllergyIntolerance`, `Medication`, `Procedure`, and `Observation`. Some of these concepts should be familiar from Part 1. FHIR defines over 140 resources.
+    * Examples of Resources are things like `Patient`, `Encounter`, `Condition`, `AllergyIntolerance`, `Medication`, `Procedure`, and `Observation`. Some of these concepts should be familiar from Part 1. FHIR® defines over 140 resources.
    
-    * FHIR also defines an **Application Programming Interface (API)*** which is a way for applications to programmatically query and request data Resource by Resource.
+    * FHIR® also defines an **Application Programming Interface (API)** which is a way for applications to programmatically query and request data Resource by Resource.
    
-    * While FHIR defines these Resources and API, it also specifies that a large majority of the features are optional.
+    * While FHIR® defines these Resources and API, it also specifies that a large majority of the features are optional.
    
-    * A lot of optionality can be a good thing, but with exchanging health data for a particular use-case, that optionality and flexibility allows for too much ambiguity and differences. Therefore, the FHIR community also develops **Implementation Guides** to specify exactly how FHIR should be used for many real-world use-cases.
+    * A lot of optionality can be a good thing, but with exchanging health data for a particular use-case, that optionality and flexibility allows for too much ambiguity and differences. Therefore, the FHIR® community also develops **Implementation Guides** to specify exactly how FHIR® should be used for many real-world use-cases.
 
 > More information and an overview can be found here: [https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf](https://www.healthit.gov/sites/default/files/2019-08/ONCFHIRFSWhatIsFHIR.pdf){target=_blank}
 
@@ -54,10 +54,12 @@ FHIR® IGs are typically published on the web after they are generated.
 ??? example "For more information on the general process for IG creation, continue here"
     * FHIR® has a specific process for publishing IG available here: [https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation](https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation){target=_blank}
 
-    * FHIR® also includes the `ImplementationGuide` resource: a single resource that defines the logical content of the IG, along with the important entry pages into the publication, so that the logical package that the IG represents, so that the contents are computable. 
+    * FHIR® also includes the `ImplementationGuide` resource: a single resource that defines the logical structure of the content of the IG, so that the contents of the logical package that the IG represents are computable. 
 
     * In particular, validators are able to use the `CapabilityStatement` resource to validate content against the IG as a whole. The capability statement is a key part of the overall conformance framework in FHIR. It is used as a statement of the features of actual software, or of a set of rules for an application to provide. This statement connects to all the detailed statements of functionality, such as StructureDefinitions and ValueSets. This composite statement of application capability may be used for system compatibility testing, code generation, or as the basis for a conformance assessment. For further information about Conformance testing, see Conformance Rules and Profiling FHIR.
     More on this resource here: [https://build.fhir.org/capabilitystatement.html](https://build.fhir.org/capabilitystatement.html) 
+
+    * FHIR® contains an official registry of IG available here: [http://registry.fhir.org/](http://registry.fhir.org/)
 
 It should also be noted that while individual organizations and entities can develop their own IG, the development process should also be guided and supported by the HL7 community.
 
