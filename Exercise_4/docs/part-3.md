@@ -188,7 +188,7 @@ Let’s take a look at the raw **JSON** for the resource:
     }
     }
     ```
-Check out this patient profile here: HL7.FHIR.US.CORE\Some Day Smoker Example - JSON Representation [http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html](http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html){target=_blank}
+See another example of a Smoking Status Observation here: [http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html](http://hl7.org/fhir/us/core/STU5/Observation-some-day-smoker.json.html){target=_blank}
 
 Link here: [http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html](http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html){target=_blank}
 
