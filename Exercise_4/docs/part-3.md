@@ -122,7 +122,7 @@ For each profile, requirements and guidance are given in a simple narrative summ
     * **US Core Smoking Status Observation Profile**
     * US Core Vital Signs Profile
 
-Looking at the complete list of US Core Profiles one might notice that **SMOKING STATUS** again! It was in the EHR data we saw, and it was in the USCDI criteria... we’ll revisit this example soon...
+Looking at the complete list of US Core Profiles one might notice **Smoking Status** again. It was in the EHR data we saw, and it was in the USCDI criteria. We'll revisit this example soon.
 
 ### IG navigation example by detailed US Core walkthrough
 
