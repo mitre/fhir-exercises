@@ -268,7 +268,7 @@ Managed by the Regenstrief Institute, LOINC has been identified by the Health Le
 See here: [https://www.hl7.org/fhir/diagnosticreport-definitions.html#DiagnosticReport.code](https://www.hl7.org/fhir/diagnosticreport-definitions.html#DiagnosticReport.code){target=_blank}
 
 
-LOINC codes are divided into Test Order and Test Result codes.
+LOINC codes are divided into Order and Observation codes.
 
 ??? example "Test Order Code Structure and Examples"
     Test Order codes are 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X
