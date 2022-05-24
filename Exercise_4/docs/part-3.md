@@ -146,7 +146,7 @@ We can see here a list of required elements this profile must support.
     7 required elements. They include a `status`, a category slice, and then a specific category code of `social-history`, a code for smoking observation, a patient, when the observation occurred, a result value code for smoking status
 
 ??? question "Knowledge Check: Where would I find the reference ID of the patient?"
-    `Subject code`
+    `Observation.subject`
 
 Let’s take a look at the raw unformatted **JSON code** for the resource:
 
