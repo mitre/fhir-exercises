@@ -295,8 +295,7 @@ LOINC codes are divided into Order and Observation codes.
 An example of a very common order is for a blood type test. [https://loinc.org/34531-4/](https://loinc.org/34531-4/){target=_blank} and further details here [https://loinc.org/kb/users-guide/introduction/](https://loinc.org/kb/users-guide/introduction/){target=_blank}
 
     |LOINC code|Long Common Name|Status|Additional names|Class|Type|Order vs. Observation|Member of these panels|Member of these groups|Example Units|
-    |---------|-----------------|------------------|------------------|-------------|-----|-----|------|----|----|
-    | 69049-5  | Coagulation specialist review of results | Active | Coagulation specialist review[Interp] | MISC | Laboratory | Observation| 93321-8	PT mixing study panel - Platelet poor plasma by Coagulation ass | | |
+    |34531-4|Blood type and Crossmatch panel - Blood|Active|Blood type and Crossmatch panel (Bld)| PANEL.BLDBK| Laboratory| Order||||
 
 ??? example "Test Result Code Structure and Examples"
     LOINC Test Result codes are also 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X
