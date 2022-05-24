@@ -297,7 +297,7 @@ An example of a very common order is for a blood type test. [https://loinc.org/3
     |LOINC code|Long Common Name|Status|Additional names|Class|Type|Order vs. Observation|Member of these panels|Member of these groups|Example Units|
     |34531-4|Blood type and Crossmatch panel - Blood|Active|Blood type and Crossmatch panel (Bld)| PANEL.BLDBK| Laboratory| Order||||
 
-??? example "Test Result Code Structure and Examples"
+??? example "LOINC Result Code Structure and Examples"
     LOINC Test Result codes are also 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X
 
     Additional attributes associated with LOINC Test Result codes are:
