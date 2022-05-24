@@ -148,7 +148,7 @@ We can see here a list of required elements this profile must support.
 ??? question "Knowledge Check: Where would I find the reference ID of the patient?"
     `Observation.subject`
 
-Let’s take a look at the raw unformatted **JSON code** for the resource:
+Let’s take a look at the raw **JSON** for the resource:
 
 ??? example "Sample JSON code of the Smoking Resource"
     ```JSON
