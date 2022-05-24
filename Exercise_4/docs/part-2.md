@@ -145,7 +145,7 @@ Source:  [https://fhim.org/resources/page1](https://fhim.org/resources/page1){ta
     Health Status
 
 ??? question "Knowledge Check: Was this always true?"
-    No! In previous versions of USCDI it was it’s own class.
+    No! In previous versions of USCDI, Smoking Status was its own class.
 
 ## USCDI and HL7 FHIR®  
 We now want to better understand the connection between USCDI’s data standard and the FHIR® standard for data exchange.
