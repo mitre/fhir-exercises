@@ -270,8 +270,8 @@ See here: [https://www.hl7.org/fhir/diagnosticreport-definitions.html#Diagnostic
 
 LOINC codes are divided into Order and Observation codes.
 
-??? example "Test Order Code Structure and Examples"
-    Test Order codes are 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X
+??? example "LOINC Orders Structure and Examples"
+     LOINC codes are 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X
 
     e.g.,
         As an example, one of the more popular codes is: `2160-0` for `Creatinine [Mass/volume] in Serum or Plasma`
