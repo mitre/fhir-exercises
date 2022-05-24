@@ -193,7 +193,7 @@ Check out this patient profile here: HL7.FHIR.US.CORE\Some Day Smoker Example - 
 Link here: [http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html](http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html){target=_blank}
 
 ??? question "Knowledge Check: When was this observation taken?"
-    July 25, 2012
+    March 18, 2012
 ??? question "Knowledge Check: Is she a smoker and if so, what kind?"
     Never smoker
 
