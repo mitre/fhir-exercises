@@ -150,7 +150,7 @@ We can see here a list of required elements this profile must support.
 
 Let’s take a look at the raw **JSON** for the resource:
 
-??? example "Sample JSON code of the Smoking Resource"
+??? example "Sample JSON of the Smoking Status Resource"
     ```JSON
     {
     "resourceType": "Observation",
