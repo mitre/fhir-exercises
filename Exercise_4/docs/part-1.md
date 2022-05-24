@@ -226,18 +226,16 @@ Other common data elements include medications, either administered or prescribe
 
 These medications include information about the patient, a CODE, often the REASONCODE for the medication, the number of dispenses, and other information. In these examples, the CODEs used are RxNorm codes, and the REASONCODES are SNOMED CT.
 ??? example "Observations Table"
-    |DATE                                |PATIENT   |ENCOUNTER           |CATEGORY   |CODE     |DESCRIPTION|VALUE   |UNITS    |TYPE                                      |
-    |------------------------------------|----------|--------------------|-----------|---------|-----------|--------|---------|------------------------------------------|
-    |2017-08-04T14:30:14Z                |42574859-0c77-3889-9b2e-d5476bd0cbd6|1988a1e8-be1c-f376-0947-e6ef3d851706|vital-signs|8302-2   |Body Height|53.5    |cm       |numeric                                   |
-    |2017-08-04T14:30:14Z                |42574859-0c77-3889-9b2e-d5476bd0cbd6|1988a1e8-be1c-f376-0947-e6ef3d851706|vital-signs|72514-3  |Pain severity - 0-10 verbal numeric rating [Score] - Reported|3.0     |{score}  |numeric                                   |
-    |2017-08-04T14:30:14Z                |42574859-0c77-3889-9b2e-d5476bd0cbd6|1988a1e8-be1c-f376-0947-e6ef3d851706|vital-signs|29463-7  |Body Weight|4.1     |kg       |numeric                                   |
-    |2017-08-04T14:30:14Z                |42574859-0c77-3889-9b2e-d5476bd0cbd6|1988a1e8-be1c-f376-0947-e6ef3d851706|vital-signs|77606-2  |Weight-for-length Per age and sex|18.6    |%        |numeric                                   |
-    |2013-01-05T15:06:33Z                |38b9dfb6-29f6-60c8-ef37-6210064feac0|43f55900-14f6-4310-440b-c34398531881|vital-signs|8302-2   |Body Height|138.9   |cm       |numeric                                   |
-    |2017-08-04T14:30:14Z                |42574859-0c77-3889-9b2e-d5476bd0cbd6|1988a1e8-be1c-f376-0947-e6ef3d851706|vital-signs|9843-4   |Head Occipital-frontal circumference|36.0    |cm       |numeric                                   |
-    |2013-01-05T15:06:33Z                |38b9dfb6-29f6-60c8-ef37-6210064feac0|43f55900-14f6-4310-440b-c34398531881|vital-signs|72514-3  |Pain severity - 0-10 verbal numeric rating [Score] - Reported|1.0     |{score}  |numeric                                   |
-    |2017-08-04T14:30:14Z                |42574859-0c77-3889-9b2e-d5476bd0cbd6|1988a1e8-be1c-f376-0947-e6ef3d851706|vital-signs|8462-4   |Diastolic Blood Pressure|71.0    |mm[Hg]   |numeric                                   |
-    |2013-01-05T15:06:33Z                |38b9dfb6-29f6-60c8-ef37-6210064feac0|43f55900-14f6-4310-440b-c34398531881|vital-signs|29463-7  |Body Weight|28.0    |kg       |numeric                                   |
-    |2017-08-04T14:30:14Z                |42574859-0c77-3889-9b2e-d5476bd0cbd6|1988a1e8-be1c-f376-0947-e6ef3d851706|vital-signs|8480-6   |Systolic Blood Pressure|119.0   |mm[Hg]   |numeric                                   |
+|DATE|PATIENT|ENCOUNTER|CATEGORY|CODE|DESCRIPTION|VALUE|UNITS|
+|----|-------|---------|--------|----|-----------|-----|-----|
+|8/4/17|42574859|1988a1e8|vital-signs 8462-4|Diastolic Blood Pressure|71|mm[Hg]|
+|8/4/17|42574859|1988a1e8|vital-signs 8480-6|Systolic Blood Pressure 119|mm[Hg]|
+|8/4/17|42574859|1988a1e8|vital-signs 8867-4|Heart rate|88|/min|
+|8/4/17|42574859|1988a1e8|vital-signs 9279-1|Respiratory rate|12|/min|
+|8/4/17|42574859|1988a1e8|laboratory|718-7 Hemoglobin [Mass/volume] in Blood|14.6|g/dL|
+|8/4/17|42574859|1988a1e8|laboratory|4544-3|Hematocrit [Volume Fraction] of Blood by Automated count|40.4|%|
+|8/4/17|42574859|1988a1e8|social-history|72166-2|Tobacco smoking status NHIS|Never smoker||
+|2/15/20|38b9dfb6|2ce584d1|survey|93026-3|Do you feel physically and emotionally safe where you currently live?|Yes||
 
 
 An Observations table might look like the above. This table contains several different CATEGORIES of data, for example, vital-signs, laboratory, social-history, and survey data. Each data element has a CODE, description, value, and units of measure. In this example, the CODE is using LOINC, and the units of measure are using Unified Code for Units of Measure (UCUM).
