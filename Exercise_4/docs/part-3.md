@@ -66,9 +66,7 @@ FHIR® IGs are typically published on the web after they are generated.
 It should also be noted that while individual organizations and entities can develop their own IG, the development process should also be guided and supported by the HL7 community.
 
 ## US Core 
-So, if there are a variety of IGs available for FHIR® implementation, is there a particular one that maps to the USCDI data standard, one whose adoption would ensure that an EHR system fully met Promoting Interoperability guidelines?
-
-> Yes! The US Core IG does exactly that.
+There are a variety of IGs available for FHIR® implementation. The US Core IG maps to the USCDI data standard, to help EHR systems meet Promoting Interoperability guidelines.
 
 The US Core IG is based on FHIR® Version R4 
 > Link for further info on FHIR® Version R4 Summary – FHIR® v4.0.1: [https://www.hl7.org/fhir/summary.html](https://www.hl7.org/fhir/summary.html){target=_blank} 
