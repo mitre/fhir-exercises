@@ -68,7 +68,7 @@ It should also be noted that while individual organizations and entities can dev
 ## US Core 
 There are a variety of IGs available for FHIR® implementation. The US Core IG maps to the USCDI data standard, to help EHR systems meet Promoting Interoperability guidelines.
 
-The US Core IG is based on FHIR® Version R4 
+The current, as of writing, version of the US Core IG (5.0.0) is based on FHIR® Version R4.
 > Link for further info on FHIR® Version R4 Summary – FHIR® v4.0.1: [https://www.hl7.org/fhir/summary.html](https://www.hl7.org/fhir/summary.html){target=_blank} 
 
 >The US Core IG defines the **minimum set of constraints on the FHIR® resources** to create the US Core Profiles. It also defines the **minimum set of FHIR® RESTful interactions** for each of the US Core Profiles to access patient data. By establishing the **“floor”** of standards to promote interoperability and adoption through common implementation, it allows for further standards development evolution for specific uses cases. 
