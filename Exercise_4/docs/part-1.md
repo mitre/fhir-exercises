@@ -310,9 +310,18 @@ An example of a very common order is for a blood type test. [https://loinc.org/3
     * LOINC Attributes
     * Method Name
 
-    | LOINC Values Updated | Test ID | Test Order Name | Result ID | Test Result Name| Result LOINC Code | LOINC Attributes | Method Name |
-    |----------------------|---------|-----------------|-----------|-----------------|-------------------|------------------|-------------|
-    | 2022-03-11 | CNSA | Central Nervous System Consultation, Autopsy, Varies | 71070 | Interpretation | 18743-5 | Autopsy report:Find:Pt:{Setting}:Doc:{Role} | Includes hermatoxylin and eosin stains. Additional special stains or procedures necessary for diagnosis will be billed separately. |
+| LOINC Code|Long Common Name| Component|Class|Type|Order vs. Observation|
+|-----------|----------------|----------|-----|----|---------------------|
+| 883-9 | ABO group [Type] in Blood | ABO group | BLDBK | Laboratory | Both |
+
+The [LOINC code 883-9][https://loinc.org/883-9/] also has an *answer list* associated with the result. In this case:
+
+| Answer | Answer ID |
+|--------|-----------|
+| Group A | LA19710-5 |
+| Group B | LA19709-7 |
+| Group O | LA19708-9 |
+| Group AB | LA28449-9 |
     
     Source: [https://loinc.org/kb/users-guide/introduction/](https://loinc.org/kb/users-guide/introduction/){target=_blank}
 
