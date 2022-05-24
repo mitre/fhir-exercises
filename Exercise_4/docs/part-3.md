@@ -59,9 +59,9 @@ FHIR® IGs are typically published on the web after they are generated.
     * FHIR® also includes the `ImplementationGuide` resource: a single resource that defines the logical structure of the content of the IG, so that the contents of the logical package that the IG represents are computable. 
 
     * In particular, validators are able to use the `CapabilityStatement` resource to validate content against the IG as a whole. The capability statement is a key part of the overall conformance framework in FHIR. It is used as a statement of the features of actual software, or of a set of rules for an application to provide. This statement connects to all the detailed statements of functionality, such as StructureDefinitions and ValueSets. This composite statement of application capability may be used for system compatibility testing, code generation, or as the basis for a conformance assessment. For further information about Conformance testing, see Conformance Rules and Profiling FHIR.
-    More on this resource here: [https://build.fhir.org/capabilitystatement.html](https://build.fhir.org/capabilitystatement.html) 
+    More on this resource here: [https://build.fhir.org/capabilitystatement.html](https://build.fhir.org/capabilitystatement.html){target=_blank} 
 
-    * FHIR® contains an official registry of IG available here: [http://registry.fhir.org/](http://registry.fhir.org/)
+    * FHIR® contains an official registry of IG available here: [http://registry.fhir.org/](http://registry.fhir.org/){target=_blank}
 
 It should also be noted that while individual organizations and entities can develop their own IG, the development process should also be guided and supported by the HL7 community.
 

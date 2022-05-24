@@ -28,10 +28,10 @@ Source [https://confluence.ihtsdotools.org/display/DOCCDS/2.1.+EHR+System+Archit
 
 **Given the highly sensitive nature of data potentially contained within the EHR, significant regulatory and programmatic considerations come into play.**
 
-To learn more about PII, PHI, and HIPAA, please expand the clipboards below.
+To learn more about personally identifiable information (PII), protected health information (PHI), and The Health Insurance Portability and Accountability Act of 1996 (HIPAA), please expand the clipboards below.
 
 ??? example "PII and PHI Information and Concerns"
-    * Before potentially accessing EHR data, it is important to note that such information is considered highly sensitive and is subject to considerable safeguards. Specifically, much of the data contained within an EHR carries a legal designation of Personnally Identifiable Information (PII) and Protected Health Information (PHI).
+    * Before potentially accessing EHR data, it is important to note that such information is considered highly sensitive and is subject to considerable safeguards. Specifically, much of the data contained within an EHR carries a legal designation of Personally Identifiable Information (PII) and Protected Health Information (PHI).
     * PII is information that can be used to distinguish or trace an individual's identity, either alone or when combined with other personal or identifying information that is linked or linkable to a specific individual.
         * Source: Glossary of NIH Terms [https://grants.nih.gov/grants/glossary.htm#P](https://grants.nih.gov/grants/glossary.htm#P){target=_blank}
     * PHI is information that relates to:
@@ -159,17 +159,17 @@ We can see demographic data about these patients. Don’t worry, these are synth
 
 Each patient also has a list of Encounters (these are the visits) where they received care. For example:
 ??? example "Encounters Table"
-|Id|DATE|PATIENT|ORGANIZATION|PROVIDER|PAYER|ENCOUNTERCLASS|CODE|DESCRIPTION|PAYER_COVERAGE|REASONCODE|REASONDESCRIPTION|
-|--|----|-------|------------|--------|-----|--------------|----|-----------|--------------|----------|-----------------|
-|bb11eefe|1/12/18|42574859|f4fb0326|65d369aa|42c4fca7|wellness|410620009|Well child visit (procedure)|||
-|258df7cd|10/25/17|38b9dfb6|7dbe8a71|04fddee1|4d71f845|ambulatory|185345009|Encounter for symptom|10509002|Acute bronchitis (disorder)|
-|a644af36|11/4/17|38b9dfb6|7dbe8a71|04fddee1|4d71f845|outpatient|185349003|Encounter for check up (procedure)|||
-|dab2c529|12/11/17|38b9dfb6|7dbe8a71|04fddee1|4d71f845|outpatient|698314001|Consultation for treatment|||
-|f8878c7e|12/26/18|42574859|48adcf1c|43929461|b1c428d6|ambulatory|185347001|Encounter for problem|||
-|4a5fc869|3/23/18|38b9dfb6|7dbe8a71|04fddee1|4d71f845|ambulatory|185345009|Encounter for symptom|444814009|Viral sinusitis (disorder)|
-|ea468580|1/26/19|42574859|48adcf1c|43929461|b1c428d6|outpatient|185345009|Encounter for symptom|65363002|Otitis media|
-|1455e3d7|8/4/19|42574859|48adcf1c|43929461|4d71f845|inpatient|185347001|Encounter for problem (procedure)|91861009|Acute myeloid leukemia  disease (disorder)|
-|2ce584d1|2/15/20|38b9dfb6|d93b6804|3ac820b9|42c4fca7|wellness|162673000|General examination of patient (procedure)|||
+    |Id|DATE|PATIENT|ORGANIZATION|PROVIDER|PAYER|ENCOUNTERCLASS|CODE|DESCRIPTION|PAYER_COVERAGE|REASONCODE|REASONDESCRIPTION|
+    |--|----|-------|------------|--------|-----|--------------|----|-----------|--------------|----------|-----------------|
+    |bb11eefe|1/12/18|42574859|f4fb0326|65d369aa|42c4fca7|wellness|410620009|Well child visit (procedure)|||
+    |258df7cd|10/25/17|38b9dfb6|7dbe8a71|04fddee1|4d71f845|ambulatory|185345009|Encounter for symptom|10509002|Acute bronchitis (disorder)|
+    |a644af36|11/4/17|38b9dfb6|7dbe8a71|04fddee1|4d71f845|outpatient|185349003|Encounter for check up (procedure)|||
+    |dab2c529|12/11/17|38b9dfb6|7dbe8a71|04fddee1|4d71f845|outpatient|698314001|Consultation for treatment|||
+    |f8878c7e|12/26/18|42574859|48adcf1c|43929461|b1c428d6|ambulatory|185347001|Encounter for problem|||
+    |4a5fc869|3/23/18|38b9dfb6|7dbe8a71|04fddee1|4d71f845|ambulatory|185345009|Encounter for symptom|444814009|Viral sinusitis (disorder)|
+    |ea468580|1/26/19|42574859|48adcf1c|43929461|b1c428d6|outpatient|185345009|Encounter for symptom|65363002|Otitis media|
+    |1455e3d7|8/4/19|42574859|48adcf1c|43929461|4d71f845|inpatient|185347001|Encounter for problem (procedure)|91861009|Acute myeloid leukemia  disease (disorder)|
+    |2ce584d1|2/15/20|38b9dfb6|d93b6804|3ac820b9|42c4fca7|wellness|162673000|General examination of patient (procedure)|||
 
 In these examples, the Encounters have a CODE (a structured set of alpha-numeric patterns that map to detailed information such as diagnoses, procedures, etc.) with a corresponding description. Some of these Encounters also have a REASONCODE. Both codes use SNOMED CT (see [details on SNOMED CT below](#snomed-ct)). These are mainly used for diagnosis, procedure tracking, and symptom monitoring purposes within a healthcare setting.  The better documented "encounters" can also provide a wealth of information retrospectively for understanding etiology of diseases or can be used for epidemiological studies (e.g., hospital acquired infections or infection control and containment).
 
@@ -189,7 +189,7 @@ Patients also have a list of Conditions or Diagnoses. For example:
     |2020-08-02                          |2020-08-20|42574859-0c77-3889-9b2e-d5476bd0cbd6|adfbf7e0-8d90-ad8d-d9c1-1e7bf02f9ea2|444814009|Viral sinusitis (disorder)|
 
 
-In these examples, we see each condition or diagnosis has a CODE. Again, these examples use SNOMED CT codes, but other common terminologies include International Statistical Classification of Diseases and Related Health Problems (Tenth Revision) (ICD-10). We can see from the descriptions that some of these codes are clinical diagnoses, such as Hyperlipidemia, a history of Stroke, and Diabetic Retinopathy. However, some of these data points can also be Social Determinants of Health (SDoH) such as stress, limited social contact, and social isolation.
+In these examples, we see each condition or diagnosis has a CODE. Again, these examples use SNOMED CT codes, but other common terminologies include International Statistical Classification of Diseases and Related Health Problems (Tenth Revision) (ICD-10). We can see from the descriptions that some of these codes are clinical diagnoses, such as Acute bronchitis, and Acute myeloid leukemia disease. However, some of these data points can also be Social Determinants of Health (SDoH) such as stress, limited social contact, and social isolation, such as the `Risk activity involvement` code above.
 
 During an Encounter, the clinical staff may perform Procedures on patients, which are recorded with CODEs. Some of these procedures also document a REASONCODE. These examples use SNOMED CT codes, but other common terminologies to encode procedures include Current Procedural Terminology (CPT) and Healthcare Common Procedure Coding System (HCPCS).
 ??? example "Procedures Table"
@@ -209,33 +209,33 @@ During an Encounter, the clinical staff may perform Procedures on patients, whic
 
 Other common data elements include medications, either administered or prescribed, and diagnostic lab results and vital sign measurements. Sometimes the measurements and results are called Observations.
 ??? example "Medications Table"
-|START|STOP|PATIENT|PAYER|ENCOUNTER|CODE|DESCRIPTION|DISPENSES|REASONCODE|REASONDESCRIPTION|
-|-----|----|-------|-----|---------|----|-----------|---------|----------|-----------------|
-|10/25/17|11/11/17|38b9dfb6|4d71f845|258df7cd|313782|Acetaminophen 325 MG Oral Tablet|1|10509002|Acute bronchitis (disorder)|
-|8/4/19|8/4/19|42574859|4d71f845|1455e3d7|199885|levofloxacin 500 MG Oral Tablet|1|91861009|Acute myeloid leukemia  disease (disorder)|
-|3/3/21|3/17/21|42574859|4d71f845|ac66a7e2|308192|Amoxicillin 500 MG Oral Tablet|1|||
-|10/1/17|10/15/17|cc837cec|7c4411ce|c5a57e3b|834061|Penicillin V Potassium 250 MG Oral Tablet|1|43878008|Streptococcal sore throat (disorder)|
-|11/1/21|db56e012|b1c428d6|b8747433|1000126|1 ML medroxyPROGESTERone acetate 150 MG/ML Injection|6|||
-|8/28/13|9/9/14|cc1c0787|047f6ec3|2e83c267|314076|lisinopril 10 MG Oral Tablet|377|59621000|Hypertension|
-|8/20/13|9/2/14|19543ef9|4d71f845|b8622808|308136|amLODIPine 2.5 MG Oral Tablet|378|59621000|Hypertension|
-|3/25/22|4/1/22|19543ef9|b1c428d6|a9e97d81|311989|Nitrofurantoin 5 MG/ML Oral Suspension|1|301011002|Escherichia coli urinary tract infection|
-|3/25/22|4/1/22|19543ef9|b1c428d6|a9e97d81|1094107|Phenazopyridine hydrochloride 100 MG Oral Tablet|1|301011002|Escherichia coli urinary tract infection|
-|12/8/20|43a16fb4|b1c428d6|485fd2ef|854252|1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe|2|706870000|Acute pulmonary embolism (disorder)|
-|12/12/20|43a16fb4|b1c428d6|39667ccc|1807513|vancomycin 1000 MG Injection|17|87628006|Bacterial infectious disease (disorder)|
+    |START|STOP|PATIENT|PAYER|ENCOUNTER|CODE|DESCRIPTION|DISPENSES|REASONCODE|REASONDESCRIPTION|
+    |-----|----|-------|-----|---------|----|-----------|---------|----------|-----------------|
+    |10/25/17|11/11/17|38b9dfb6|4d71f845|258df7cd|313782|Acetaminophen 325 MG Oral Tablet|1|10509002|Acute bronchitis (disorder)|
+    |8/4/19|8/4/19|42574859|4d71f845|1455e3d7|199885|levofloxacin 500 MG Oral Tablet|1|91861009|Acute myeloid leukemia  disease (disorder)|
+    |3/3/21|3/17/21|42574859|4d71f845|ac66a7e2|308192|Amoxicillin 500 MG Oral Tablet|1|||
+    |10/1/17|10/15/17|cc837cec|7c4411ce|c5a57e3b|834061|Penicillin V Potassium 250 MG Oral Tablet|1|43878008|Streptococcal sore throat (disorder)|
+    |11/1/21|db56e012|b1c428d6|b8747433|1000126|1 ML medroxyPROGESTERone acetate 150 MG/ML Injection|6|||
+    |8/28/13|9/9/14|cc1c0787|047f6ec3|2e83c267|314076|lisinopril 10 MG Oral Tablet|377|59621000|Hypertension|
+    |8/20/13|9/2/14|19543ef9|4d71f845|b8622808|308136|amLODIPine 2.5 MG Oral Tablet|378|59621000|Hypertension|
+    |3/25/22|4/1/22|19543ef9|b1c428d6|a9e97d81|311989|Nitrofurantoin 5 MG/ML Oral Suspension|1|301011002|Escherichia coli urinary tract infection|
+    |3/25/22|4/1/22|19543ef9|b1c428d6|a9e97d81|1094107|Phenazopyridine hydrochloride 100 MG Oral Tablet|1|301011002|Escherichia coli urinary tract infection|
+    |12/8/20|43a16fb4|b1c428d6|485fd2ef|854252|1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe|2|706870000|Acute pulmonary embolism (disorder)|
+    |12/12/20|43a16fb4|b1c428d6|39667ccc|1807513|vancomycin 1000 MG Injection|17|87628006|Bacterial infectious disease (disorder)|
 
 
 These medications include information about the patient, a CODE, often the REASONCODE for the medication, the number of dispenses, and other information. In these examples, the CODEs used are RxNorm codes, and the REASONCODES are SNOMED CT.
 ??? example "Observations Table"
-|DATE|PATIENT|ENCOUNTER|CATEGORY|CODE|DESCRIPTION|VALUE|UNITS|
-|----|-------|---------|--------|----|-----------|-----|-----|
-|8/4/17|42574859|1988a1e8|vital-signs 8462-4|Diastolic Blood Pressure|71|mm[Hg]|
-|8/4/17|42574859|1988a1e8|vital-signs 8480-6|Systolic Blood Pressure 119|mm[Hg]|
-|8/4/17|42574859|1988a1e8|vital-signs 8867-4|Heart rate|88|/min|
-|8/4/17|42574859|1988a1e8|vital-signs 9279-1|Respiratory rate|12|/min|
-|8/4/17|42574859|1988a1e8|laboratory|718-7 Hemoglobin [Mass/volume] in Blood|14.6|g/dL|
-|8/4/17|42574859|1988a1e8|laboratory|4544-3|Hematocrit [Volume Fraction] of Blood by Automated count|40.4|%|
-|8/4/17|42574859|1988a1e8|social-history|72166-2|Tobacco smoking status NHIS|Never smoker||
-|2/15/20|38b9dfb6|2ce584d1|survey|93026-3|Do you feel physically and emotionally safe where you currently live?|Yes||
+    |DATE|PATIENT|ENCOUNTER|CATEGORY|CODE|DESCRIPTION|VALUE|UNITS|
+    |----|-------|---------|--------|----|-----------|-----|-----|
+    |8/4/17|42574859|1988a1e8|vital-signs 8462-4|Diastolic Blood Pressure|71|mm[Hg]|
+    |8/4/17|42574859|1988a1e8|vital-signs 8480-6|Systolic Blood Pressure 119|mm[Hg]|
+    |8/4/17|42574859|1988a1e8|vital-signs 8867-4|Heart rate|88|/min|
+    |8/4/17|42574859|1988a1e8|vital-signs 9279-1|Respiratory rate|12|/min|
+    |8/4/17|42574859|1988a1e8|laboratory|718-7 Hemoglobin [Mass/volume] in Blood|14.6|g/dL|
+    |8/4/17|42574859|1988a1e8|laboratory|4544-3|Hematocrit [Volume Fraction] of Blood by Automated count|40.4|%|
+    |8/4/17|42574859|1988a1e8|social-history|72166-2|Tobacco smoking status NHIS|Never smoker||
+    |2/15/20|38b9dfb6|2ce584d1|survey|93026-3|Do you feel physically and emotionally safe where you currently live?|Yes||
 
 
 An Observations table might look like the above. This table contains several different CATEGORIES of data, for example, vital-signs, laboratory, social-history, and survey data. Each data element has a CODE, description, value, and units of measure. In this example, the CODE is using LOINC, and the units of measure are using Unified Code for Units of Measure (UCUM).
@@ -291,11 +291,10 @@ LOINC codes are divided into Order and Observation codes.
     * Example Units
 
 
-    e.g.,
-An example of a very common order is for a blood type test. [https://loinc.org/34531-4/](https://loinc.org/34531-4/){target=_blank} and further details here [https://loinc.org/kb/users-guide/introduction/](https://loinc.org/kb/users-guide/introduction/){target=_blank}
+    e.g., An example of a very common order is for a blood type test. [https://loinc.org/34531-4/](https://loinc.org/34531-4/){target=_blank} and further details here [https://loinc.org/kb/users-guide/introduction/](https://loinc.org/kb/users-guide/introduction/){target=_blank}
 
-    |LOINC code|Long Common Name|Status|Additional names|Class|Type|Order vs. Observation|Member of these panels|Member of these groups|Example Units|
-    |34531-4|Blood type and Crossmatch panel - Blood|Active|Blood type and Crossmatch panel (Bld)| PANEL.BLDBK| Laboratory| Order||||
+        |LOINC code|Long Common Name|Status|Additional names|Class|Type|Order vs. Observation|Member of these panels|Member of these groups|Example Units|
+        |34531-4|Blood type and Crossmatch panel - Blood|Active|Blood type and Crossmatch panel (Bld)| PANEL.BLDBK| Laboratory| Order||||
 
 ??? example "LOINC Result Code Structure and Examples"
     LOINC Test Result codes are also 5 digit numeric codes appended with a dash and 6th number. Form: XXXXX-X
@@ -310,18 +309,18 @@ An example of a very common order is for a blood type test. [https://loinc.org/3
     * LOINC Attributes
     * Method Name
 
-| LOINC Code|Long Common Name| Component|Class|Type|Order vs. Observation|
-|-----------|----------------|----------|-----|----|---------------------|
-| 883-9 | ABO group [Type] in Blood | ABO group | BLDBK | Laboratory | Both |
+    | LOINC Code|Long Common Name| Component|Class|Type|Order vs. Observation|
+    |-----------|----------------|----------|-----|----|---------------------|
+    | 883-9 | ABO group [Type] in Blood | ABO group | BLDBK | Laboratory | Both |
 
-The [LOINC code 883-9][https://loinc.org/883-9/] also has an *answer list* associated with the result. In this case:
+    The LOINC code 883-9, link here: [https://loinc.org/883-9/](https://loinc.org/883-9/){target=_blank} also has an *answer list* associated with the result. In this case:
 
-| Answer | Answer ID |
-|--------|-----------|
-| Group A | LA19710-5 |
-| Group B | LA19709-7 |
-| Group O | LA19708-9 |
-| Group AB | LA28449-9 |
+    | Answer | Answer ID |
+    |--------|-----------|
+    | Group A | LA19710-5 |
+    | Group B | LA19709-7 |
+    | Group O | LA19708-9 |
+    | Group AB | LA28449-9 |
     
     Source: [https://loinc.org/kb/users-guide/introduction/](https://loinc.org/kb/users-guide/introduction/){target=_blank}
 
@@ -368,7 +367,7 @@ It should also be noted that some CPT codes indicate bundled services. That is, 
     * Updated list of codes: [https://www.cms.gov/Medicare/Fraud-and-Abuse/PhysicianSelfReferral](https://www.cms.gov/Medicare/Fraud-and-Abuse/PhysicianSelfReferral){target=_blank}
     * CPT code lookup tool: [https://www.aapc.com/codes/cpt-codes-range/](https://www.aapc.com/codes/cpt-codes-range/){target=_blank}
 
-### SNOMED-CT
+### SNOMED
 **Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT®** is a standardized, international, multilingual core set of clinical healthcare terminology that can be used in an EHR.
 
 SNOMED International is the non-profit standards development organization that creates and distributes SNOMED CT, and it is operated by the International Health Standards Development Organization. The National Library of Medicine (NLM) is the release center for SNOMED CT in the United States and supports the distribution of SNOMED CT for United States users.

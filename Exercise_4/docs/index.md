@@ -2,7 +2,7 @@
 
 ## Overview
 
-This exercise is intended to augment the R and Jupyter notebooks within the [FHIR® for Research Exercises](https://github.com/mitre/fhir-exercises){target=_blank} with a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability.
+This exercise is intended to augment the R and Jupyter notebooks within the [FHIR® for Research Exercises 0-3 Workshop](https://github.com/mitre/fhir-exercises){target=_blank} with a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability.
 
 For those interested in learning more about the FHIR® standard, please also consider reviewing the [Introduction to FHIR® for Research Webinar](https://www.youtube.com/watch?v=_ZwQW0BJJx0){target=_blank} and the [FHIR® for Research Exercises 0-3 Workshop](https://github.com/mitre/fhir-exercises){target=_blank}.
 

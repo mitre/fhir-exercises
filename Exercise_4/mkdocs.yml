@@ -31,3 +31,5 @@ nav:
 - 'conclusion.md'
 - 'glossary.md'
 
+extra_css:
+  - stylesheets/extra.css
