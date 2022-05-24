@@ -49,6 +49,8 @@ The result of this, however, is that the potential exists for two health IT syst
 
 >An IG is a set of rules about how FHIR® resources are used (or should be used) to solve a particular problem, with associated documentation to support and clarify the usage.
 
+Source: http://hl7.org/fhir/implementationguide.html
+
 FHIR® IGs are typically published on the web after they are generated.
 
 ??? example "For more information on the general process for IG creation, continue here"
