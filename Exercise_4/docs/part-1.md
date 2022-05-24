@@ -321,7 +321,7 @@ LOINC codes are divided into Order and Observation codes.
     Additonal infomration on the **LOINC coding terminology** is available here: [https://loinc.org]( https://loinc.org){target=_blank}
 
 ??? question "Knowledge Check: Where would I look to find human-readable description of the specific LOINC code?"
-    The `Test Order Name` attribute provides additional details on the specific LOINC code.
+    The `Long Common Name` attribute provides the human-readable description for a specific LOINC code.
 
 ### CPT
 
