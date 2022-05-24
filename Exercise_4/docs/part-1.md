@@ -209,18 +209,19 @@ During an Encounter, the clinical staff may perform Procedures on patients, whic
 
 Other common data elements include medications, either administered or prescribed, and diagnostic lab results and vital sign measurements. Sometimes the measurements and results are called Observations.
 ??? example "Medications Table"
-    |START                               |STOP      |PATIENT             |PAYER      |ENCOUNTER|CODE      |DESCRIPTION|DISPENSES |REASONCODE  |REASONDESCRIPTION                                               |
-    |------------------------------------|----------|--------------------|-----------|---------|----------|-----------|----------|------------|----------------------------------------------------------------|
-    |10/25/17                            |11/11/17  |38b9dfb6            |4d71f845   |258df7cd |313782    |Acetaminophen 325 MG Oral Tablet|1         |10509002    |Acute bronchitis (disorder)                                     |
-    |12/11/17                            |12/6/18   |38b9dfb6            |4d71f845   |dab2c529 |748879    |Levora 0.15/30 28 Day Pack|12        |            |                                                                |
-    |12/26/18                            |          |42574859            |b1c428d6   |f8878c7e |1014676   |cetirizine hydrochloride 5 MG Oral Tablet|41        |            |                                                                |
-    |12/26/18                            |          |42574859            |b1c428d6   |f8878c7e |1870230   |NDA020800 0.3 ML Epinephrine 1 MG/ML Auto-Injector|41        |            |                                                                |
-    |1/26/19                             |2/9/19    |42574859            |b1c428d6   |ea468580 |313820    |Acetaminophen 160 MG Chewable Tablet|1         |            |                                                                |
-    |12/1/19                             |11/25/20  |38b9dfb6            |42c4fca7   |f6bae05e |1367439   |NuvaRing 0.12/0.015 MG per 24HR 21 Day Vaginal Ring|12        |            |                                                                |
-    |8/4/19                              |8/4/19    |42574859            |4d71f845   |1455e3d7 |199885    |levofloxacin 500 MG Oral Tablet|1         |91861009    |Acute myeloid leukemia  disease (disorder)                      |
-    |3/3/21                              |3/17/21   |42574859            |4d71f845   |ac66a7e2 |308192    |Amoxicillin 500 MG Oral Tablet|1         |            |                                                                |
-    |3/3/21                              |3/17/21   |42574859            |4d71f845   |ac66a7e2 |198405    |Ibuprofen 100 MG Oral Tablet|1         |            |                                                                |
-    |11/25/20                            |11/20/21  |38b9dfb6            |047f6ec3   |6744ffa1 |751905    |Trinessa 28 Day Pack|12        |            |                                                                |
+|START|STOP|PATIENT|PAYER|ENCOUNTER|CODE|DESCRIPTION|DISPENSES|REASONCODE|REASONDESCRIPTION|
+|-----|----|-------|-----|---------|----|-----------|---------|----------|-----------------|
+|10/25/17|11/11/17|38b9dfb6|4d71f845|258df7cd|313782|Acetaminophen 325 MG Oral Tablet|1|10509002|Acute bronchitis (disorder)|
+|8/4/19|8/4/19|42574859|4d71f845|1455e3d7|199885|levofloxacin 500 MG Oral Tablet|1|91861009|Acute myeloid leukemia  disease (disorder)|
+|3/3/21|3/17/21|42574859|4d71f845|ac66a7e2|308192|Amoxicillin 500 MG Oral Tablet|1|||
+|10/1/17|10/15/17|cc837cec|7c4411ce|c5a57e3b|834061|Penicillin V Potassium 250 MG Oral Tablet|1|43878008|Streptococcal sore throat (disorder)|
+|11/1/21|db56e012|b1c428d6|b8747433|1000126|1 ML medroxyPROGESTERone acetate 150 MG/ML Injection|6|||
+|8/28/13|9/9/14|cc1c0787|047f6ec3|2e83c267|314076|lisinopril 10 MG Oral Tablet|377|59621000|Hypertension|
+|8/20/13|9/2/14|19543ef9|4d71f845|b8622808|308136|amLODIPine 2.5 MG Oral Tablet|378|59621000|Hypertension|
+|3/25/22|4/1/22|19543ef9|b1c428d6|a9e97d81|311989|Nitrofurantoin 5 MG/ML Oral Suspension|1|301011002|Escherichia coli urinary tract infection|
+|3/25/22|4/1/22|19543ef9|b1c428d6|a9e97d81|1094107|Phenazopyridine hydrochloride 100 MG Oral Tablet|1|301011002|Escherichia coli urinary tract infection|
+|12/8/20|43a16fb4|b1c428d6|485fd2ef|854252|1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe|2|706870000|Acute pulmonary embolism (disorder)|
+|12/12/20|43a16fb4|b1c428d6|39667ccc|1807513|vancomycin 1000 MG Injection|17|87628006|Bacterial infectious disease (disorder)|
 
 
 These medications include information about the patient, a CODE, often the REASONCODE for the medication, the number of dispenses, and other information. In these examples, the CODEs used are RxNorm codes, and the REASONCODES are SNOMED CT.
