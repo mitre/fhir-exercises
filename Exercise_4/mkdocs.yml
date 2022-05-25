@@ -16,6 +16,8 @@ theme:
       bug: octicons/bug-16
       example: octicons/beaker-16
       quote: octicons/quote-16
+  features:
+    - navigation.tabs
 
 markdown_extensions:
   - admonition
@@ -24,12 +26,14 @@ markdown_extensions:
   - attr_list
 
 nav:
-- 'index.md'
-- 'part-1.md'
-- 'part-2.md'
-- 'part-3.md'
-- 'conclusion.md'
-- 'glossary.md'
+  - Home: index.md
+  - Exercise 4:
+    - exercise-4/index.md
+    - exercise-4/part-1.md
+    - exercise-4/part-2.md
+    - exercise-4/part-3.md
+    - exercise-4/conclusion.md
+    - exercise-4/glossary.md
 
 extra_css:
   - stylesheets/extra.css

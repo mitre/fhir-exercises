@@ -1,65 +1,48 @@
-# Welcome
+# FHIR® for Researchers
 
 ## Overview
 
-This exercise is intended to augment the R and Jupyter notebooks within the [FHIR® for Research Exercises 0-3 Workshop](https://github.com/mitre/fhir-exercises){target=_blank} with a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability.
+The goal of this FHIR® for Research site is to equip NIH research scientists and program officers to better leverage FHIR® in their own research by deepening their understanding of where FHIR® data comes from and the FHIR® standard more generally.
+For a general review of the FHIR® ecosystem and potential applications, please review the [Introduction to FHIR® for Research webinar](https://www.youtube.com/watch?v=_ZwQW0BJJx0){target=_blank}.
+To complete a series of hands-on exercises on working with FHIR® for research, please review the hands on content below.
+To obtain a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability, please continue with [Exercise 4](exercise-4).
 
-For those interested in learning more about the FHIR® standard, please also consider reviewing the [Introduction to FHIR® for Research Webinar](https://www.youtube.com/watch?v=_ZwQW0BJJx0){target=_blank} and the [FHIR® for Research Exercises 0-3 Workshop](https://github.com/mitre/fhir-exercises){target=_blank}.
+To view recordings of Exercises 0-3, please visit the following:
 
-Upon completion of this exercise, NIH researchers or program officers will have a foundational understanding of where FHIR®-enabled data comes from, and how to eventually access and utilize it.
+- [Workshop in Python](https://www.youtube.com/watch?v=yGT3ottE7LY){target=_blank}
+- [Workshop in R](https://www.youtube.com/watch?v=TpjueS9L-5o){target=_blank}
 
+### Exercise 0
 
-## Sections:
+Exercise 0 introduces learners to the basic mechanisms for working with FHIR® by completing the following steps: establishing a connection to the client server, formatting and submitting a query to the server, processing response data from the FHIR® server, and viewing resulting data to confirm it was successfully pulled from the remote server.  It includes hands on exercises in both R and Python.
 
-### Part 1: EHR Data
+- [Exercise 0 Python](https://github.com/mitre/fhir-exercises/blob/main/Python/Exercise_0_Introduction.ipynb){target=_blank}
+- [Exercise 0 R](r/0){target=_blank}
 
-**Background:**  Electronic Health Records (EHR) contain important healthcare-related data. Understanding the purpose and structure of data inside an EHR is a necessary foundation for understanding what data is captured, how it is captured, and how it might be queryable through an API.
+### Exercise 1
 
-!!! check "Learning Objectives"
-    Be able to identify how and why EHR data can be used for research purposes.
+Exercise 1 steps learners through a use case for patients prescribed opioids to teach the following concepts: understanding a FHIR® server’s capabilities, reading FHIR® specifications, understanding and searching for FHIR® Resources, processing paginated responses, and integrating with other, non-FHIR® Application Programming Interfaces (APIs).  It includes hands on exercises in both R and Python.
 
-!!! Abstract "Components"
-    * Overview of EHR Technology Ecosystem
-      * EHR Technical Architecture
-    * Access and Regulatory Considerations
-    * Data Composition
-      * Sample EHR Data Exercise
-    * Codes and Medical Terminology
+- [Exercise 1 Python](https://github.com/mitre/fhir-exercises/blob/main/Python/Exercise_1_Opioids.ipynb){target=_blank}
+- [Exercise 1 R](r/1){target=_blank}
 
-### Part 2: USCDI and Associated Terminology
+### Exercise 2
 
-**Background:** Understanding the purpose and structure of EHR data that researchers could possibly work with is the first step to understanding how to eventually access and utilize it. A next step is understanding the technical standards that enable remote access and interoperability.
+Exercise 2 steps through a use case leveraging Kids First data to enable learners to better understand how to query FHIR® resources in various ways to enable visualizing and analyzing data.  It includes hands on exercises in both R and Python.
 
-!!! check "Learning Objectives"
-    Understand the concept of health data exchange, interoperability, and the core interoperable standard United States Core Data for Interoperability (USCDI). 
+- [Exercise 2 Python](https://github.com/mitre/fhir-exercises/blob/main/Python/Exercise_2_KidsFirst.ipynb){target=_blank}
+- [Exercise 2 R](r/2){target=_blank}
 
-!!! Abstract "Components"
-    * Background on Health Data Interoperability
-      * History
-      * How Healthcare Data Standards Support Interoperability
-    * Introduction to USCDI
-      * Background and history
-      * Structure of the USCDI Standard
-      * Mapping USCDI to EHR data components
-    * USCDI and FHIR®
+### Exercise 3
 
+Exercise 3 applies knowledge gained in the previous exercises to identify drug-on-drug 
+interactions using FHIR® data and NLM APIs. It includes hands on exercises in both 
+R and Python.
 
-### Part 3: Implementation Guides and US Core
+- [Exercise 3 Python](https://github.com/mitre/fhir-exercises/blob/main/Python/Exercise_3_DrugInteractions.ipynb){target=_blank}
+- [Exercise 3 R](r/3){target=_blank}
 
-**Background:** By Part 3, readers should be familiar with EHR data, and its alignment to standardized elements through a standard like USCDI. But while USCDI provides a standard for **WHAT** information must be included in an interoperable framework, it doesn’t specify **HOW** it must be packaged and rendered to external entities. The final piece in the interoperable framework then, is a standard geared precisely for information exchange. 
+### Exercise 4
 
-This standard is known as HL7 FHIR®, or the Fast Healthcare Interoperability Resources. (See:  [hl7.org/fhir](https://hl7.org/fhir){target=_blank})
+[Exercise 4](exercise-4) is a self-paced web-based training that provides learners with a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability.  This exercise is meant to augment the materials in Exercises 0-3.
 
-!!! check "Learning Objectives"
-    Understand the role that Implementation Guides like US Core play in standardizing the precise data elements made available in specific HL7 FHIR-enabled data exchanges. 
-
-!!! Abstract "Components"
-    * Background on FHIR®
-    * How Implementation Guides (IG) are developed
-      * Introducing Implementation Guides
-    * US Core
-      * Specifics of the US Core IG including relationship to USCDI
-      * Requirements and elements to be US Core compliant
-      * IG navigation example by detailed US Core walkthrough
-
-**Please note, a Glossary of Abbreviations and Acronyms used throughout this site is available in the navigation menu for easy access, should any confusion about an acronym arise.**
