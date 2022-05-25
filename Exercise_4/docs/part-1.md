@@ -87,7 +87,7 @@ Further down in the process flow we find our provider inquiring about the patien
 ![Smoking Decision Tree](img/smoking0.png)
 
 Depending on the smoking status, we see that there are three options (in this example there are three, but more exist in the real world).
-All three options use the same LOINC code `72166-2` with the human-readable description of `Tobacco smoking status` -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT® codes ([learn more about SNOMED-CT below](#snomed)), one where the smoker attribute is true, the second where the `quit smoking date` is not null, and finally 3, an `else` default finding:
+All three options use the same LOINC code `72166-2` with the human-readable description of `Tobacco smoking status` -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT® codes ([learn more about SNOMED-CT below](#snomed-ct)), one where the smoker attribute is true, the second where the `quit smoking date` is not null, and finally 3, an `else` default finding:
 
 1. SNOMED-CT `449868002` with the human-readable description `Smokes tobacco daily (finding)`
 ![Daily Smoker Code](img/smoking1.png)
