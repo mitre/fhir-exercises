@@ -87,16 +87,16 @@ Further down in the process flow we find our provider inquiring about the patien
 ![Smoking Decision Tree](img/smoking0.png)
 
 Depending on the smoking status, we see that there are three options (in this example there are three, but more exist in the real world).
-All three options use the same LOINC code `72166-2` with the human-readable description of `Tobacco smoking status` -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT® codes ([learn more about SNOMED-CT below](#snomed-ct)), one where the smoker attribute is true, the second where the `quit smoking date` is not null, and finally 3, an `else` default finding:
+All three options use the same LOINC code `72166-2` with the human-readable description of `Tobacco smoking status` -- but each option has a different value. The LOINC standard has a preferred answer list for this question, but here our example represents the answers with one of three Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT® codes ([learn more about SNOMED CT below](#snomed-ct)), one where the smoker attribute is true, the second where the `quit smoking date` is not null, and finally 3, an `else` default finding:
 
-1. SNOMED-CT `449868002` with the human-readable description `Smokes tobacco daily (finding)`
+1. SNOMED CT `449868002` with the human-readable description `Smokes tobacco daily (finding)`
 ![Daily Smoker Code](img/smoking1.png)
 
 
-2. SNOMED-CT `8517006` with the human-readable description `Ex-smoker (finding)`
+2. SNOMED CT `8517006` with the human-readable description `Ex-smoker (finding)`
 ![Smoking Decision Tree](img/smoking2.png)
 
-3. SNOMED-CT `266919005` with the human-readable description `Never smoked tobacco (finding)`
+3. SNOMED CT `266919005` with the human-readable description `Never smoked tobacco (finding)`
 ![Smoking Decision Tree](img/smoking3.png)
 
 
@@ -368,7 +368,7 @@ It should also be noted that some CPT codes indicate bundled services. That is, 
     * Updated list of codes: [https://www.cms.gov/Medicare/Fraud-and-Abuse/PhysicianSelfReferral](https://www.cms.gov/Medicare/Fraud-and-Abuse/PhysicianSelfReferral){target=_blank}
     * CPT code lookup tool: [https://www.aapc.com/codes/cpt-codes-range/](https://www.aapc.com/codes/cpt-codes-range/){target=_blank}
 
-### SNOMED-CT
+### SNOMED CT
 **Systemized Nomenclature of Medicine – Clinical Terms or SNOMED CT®** is a standardized, international, multilingual core set of clinical healthcare terminology that can be used in an EHR.
 
 SNOMED International is the non-profit standards development organization that creates and distributes SNOMED CT, and it is operated by the International Health Standards Development Organization. The National Library of Medicine (NLM) is the release center for SNOMED CT in the United States and supports the distribution of SNOMED CT for United States users.
@@ -439,7 +439,7 @@ In the National Drug Code (NDC) system, if more than one manufacturer produces t
 ??? question "Knowledge Check: What code systems are used to identify procedures?"
     * CPT
     * HCPCS
-    * SNOMED
+    * SNOMED CT
 ??? question "Knowledge Check: What code systems are used to identify diagnoses?"
-    * SNOMED
+    * SNOMED CT
     * ICD-10
