@@ -153,7 +153,7 @@ We now want to better understand the connection between USCDI’s data standard 
 !!! Note "Format and Structure"
     While USCDI defined **WHAT** data elements are required for a core definition of comprehensive interoperability, it did not specify the precise format and structure for that data exchange, or the **HOW**. 
     
-Explaining the **HOW** of USCDI exchange requires the separate and complementary adoption of the FHIR® standard, explore further in Part 3 if this tutorial. 
+Explaining the **HOW** of USCDI exchange requires the separate and complementary adoption of the FHIR® standard, explore further in Part 3 of this tutorial. 
 
 !!! danger "Additional Resources about USCDI:"
     Please check out these ONC Fact Sheets: 

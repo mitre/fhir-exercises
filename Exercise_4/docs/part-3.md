@@ -49,7 +49,7 @@ The result of this, however, is that the potential exists for two health IT syst
 
 >An IG is a set of rules about how FHIR® resources are used (or should be used) to solve a particular problem, with associated documentation to support and clarify the usage.
 
-Source: http://hl7.org/fhir/implementationguide.html
+Source: [http://hl7.org/fhir/implementationguide.html](http://hl7.org/fhir/implementationguide.html){target=_blank}
 
 FHIR® IGs are typically published on the web after they are generated.
 
@@ -192,8 +192,8 @@ See another example of a Smoking Status Observation here: [http://hl7.org/fhir/u
 
 Link here: [http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html](http://build.fhir.org/ig/HL7/US-Core/StructureDefinition-us-core-smokingstatus.html){target=_blank}
 
-??? question "Knowledge Check: When was this observation taken?"
-    March 18, 2012
+??? question "Knowledge Check: In the linked example above, when was that observation taken?"
+    March 18, 2016
 ??? question "Knowledge Check: Is she a smoker and if so, what kind?"
     Never smoker
 
