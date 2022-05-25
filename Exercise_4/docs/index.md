@@ -36,7 +36,7 @@ Exercise 2 steps through a use case leveraging Kids First data to enable learner
 ### Exercise 3
 
 Exercise 3 applies knowledge gained in the previous exercises to identify drug-on-drug 
-interactions using FHIR® data and NLM APIS. It includes hands on exercises in both 
+interactions using FHIR® data and NLM APIs. It includes hands on exercises in both 
 R and Python.
 
 - [Exercise 3 Python](https://github.com/mitre/fhir-exercises/blob/main/Python/Exercise_3_DrugInteractions.ipynb){target=_blank}
