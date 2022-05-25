@@ -67,7 +67,7 @@ Ultimately, data sharing and interoperability will enable researchers to access 
 
 This interoperability framework is extremely complex. Individual patient models must define all workflows for clinical care, step by step. The care models must be mapped out for every instance and option for care. Each element of these models must be translated into specific clinical definitions all providers agree to accept. Then, those definitions are assigned machine-readable terminologies from known standards held in recognized libraries such as SNOMED CT, or assigned LOINC and RxNorm codes. When appropriate, those terminologies also needed to be bound to a "value set" from the U.S. National Library of Medicine. 
 
-A "value set" is a list of codes from one or more terminologies (e.g., SNOMED-CT and ICD-10) that can be used for some purpose. That purpose could be to represent the same topic, or could be used to enumerate a list of clinical options, or something else entirely.
+A "value set" is a list of codes from one or more terminologies (e.g., SNOMED CT and ICD-10) that can be used for some purpose. That purpose could be to represent the same topic, or could be used to enumerate a list of clinical options, or something else entirely.
 
 Source: [https://bulletin.facs.org/2017/11/a-history-of-health-information-technology-and-the-future-of-interoperability/](https://bulletin.facs.org/2017/11/a-history-of-health-information-technology-and-the-future-of-interoperability/){target=_blank}
 
