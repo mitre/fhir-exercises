@@ -14,10 +14,10 @@ in the Python Standard Library.
 
 ```shell
 # Navigate to the Python folder
-cd Python/
+cd fhir-exercises/Exercise_4/
 
 # Create a virtual environment in a `venv/` folder
-python3 -m venv venv/
+python -m venv venv/
 
 # Activate the virtual environment
 source venv/bin/activate
