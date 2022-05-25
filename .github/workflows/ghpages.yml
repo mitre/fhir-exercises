@@ -3,7 +3,7 @@ name: ghpages
 on:
   push:
     branches:
-      - pages-reorg
+      - main
 
 defaults:
   run:
