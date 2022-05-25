@@ -7,6 +7,10 @@ For a general review of the FHIR® ecosystem and potential applications, please 
 To complete a series of hands-on exercises on working with FHIR® for research, please review the hands on content below.
 To obtain a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability, please continue with [Exercise 4](exercise-4).
 
+To view recordings of Exercises 0-3, please visit the following:
+
+- [Workshop in Python](https://www.youtube.com/watch?v=yGT3ottE7LY)
+- [Workshop in R](https://www.youtube.com/watch?v=TpjueS9L-5o)
 
 ### Exercise 0
 
