@@ -7,7 +7,7 @@ on:
 
 defaults:
   run:
-    working-directory: Exercise 4
+    working-directory: Exercise_4
 # See https://squidfunk.github.io/mkdocs-material/publishing-your-site/#with-github-actions
 jobs:
   deploy:
