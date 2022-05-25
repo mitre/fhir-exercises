@@ -439,7 +439,7 @@ In the National Drug Code (NDC) system, if more than one manufacturer produces t
 ??? question "Knowledge Check: What code systems are used to identify procedures?"
     * CPT
     * HCPCS
-    * SNOMED
+    * SNOMED CT
 ??? question "Knowledge Check: What code systems are used to identify diagnoses?"
-    * SNOMED
+    * SNOMED CT
     * ICD-10
