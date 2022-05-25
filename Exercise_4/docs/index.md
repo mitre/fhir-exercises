@@ -37,3 +37,8 @@ R and Python.
 
 - [Exercise 3 Python](https://github.com/mitre/fhir-exercises/blob/main/Python/Exercise_3_DrugInteractions.ipynb)
 - [Exercise 3 R](r/3)
+
+### Exercise 4
+
+[Exercise 4](exercise-4) is a self-paced web-based training that provides learners with a broad view of Electronic Health Records (EHR), terminology systems, and how United States Core Data for Interoperability (USCDI) and Implementation Guides like US Core enable remote access and interoperability.  This exercise is meant to augment the materials in Exercises 0-3.
+
