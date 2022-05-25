@@ -159,8 +159,8 @@ We can see demographic data about these patients. Don’t worry, these are synth
 
 Each patient also has a list of Encounters (these are the visits) where they received care. For example:
 ??? example "Encounters Table"
-    |Id|DATE|PATIENT|ORGANIZATION|PROVIDER|PAYER|ENCOUNTERCLASS|CODE|DESCRIPTION|PAYER_COVERAGE|REASONCODE|REASONDESCRIPTION|
-    |--|----|-------|------------|--------|-----|--------------|----|-----------|--------------|----------|-----------------|
+    |Id|DATE|PATIENT|ORGANIZATION|PROVIDER|PAYER|ENCOUNTERCLASS|CODE|DESCRIPTION|REASONCODE|REASONDESCRIPTION|
+    |--|----|-------|------------|--------|-----|--------------|----|-----------|----------|-----------------|
     |bb11eefe|1/12/18|42574859|f4fb0326|65d369aa|42c4fca7|wellness|410620009|Well child visit (procedure)|||
     |258df7cd|10/25/17|38b9dfb6|7dbe8a71|04fddee1|4d71f845|ambulatory|185345009|Encounter for symptom|10509002|Acute bronchitis (disorder)|
     |a644af36|11/4/17|38b9dfb6|7dbe8a71|04fddee1|4d71f845|outpatient|185349003|Encounter for check up (procedure)|||
@@ -215,24 +215,24 @@ Other common data elements include medications, either administered or prescribe
     |8/4/19|8/4/19|42574859|4d71f845|1455e3d7|199885|levofloxacin 500 MG Oral Tablet|1|91861009|Acute myeloid leukemia  disease (disorder)|
     |3/3/21|3/17/21|42574859|4d71f845|ac66a7e2|308192|Amoxicillin 500 MG Oral Tablet|1|||
     |10/1/17|10/15/17|cc837cec|7c4411ce|c5a57e3b|834061|Penicillin V Potassium 250 MG Oral Tablet|1|43878008|Streptococcal sore throat (disorder)|
-    |11/1/21|db56e012|b1c428d6|b8747433|1000126|1 ML medroxyPROGESTERone acetate 150 MG/ML Injection|6|||
+    |11/1/21||db56e012|b1c428d6|b8747433|1000126|1 ML medroxyPROGESTERone acetate 150 MG/ML Injection|6|||
     |8/28/13|9/9/14|cc1c0787|047f6ec3|2e83c267|314076|lisinopril 10 MG Oral Tablet|377|59621000|Hypertension|
     |8/20/13|9/2/14|19543ef9|4d71f845|b8622808|308136|amLODIPine 2.5 MG Oral Tablet|378|59621000|Hypertension|
     |3/25/22|4/1/22|19543ef9|b1c428d6|a9e97d81|311989|Nitrofurantoin 5 MG/ML Oral Suspension|1|301011002|Escherichia coli urinary tract infection|
     |3/25/22|4/1/22|19543ef9|b1c428d6|a9e97d81|1094107|Phenazopyridine hydrochloride 100 MG Oral Tablet|1|301011002|Escherichia coli urinary tract infection|
-    |12/8/20|43a16fb4|b1c428d6|485fd2ef|854252|1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe|2|706870000|Acute pulmonary embolism (disorder)|
-    |12/12/20|43a16fb4|b1c428d6|39667ccc|1807513|vancomycin 1000 MG Injection|17|87628006|Bacterial infectious disease (disorder)|
+    |12/8/20||43a16fb4|b1c428d6|485fd2ef|854252|1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe|2|706870000|Acute pulmonary embolism (disorder)|
+    |12/12/20||43a16fb4|b1c428d6|39667ccc|1807513|vancomycin 1000 MG Injection|17|87628006|Bacterial infectious disease (disorder)|
 
 
 These medications include information about the patient, a CODE, often the REASONCODE for the medication, the number of dispenses, and other information. In these examples, the CODEs used are RxNorm codes, and the REASONCODES are SNOMED CT.
 ??? example "Observations Table"
     |DATE|PATIENT|ENCOUNTER|CATEGORY|CODE|DESCRIPTION|VALUE|UNITS|
     |----|-------|---------|--------|----|-----------|-----|-----|
-    |8/4/17|42574859|1988a1e8|vital-signs 8462-4|Diastolic Blood Pressure|71|mm[Hg]|
-    |8/4/17|42574859|1988a1e8|vital-signs 8480-6|Systolic Blood Pressure 119|mm[Hg]|
-    |8/4/17|42574859|1988a1e8|vital-signs 8867-4|Heart rate|88|/min|
-    |8/4/17|42574859|1988a1e8|vital-signs 9279-1|Respiratory rate|12|/min|
-    |8/4/17|42574859|1988a1e8|laboratory|718-7 Hemoglobin [Mass/volume] in Blood|14.6|g/dL|
+    |8/4/17|42574859|1988a1e8|vital-signs|8462-4|Diastolic Blood Pressure|71|mm[Hg]|
+    |8/4/17|42574859|1988a1e8|vital-signs|8480-6|Systolic Blood Pressure 119|mm[Hg]|
+    |8/4/17|42574859|1988a1e8|vital-signs|8867-4|Heart rate|88|/min|
+    |8/4/17|42574859|1988a1e8|vital-signs|9279-1|Respiratory rate|12|/min|
+    |8/4/17|42574859|1988a1e8|laboratory|718-7|Hemoglobin [Mass/volume] in Blood|14.6|g/dL|
     |8/4/17|42574859|1988a1e8|laboratory|4544-3|Hematocrit [Volume Fraction] of Blood by Automated count|40.4|%|
     |8/4/17|42574859|1988a1e8|social-history|72166-2|Tobacco smoking status NHIS|Never smoker||
     |2/15/20|38b9dfb6|2ce584d1|survey|93026-3|Do you feel physically and emotionally safe where you currently live?|Yes||
@@ -294,6 +294,7 @@ LOINC codes are divided into Order and Observation codes.
     e.g., An example of a very common order is for a blood type test. [https://loinc.org/34531-4/](https://loinc.org/34531-4/){target=_blank} and further details here [https://loinc.org/kb/users-guide/introduction/](https://loinc.org/kb/users-guide/introduction/){target=_blank}
 
         |LOINC code|Long Common Name|Status|Additional names|Class|Type|Order vs. Observation|Member of these panels|Member of these groups|Example Units|
+        |----------|----------------|------|----------------|-----|----|---------------------|----------------------|----------------------|-------------|
         |34531-4|Blood type and Crossmatch panel - Blood|Active|Blood type and Crossmatch panel (Bld)| PANEL.BLDBK| Laboratory| Order||||
 
 ??? example "LOINC Result Code Structure and Examples"
