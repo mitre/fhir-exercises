@@ -37,3 +37,5 @@ nav:
 
 extra_css:
   - stylesheets/extra.css
+
+copyright: "Copyright &copy; 2022 The MITRE Corporation. PRS Release Number: 21-3456"
