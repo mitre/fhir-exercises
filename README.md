@@ -2,6 +2,8 @@
 
 This repository contains exercises related to using FHIR to gather data for analysis in R and Python.
 
+For more information please see <https://datascience.nih.gov/fhir-initiatives/researchers-training>.
+
 <table>
   <tr>
     <th>Language</th>
